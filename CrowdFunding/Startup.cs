@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using CrowdFunding.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using CrowdFunding.Services;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace CrowdFunding
 {
@@ -32,6 +34,9 @@ namespace CrowdFunding
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddTransient<IEmailSender, EmailSender>();
+
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
