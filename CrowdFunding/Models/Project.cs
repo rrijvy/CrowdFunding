@@ -36,6 +36,12 @@ namespace CrowdFunding.Models
         [Required, DataType(DataType.Date)]
         public DateTime EndingDate { get; set; }
 
+        public string Image1 { get; set; }
+
+        public string Image2 { get; set; }
+
+        public string Image3 { get; set; }
+
         public int CompanyId { get; set; }
 
         [ForeignKey("CompanyId")]

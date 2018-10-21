@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CrowdFunding.Areas.Identity.Pages.Account
 {
@@ -20,15 +21,18 @@ namespace CrowdFunding.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly ApplicationDbContext _context;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
+            ApplicationDbContext context,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
             _logger = logger;
             _emailSender = emailSender;
         }
@@ -55,10 +59,13 @@ namespace CrowdFunding.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            public int CountryId { get; set; }
         }
 
         public void OnGet(string returnUrl = null)
         {
+            ViewData["Country"] = new SelectList(_context.Countries, "Id", "Name");
             ReturnUrl = returnUrl;
         }
 
@@ -67,7 +74,7 @@ namespace CrowdFunding.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
+                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, CountryId = Input.CountryId };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
