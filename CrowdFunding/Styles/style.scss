@@ -1,0 +1,87 @@
+﻿body {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Assistant', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+h1 {
+    font-family: 'Inconsolata', monospace;
+    font-weight: 700;
+}
+
+a {
+    text-decoration: none;
+    color: #333333;
+}
+
+a:hover, a:active, a:link, a:visited {
+    text-decoration: none;
+    color: #333333;
+}
+
+#boder-radious-zero {
+    border-radius: 0px;
+}
+
+.container-fluid {
+    padding: 0;
+}
+
+.btn {
+    border-radius: 0px;
+}
+
+#nav {
+    background-color: #fff;
+
+    &-bar {
+        width: 75%;
+        margin: auto;
+    }
+
+    &-list :hover {
+        background-color: #42ccae;
+    }
+
+    &-btn {
+        background-color: #42ccae;
+    }
+}
+
+
+.ownCarousel {
+
+}
+
+.myslides {
+    width: 100%;
+    height: 60vh;
+    position: relative;
+    text-align: center;
+}
+.centered {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+}
+
+
+
+.mySlides img {
+    width: 100%;
+    height: 60vh;
+    object-fit: cover;
+    
+}
+
+
+.shadow {
+    background-color: rgba(0, 0, 0, 0.35);
+    height: 100%;
+    width: 100%;
+}
