@@ -1,0 +1,78 @@
+﻿@model CrowdFunding.Models.Company
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Company</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RegNo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RegNo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Liesence)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Liesence)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PhoneNo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.WebsiteUrl)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.WebsiteUrl)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Video)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Video)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CompanyType.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Entrepreneur)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Entrepreneur.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

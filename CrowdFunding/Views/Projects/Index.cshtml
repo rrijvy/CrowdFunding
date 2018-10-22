@@ -1,0 +1,113 @@
+﻿@model IEnumerable<CrowdFunding.Models.Project>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProjectShortDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DetailDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProjectTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsRunning)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsCompleted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NeededFund)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartingDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndingDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image3)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Company)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProjectCategory)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectShortDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DetailDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsRunning)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsCompleted)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NeededFund)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartingDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndingDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Image1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Image2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Image3)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Company.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectCategory.Id)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

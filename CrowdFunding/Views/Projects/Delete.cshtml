@@ -1,0 +1,105 @@
+﻿@model CrowdFunding.Models.Project
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Project</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ProjectShortDescription)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProjectShortDescription)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DetailDescription)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DetailDescription)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ProjectTitle)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProjectTitle)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsRunning)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsRunning)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsCompleted)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsCompleted)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NeededFund)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NeededFund)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StartingDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StartingDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EndingDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EndingDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Image1)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Image1)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Image2)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Image2)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Image3)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Image3)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Company)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Company.Email)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ProjectCategory)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProjectCategory.Id)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

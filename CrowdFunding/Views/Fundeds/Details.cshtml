@@ -1,0 +1,54 @@
+﻿@model CrowdFunding.Models.Funded
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Funded</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Amount)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Amount)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RaisedAmount)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RaisedAmount)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsLive)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsLive)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Investment)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Investment.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Project)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Project.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Investor)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Investor.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

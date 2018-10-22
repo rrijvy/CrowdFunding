@@ -1,0 +1,50 @@
+﻿@model CrowdFunding.Models.Investment
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>Investment</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="InvestmentRegNo" class="control-label"></label>
+                <input asp-for="InvestmentRegNo" value="@ViewBag.registration" class="form-control" readonly />
+                <span asp-validation-for="InvestmentRegNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProjectId" class="control-label"></label>
+                <select asp-for="ProjectId" class ="form-control" asp-items="ViewBag.ProjectId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="InvestmentTypeId" class="control-label"></label>
+                <select asp-for="InvestmentTypeId" class ="form-control" asp-items="ViewBag.InvestmentTypeId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="InvestorId" class="control-label"></label>
+                <select asp-for="InvestorId" class ="form-control" asp-items="ViewBag.InvestorId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
