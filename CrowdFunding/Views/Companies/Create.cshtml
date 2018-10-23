@@ -1,5 +1,5 @@
 ﻿@model CrowdFunding.Models.Company
-
+@inject UserManager<ApplicationUser> userManager
 @{
     ViewData["Title"] = "Create";
 }
@@ -19,16 +19,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="RegNo" class="control-label"></label>
-                <input asp-for="RegNo" value="@ViewBag.registration" class="form-control" readonly />
+                <input asp-for="RegNo" class="form-control" />
                 <span asp-validation-for="RegNo" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CompanyTypeId" class="control-label"></label>
-                <select asp-for="CompanyTypeId" class ="form-control" asp-items="ViewBag.CompanyTypeId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="EntrepreneurId" class="control-label"></label>
-                <select asp-for="EntrepreneurId" class ="form-control" asp-items="ViewBag.EntrepreneurId"></select>
+                <select asp-for="CompanyTypeId" class="form-control" asp-items="ViewBag.CompanyTypeId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
