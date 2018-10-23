@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - CrowdFunding</title>
 
     <environment include="Development">
+        <link href="https://fonts.googleapis.com/css?family=Crimson+Text:400,600,700" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Assistant:300,400,600,700|Inconsolata:400,700" rel="stylesheet">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
@@ -20,6 +21,20 @@
     </environment>
 </head>
 <body>
+    <div class="top-header">
+        <div class="container">
+            <ul class="login-form-left">
+                <li>
+                    <i class="fab fa-facebook-f"></i>
+                    <i class="fab fa-google-plus-g"></i>
+                </li>
+                <li>Date time</li>
+                <li>Support mail</li>
+                <li><partial name="_LoginPartial" /></li>
+            </ul>
+
+        </div>
+    </div>
     <nav id="nav" class="navbar navbar-fixed-top">
         <div id="nav-bar">
             <div class="navbar-header">
@@ -42,7 +57,7 @@
                     <div class="form-group">
                         <input id="boder-radious-zero" type="text" class="form-control" placeholder="Search">
                     </div>
-                    <button  id="nav-btn boder-radious-zero" type="submit" class="btn btn-default">
+                    <button id="nav-btn boder-radious-zero" type="submit" class="btn btn-default">
                         <i class="fas fa-search"></i>
                     </button>
                 </form>
@@ -53,7 +68,9 @@
     <partial name="_CookieConsentPartial" />
 
     <div>
-        @RenderBody()
+        <div class="main-content">
+            @RenderBody()
+        </div>
         <hr />
         <footer>
             <p>&copy; 2018 - CrowdFunding</p>

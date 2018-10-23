@@ -16,14 +16,14 @@ namespace CrowdFunding.Controllers
     {
 
         private readonly ApplicationDbContext _context;
-        private readonly IHostingEnvironment he;
+        private readonly IHostingEnvironment _environment;
 
 
 
-        public HomeController(ApplicationDbContext context, IHostingEnvironment e)
+        public HomeController(ApplicationDbContext context, IHostingEnvironment environment)
         {
             _context = context;
-            he = e;
+            _environment = environment;
         }
         public IActionResult Index()
         {
@@ -31,17 +31,13 @@ namespace CrowdFunding.Controllers
         }
 
         public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
+        {          
+            return Json(_context.Entrepreneurs.ToList());
         }
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
+            return Json(_context.Investors.ToList());
         }
 
         public IActionResult Privacy()
@@ -67,12 +63,12 @@ namespace CrowdFunding.Controllers
 
             foreach (var file in files)
             {
-                location = Path.Combine(he.WebRootPath, Path.GetFileName(file.FileName));
+                location = Path.Combine(_environment.WebRootPath, Path.GetFileName(file.FileName));
                 var filename = ContentDispositionHeaderValue
                                 .Parse(file.ContentDisposition)
                                 .FileName
                                 .Trim('"');
-                filename = he.WebRootPath + $@"\{filename}";
+                filename = _environment.WebRootPath + $@"\{filename}";
                 size += file.Length;
                 using (FileStream fs = System.IO.File.Create(filename))
                 {

@@ -36,6 +36,7 @@ namespace CrowdFunding
                     Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<ICustomizedId, CustomizedId>();
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -58,7 +59,7 @@ namespace CrowdFunding
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            app.UseHttpsRedirection(); 
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
