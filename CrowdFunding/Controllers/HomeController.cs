@@ -27,7 +27,9 @@ namespace CrowdFunding.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            var projectCategory = _context.ProjectCategory.ToList();
+            ViewData["Projects"] = _context.Projects.ToList();
+            return View(projectCategory);
         }
 
         public IActionResult About()

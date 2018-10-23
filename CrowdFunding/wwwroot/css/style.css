@@ -9,6 +9,9 @@ body {
 .main-content {
   margin-top: 83px; }
 
+.container {
+  padding: 0; }
+
 h1 {
   font-family: 'Inconsolata', monospace;
   font-weight: 700; }
@@ -146,3 +149,55 @@ a:hover, a:active, a:link, a:visited {
     border-bottom: 1px solid;
     padding-bottom: 2rem;
     margin-bottom: 2rem; }
+
+.second-part {
+  width: 70%;
+  margin: 4rem auto 0px auto; }
+
+.projectCategory {
+  width: 100%;
+  margin-bottom: 4rem; }
+  .projectCategory-ul {
+    list-style-type: none;
+    float: left; }
+  .projectCategory-li {
+    float: left;
+    padding: 10px 15px; }
+    .projectCategory-li:first-child {
+      margin-left: -40px;
+      padding-left: 0; }
+    .projectCategory-li-a {
+      border: none;
+      padding: 8px 0px; }
+      .projectCategory-li-a:first-child {
+        padding-left: 0; }
+      .projectCategory-li-a:hover {
+        border-bottom: 1px solid; }
+
+.category-projects {
+  width: 100%;
+  height: 55vh; }
+  .category-projects-big {
+    width: 50%;
+    float: left;
+    background-image: linear-gradient(to right bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5)), url(/images/img-4.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%; }
+  .category-projects-list {
+    width: 50%;
+    float: left;
+    height: 100%; }
+
+.group:before,
+.group:after {
+  content: "";
+  display: table; }
+
+.group:after {
+  clear: both; }
+
+.group {
+  zoom: 1;
+  /* For IE 6/7 (trigger hasLayout) */ }

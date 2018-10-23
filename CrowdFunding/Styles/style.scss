@@ -10,6 +10,11 @@
 .main-content {
     margin-top: 83px;
 }
+
+.container {
+    padding: 0;
+}
+
 h1 {
     font-family: 'Inconsolata', monospace;
     font-weight: 700;
@@ -20,10 +25,11 @@ a {
     color: #333333;
 }
 
-.width100p{
+.width100p {
     width: 100%;
     padding: 10px;
 }
+
 a:hover, a:active, a:link, a:visited {
     text-decoration: none;
     color: #333333;
@@ -45,7 +51,8 @@ a:hover, a:active, a:link, a:visited {
     background-color: #fff;
     top: 33px;
     transition: top 0.3s;
-    font-family: 'Inconsolata', monospace;;
+    font-family: 'Inconsolata', monospace;
+    ;
 
     &-bar {
         width: 75%;
@@ -146,21 +153,22 @@ a:hover, a:active, a:link, a:visited {
 
 ///---register---///
 
-.regEntreprenuer{
+.regEntreprenuer {
     display: none;
 }
 
-.regInvestor{
+.regInvestor {
     display: none;
 }
-#logoutForm{
+
+#logoutForm {
     margin-top: -15px;
 }
 
-.regButton{
+.regButton {
     width: 70%;
     margin: auto;
-    text-align:center;
+    text-align: center;
     margin-bottom: 4rem;
     margin-top: 2rem;
 }
@@ -187,4 +195,84 @@ a:hover, a:active, a:link, a:visited {
         padding-bottom: 2rem;
         margin-bottom: 2rem;
     }
+}
+
+///---- Index - section - projectCategory ----///
+.second-part {
+    width: 70%;
+    margin: 4rem auto 0px auto;
+}
+
+.projectCategory {
+    width: 100%;
+    margin-bottom: 4rem;
+
+    &-ul {
+        list-style-type: none;
+        float: left;
+    }
+
+    &-li {
+        float: left;
+        padding: 10px 15px;
+
+        &:first-child {
+            margin-left: -40px;
+            padding-left: 0;
+        }
+
+        &-a {
+            border: none;
+            padding: 8px 0px;
+
+            &:first-child {
+                padding-left: 0;
+            }
+
+            &:hover {
+                border-bottom: 1px solid;
+            }
+        }
+    }
+}
+
+.category-projects {
+    width: 100%;
+    height: 55vh;
+
+    &-big {
+        width: 50%;
+        float: left;
+        background-image: linear-gradient(to right bottom, rgba(0,0,0,.4), rgba(0,0,0,.5)), url(/images/img-4.jpg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 100%;
+    }
+
+    &-list {
+        width: 50%;
+        float: left;
+        height: 100%;
+    }
+}
+
+
+
+
+
+
+
+.group:before,
+.group:after {
+    content: "";
+    display: table;
+}
+
+.group:after {
+    clear: both;
+}
+
+.group {
+    zoom: 1; /* For IE 6/7 (trigger hasLayout) */
 }
