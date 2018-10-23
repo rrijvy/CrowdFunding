@@ -82,7 +82,7 @@ namespace CrowdFunding.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string name, string returnUrl = null)
         {
-            returnUrl = returnUrl ?? Url.Content("~/");
+            returnUrl = returnUrl ?? Url.Content("~/Identity/Account/Manage");
             if (ModelState.IsValid)
             {
                 if (name == "Entreprenuer")
