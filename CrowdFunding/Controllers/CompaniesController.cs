@@ -7,16 +7,24 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CrowdFunding.Data;
 using CrowdFunding.Models;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace CrowdFunding.Controllers
 {
     public class CompaniesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public CompaniesController(ApplicationDbContext context)
+        public CompaniesController(ApplicationDbContext context,
+                                    UserManager<ApplicationUser> userManager,
+                                    SignInManager<ApplicationUser> signInManager)
         {
             _context = context;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         // GET: Companies
@@ -50,30 +58,6 @@ namespace CrowdFunding.Controllers
         public IActionResult Create()
         {
             ViewData["CompanyTypeId"] = new SelectList(_context.CompanyTypes, "Id", "TypeName");
-            ViewData["EntrepreneurId"] = new SelectList(_context.Entrepreneurs, "Id", "Id");
-
-            var rg = _context.Companies.OrderByDescending(e => e.Id).FirstOrDefault();
-            string rgNo = string.Empty;
-            string defaultValue = "11";
-            int id = 0;
-            if (rg == null)
-            {
-                id = 1;
-                rgNo = defaultValue+id.ToString().Trim().PadLeft(5, '0');
-
-
-            }
-            else
-            {
-                string newId = rg.RegNo.ToString();
-                id = int.Parse(newId);
-                id += 1;
-                rgNo = defaultValue+id.ToString().Trim().PadLeft(5, '0');
-
-            }
-            ViewBag.registration = rgNo;
-
-
             return View();
         }
 
@@ -82,17 +66,34 @@ namespace CrowdFunding.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,RegNo,TypeName,EntrepreneurId,Email,Liesence,PhoneNo,Address,WebsiteUrl,Video")] Company company)
+        public async Task<IActionResult> Create(Company model)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(company);
+                var company = new Company
+                {
+                    Name = model.Name,
+                    CompanyTypeId = model.CompanyTypeId,
+                    Email = model.Email,
+                    Liesence = model.Liesence,
+                    PhoneNo = model.PhoneNo,
+                    Address = model.Address,
+                    WebsiteUrl = model.WebsiteUrl
+                };
+
+                var userId = _userManager.GetUserId(HttpContext.User);
+
+                company.EntrepreneurId = userId;
+
+                if (string.IsNullOrEmpty(model.RegNo))
+                    company.RegNo = null;
+                else
+                    company.RegNo = model.RegNo;
+
+                await _context.AddAsync(company);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
             }
-            ViewData["CompanyTypeId"] = new SelectList(_context.CompanyTypes, "Id", "TypeName", company.CompanyTypeId);
-            ViewData["EntrepreneurId"] = new SelectList(_context.Entrepreneurs, "Id", "Id", company.EntrepreneurId);
-            return View(company);
+            return RedirectToAction("Index");
         }
 
         // GET: Companies/Edit/5

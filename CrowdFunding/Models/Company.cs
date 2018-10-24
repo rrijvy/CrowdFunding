@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using CrowdFunding.Data;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -11,13 +12,13 @@ namespace CrowdFunding.Models
         [Required, Display(Name ="Company name")]
         public string Name { get; set; }
         
-        [Required, Display(Name ="Registration no.")]
+        [Display(Name ="Registration no.")]
         public string RegNo { get; set; }
 
         [Required, Display(Name ="Company type")]
         public int CompanyTypeId { get; set; }
 
-        [Display(Name = "Entrepreneur name")]
+        
         public string EntrepreneurId { get; set; }
        
         [Required, EmailAddress]
@@ -37,7 +38,6 @@ namespace CrowdFunding.Models
         [ForeignKey("CompanyTypeId")]
         public CompanyType CompanyType { get; set; }
 
-        [ForeignKey("EntrepreneurId")]
         public Entrepreneur Entrepreneur { get; set; }        
 
         public List<Project> Projects { get; set; }
