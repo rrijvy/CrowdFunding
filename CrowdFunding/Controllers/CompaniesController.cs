@@ -58,6 +58,30 @@ namespace CrowdFunding.Controllers
         public IActionResult Create()
         {
             ViewData["CompanyTypeId"] = new SelectList(_context.CompanyTypes, "Id", "TypeName");
+
+            var rg = _context.Companies.OrderByDescending(e => e.Id).FirstOrDefault();
+            string rgNo = string.Empty;
+            string defaultValue = "11";
+            int id = 0;
+            if (rg == null)
+            {
+                id = 1;
+                rgNo = defaultValue + id.ToString().Trim().PadLeft(5, '0');
+
+
+            }
+            else
+            {
+                string newId = rg.RegNo.ToString();
+                id = int.Parse(newId);
+                id += 1;
+                rgNo = defaultValue + id.ToString().Trim().PadLeft(5, '0');
+
+            }
+            ViewBag.registration = rgNo;
+
+
+
             return View();
         }
 
