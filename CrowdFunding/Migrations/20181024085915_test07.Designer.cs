@@ -7,17 +7,17 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace CrowdFunding.Data.Migrations
+namespace CrowdFunding.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181021165739_create-database")]
-    partial class createdatabase
+    [Migration("20181024085915_test07")]
+    partial class test07
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
+                .HasAnnotation("ProductVersion", "2.1.1-rtm-30846")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -117,8 +117,7 @@ namespace CrowdFunding.Data.Migrations
 
                     b.Property<string>("PhoneNo");
 
-                    b.Property<string>("RegNo")
-                        .IsRequired();
+                    b.Property<string>("RegNo");
 
                     b.Property<string>("Video");
 
@@ -239,6 +238,12 @@ namespace CrowdFunding.Data.Migrations
                     b.Property<string>("DetailDescription");
 
                     b.Property<DateTime>("EndingDate");
+
+                    b.Property<string>("Image1");
+
+                    b.Property<string>("Image2");
+
+                    b.Property<string>("Image3");
 
                     b.Property<bool>("IsCompleted");
 
