@@ -9,6 +9,7 @@ using CrowdFunding.Data;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using System.Net.Http.Headers;
+using CrowdFunding.ViewModels;
 
 namespace CrowdFunding.Controllers
 {
@@ -25,11 +26,19 @@ namespace CrowdFunding.Controllers
             _context = context;
             _environment = environment;
         }
-        public IActionResult Index()
+        public IActionResult Index(int? categoryId)
         {
-            var projectCategory = _context.ProjectCategory.ToList();
-            ViewData["Projects"] = _context.Projects.ToList();
-            return View(projectCategory);
+            var projectCategories = _context.ProjectCategory.ToList();
+            var projects = _context.Projects.Where(x => x.ProjectCategoryId == categoryId).ToList();
+            var fileProjects = _context.Projects.Where(x => x.ProjectCategoryId == 1).ToList();
+
+            var inputViewModel = new HomeIndexVIewModel
+            {
+                ProjectCategories = projectCategories,
+                Projects = projects,
+                FileProjects = fileProjects
+            };
+            return View(inputViewModel);
         }
 
         public IActionResult About()

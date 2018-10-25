@@ -152,7 +152,9 @@ a:hover, a:active, a:link, a:visited {
 
 .second-part {
   width: 70%;
-  margin: 4rem auto 0px auto; }
+  margin: 4rem auto 0px auto;
+  padding-bottom: 6rem;
+  border-bottom: 1px solid; }
 
 .projectCategory {
   width: 100%;
@@ -168,7 +170,8 @@ a:hover, a:active, a:link, a:visited {
       padding-left: 0; }
     .projectCategory-li-a {
       border: none;
-      padding: 8px 0px; }
+      padding: 8px 0px;
+      background-color: #fff; }
       .projectCategory-li-a:first-child {
         padding-left: 0; }
       .projectCategory-li-a:hover {
@@ -180,15 +183,54 @@ a:hover, a:active, a:link, a:visited {
   .category-projects-big {
     width: 50%;
     float: left;
-    background-image: linear-gradient(to right bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5)), url(/images/img-4.jpg);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
     height: 100%; }
-  .category-projects-list {
+    .category-projects-big img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      overflow: hidden; }
+  .category-projects-box {
+    height: 100%;
     width: 50%;
     float: left;
-    height: 100%; }
+    font-size: 13px; }
+    .category-projects-box-list {
+      width: 100%;
+      height: 85%;
+      overflow: auto;
+      padding-right: 20px; }
+      .category-projects-box-list ul {
+        list-style: none;
+        width: 100%; }
+        .category-projects-box-list ul li {
+          border-bottom: 1px solid; }
+          .category-projects-box-list ul li .group:last-child {
+            border-bottom: none; }
+      .category-projects-box-list-image {
+        width: 30%;
+        float: left;
+        height: 100%; }
+        .category-projects-box-list-image img {
+          display: block; }
+      .category-projects-box-list-info {
+        width: 70%;
+        float: left; }
+    .category-projects-box-all {
+      padding: 50px 0px 0px 40px; }
+      .category-projects-box-all a {
+        padding: 8px 25px;
+        background-color: #42ccae; }
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #F5F5F5; }
+
+::-webkit-scrollbar {
+  width: 6px;
+  background-color: #F5F5F5; }
+
+::-webkit-scrollbar-thumb {
+  background-color: #000000; }
 
 .group:before,
 .group:after {

@@ -13,10 +13,10 @@ namespace CrowdFunding.Models
         public string Name { get; set; }
 
 
-        [Required, Display(Name = "Company Short Discription")]
+        [Required, Display(Name = "Project Short Discription")]
         public string ProjectShortDescription { get; set; }
 
-        [Display(Name = "Company Details Description")]
+        [Display(Name = "Projects Details Description")]
         public string DetailDescription { get; set; }
         
         [Required, Display(Name = "Project title")]

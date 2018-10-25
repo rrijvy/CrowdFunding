@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ProjectCategory>
+﻿@model HomeIndexVIewModel
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -15,7 +15,7 @@
                 <h1>Let's make .</h1>
             </div>
         </div>
-        <div class="mySlides" id="mySlides-3">            
+        <div class="mySlides" id="mySlides-3">
             <div class="centered">
                 <h1>Let's  change.</h1>
             </div>
@@ -27,25 +27,40 @@
 <div class="second-part">
     <div class="projectCategory group">
         <ul class="projectCategory-ul">
-            @foreach (var item in Model)
+            @foreach (var item in Model.ProjectCategories)
             {
-                <li class="projectCategory-li " >
-                    <a href="#" class="projectCategory-li-a" name="@item.Id">@item.Type</a>
+                <li class="projectCategory-li">
+                    <button value="@item.Id" class="projectCategory-li-a">@item.Type</button>
                 </li>
             }
         </ul>
     </div>
     <div class="category-projects group">
         <div class="category-projects-big">
-            big
+            <img src="~/images/img-4.jpg" alt="project image" />
         </div>
-        <div class="category-projects-list">
-            @foreach (var item in ViewBag.Projects)
-            {
-                <ul>
-                    <li>@item</li>
-                </ul>
-            }
+        <div class="category-projects-box">
+            <div class="category-projects-box-list">
+                @foreach (var item in Model.FileProjects)
+                {
+
+                    <ul>
+                        <li class="group">
+                            <div class="category-projects-box-list-image">
+                                <img src="#" alt="project image" />
+                            </div>
+                            <div class="category-projects-box-list-info">
+                                <h4>@item.Name</h4>
+                                <p>@item.ProjectShortDescription</p>
+                                <p>@item.NeededFund</p>
+                            </div>
+                        </li>
+                    </ul>
+                }
+            </div>
+            <div class="category-projects-box-all">
+                <a href="">View all</a>
+            </div>
         </div>
     </div>
 </div>
@@ -67,6 +82,43 @@
             x[myIndex - 1].style.display = "block";
             setTimeout(carousel, 3000); // Change image every 3 seconds
         }
+
+        $(".projectCategory-li-a").on('click', function () {
+            var categoryId = $(this).val();
+            console.log(categoryId);
+            var url = "/Projects/ShowByCategory/" + categoryId;
+            $.ajax({
+                type: "GET",
+                url: url,
+                contentType: "application/json",
+                dataType: "json",
+                success: function (response) {
+                    var dvItems = $(".category-projects-box-list");
+                    dvItems.html(" ");
+                    var str;
+
+
+                    $.each(response, function (i, item) {
+                        str += "<ul> <li class=" + "group" + "> ";
+                        str += "<div class=" + "category-projects-box-list-image" + "> <img src=" + item.image1 + " /> </div>";
+                        str += "<div class=" + "category-projects-box-list-info" + ">";
+                        str += "<h4>" + item.name + "</h4>";
+                        str += "<p>" + item.projectShortDescription + "</p>";
+                        str += "<p>" + item.neededFund + "</p>";
+                        str += "</div> </li> </ul>";
+                    });
+                    dvItems.append(str);
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+
+        })
+
+
+
+
     </script>
 }
 

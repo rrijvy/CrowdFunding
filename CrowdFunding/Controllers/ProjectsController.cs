@@ -162,5 +162,13 @@ namespace CrowdFunding.Controllers
         {
             return _context.Projects.Any(e => e.Id == id);
         }
+
+
+
+        public IActionResult ShowByCategory(int id)
+        {
+            var projects = _context.Projects.Where(x => x.ProjectCategoryId == id).ToList();
+            return Json(projects);
+        }
     }
 }
