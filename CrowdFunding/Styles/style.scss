@@ -9,6 +9,7 @@
 
 .main-content {
     margin-top: 83px;
+    padding: 0;
 }
 
 .container {
@@ -202,7 +203,6 @@ a:hover, a:active, a:link, a:visited {
     width: 70%;
     margin: 4rem auto 0px auto;
     padding-bottom: 6rem;
-    border-bottom: 1px solid;
 }
 
 .projectCategory {
@@ -313,6 +313,122 @@ a:hover, a:active, a:link, a:visited {
         }
     }
 }
+
+
+/////---- how it works -----////
+.how {
+    width: 100%;
+    padding: 50px 0 50px 0;
+    background-color: #eee; 
+    
+    &-works {
+        width: 70%;
+        margin: auto;
+        text-align: center;
+        padding: 20px 0 20px 0;
+
+        &-list {
+            width: 100%;
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 0 20px 0;
+
+            &-item {
+                width: 30%;
+
+                i {
+                    font-size: 32px;
+                    color: #42ccae;
+                }
+            }
+        }
+    }
+}
+
+////---- project view ----////
+
+.project-list {
+    padding-top: 2rem;
+    width: 80%;
+    margin: auto;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: flex-start;
+
+    &-item {
+        width: 25%;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        height: 60vh;
+
+        &:hover{
+            box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        &-img {
+            height: 38%;
+            width: 100%;
+            object-fit: cover;
+            overflow: hidden;
+        }
+
+        &-info {
+            padding: 3rem;
+            height: 62%;
+            font-size: 1.3rem;
+            display: flex;
+            flex-flow: column;
+            justify-content: space-between;
+
+            &-pledged {
+                color: #42ccae;
+            }
+        }
+    }
+}
+
+
+////---- Product details ----///
+.product {
+    width: 70%;
+    margin: auto;
+
+    &-details {
+        width: 70%;
+        float:left;
+
+        img {
+            height: 30rem;
+            width: 100%;
+            object-fit: cover;
+            overflow: hidden;
+        }
+    }
+
+    &-back{
+        width: 30%;
+        float: left;
+    }
+}
+
+
+
+
+.w3-border {
+    border: 1px solid #42ccae;
+    margin-bottom: 10px;
+}
+.w3-grey {
+    background-color: #42ccae;
+}
+
+
+
+
+
+
 
 
 

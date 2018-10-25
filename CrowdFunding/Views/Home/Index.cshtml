@@ -30,7 +30,7 @@
             @foreach (var item in Model.ProjectCategories)
             {
                 <li class="projectCategory-li">
-                    <button value="@item.Id" class="projectCategory-li-a">@item.Type</button>
+                    <button value="@item.Id" class="projectCategory-li-a ">@item.Type</button>
                 </li>
             }
         </ul>
@@ -59,7 +59,32 @@
                 }
             </div>
             <div class="category-projects-box-all">
-                <a href="">View all</a>
+                <a class="category-projects-box-all-a" href="/Projects/ShowProjectByCategory/1">View all</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="how">
+    <div class="how-works">
+        <h1>HOW IT <span style="color:#42ccae">WORKS</span></h1>
+        <p>Every project creator sets their project's funding goal and deadline. If people like the project, they can pledge money to make it happen. If the project succeeds in reaching its funding goal, all backers' credit cards are charged when time expires. Funding on Kickstarter is all-or-nothing. If the project falls short of its funding goal, no one is charged. If a project is successfully funded, Kickstarter applies a 5% fee to the funds collected.</p>
+        <p>How way you can get Funding to this Website?</p>
+        <div class="how-works-list">
+            <div class="how-works-list-item">
+                <i class="far fa-edit"></i>
+                <h2>Create</h2>
+                <p>Create a company to raise funds for your cause.</p>
+            </div>
+            <div class="how-works-list-item">
+                <i class="fas fa-share"></i>
+                <h2>Share</h2>
+                <p>Share it on all social media platforms, we mean, ALL!</p>
+            </div>
+            <div class="how-works-list-item">
+                <i class="fas fa-dollar-sign"></i>
+                <h2>Fund</h2>
+                <p>Receive donations to your cause direct to your account.</p>
             </div>
         </div>
     </div>
@@ -95,8 +120,8 @@
                 success: function (response) {
                     var dvItems = $(".category-projects-box-list");
                     dvItems.html(" ");
+                    var categoryId = 0;
                     var str;
-
 
                     $.each(response, function (i, item) {
                         str += "<ul> <li class=" + "group" + "> ";
@@ -106,8 +131,12 @@
                         str += "<p>" + item.projectShortDescription + "</p>";
                         str += "<p>" + item.neededFund + "</p>";
                         str += "</div> </li> </ul>";
+                        categoryId = item.projectCategoryId;
                     });
+
                     dvItems.append(str);
+                    var url = '/Projects/ShowProjectByCategory/' + categoryId;
+                    $('.category-projects-box-all-a').attr('href', url);
                 },
                 failure: function (response) {
                     alert(response);

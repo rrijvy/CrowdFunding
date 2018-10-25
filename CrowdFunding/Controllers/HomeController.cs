@@ -42,8 +42,9 @@ namespace CrowdFunding.Controllers
         }
 
         public IActionResult About()
-        {          
+        {
             return Json(_context.Entrepreneurs.ToList());
+            //return View();
         }
 
         public IActionResult Contact()

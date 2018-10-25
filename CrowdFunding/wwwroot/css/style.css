@@ -7,7 +7,8 @@ body {
   font-size: 16px; }
 
 .main-content {
-  margin-top: 83px; }
+  margin-top: 83px;
+  padding: 0; }
 
 .container {
   padding: 0; }
@@ -153,8 +154,7 @@ a:hover, a:active, a:link, a:visited {
 .second-part {
   width: 70%;
   margin: 4rem auto 0px auto;
-  padding-bottom: 6rem;
-  border-bottom: 1px solid; }
+  padding-bottom: 6rem; }
 
 .projectCategory {
   width: 100%;
@@ -220,6 +220,79 @@ a:hover, a:active, a:link, a:visited {
       .category-projects-box-all a {
         padding: 8px 25px;
         background-color: #42ccae; }
+
+.how {
+  width: 100%;
+  padding: 50px 0 50px 0;
+  background-color: #eee; }
+  .how-works {
+    width: 70%;
+    margin: auto;
+    text-align: center;
+    padding: 20px 0 20px 0; }
+    .how-works-list {
+      width: 100%;
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: center;
+      align-items: center;
+      padding: 20px 0 20px 0; }
+      .how-works-list-item {
+        width: 30%; }
+        .how-works-list-item i {
+          font-size: 32px;
+          color: #42ccae; }
+
+.project-list {
+  padding-top: 2rem;
+  width: 80%;
+  margin: auto;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: flex-start; }
+  .project-list-item {
+    width: 25%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    height: 60vh; }
+    .project-list-item:hover {
+      box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.19); }
+    .project-list-item-img {
+      height: 38%;
+      width: 100%;
+      object-fit: cover;
+      overflow: hidden; }
+    .project-list-item-info {
+      padding: 3rem;
+      height: 62%;
+      font-size: 1.3rem;
+      display: flex;
+      flex-flow: column;
+      justify-content: space-between; }
+      .project-list-item-info-pledged {
+        color: #42ccae; }
+
+.product {
+  width: 70%;
+  margin: auto; }
+  .product-details {
+    width: 70%;
+    float: left; }
+    .product-details img {
+      height: 30rem;
+      width: 100%;
+      object-fit: cover;
+      overflow: hidden; }
+  .product-back {
+    width: 30%;
+    float: left; }
+
+.w3-border {
+  border: 1px solid #42ccae;
+  margin-bottom: 10px; }
+
+.w3-grey {
+  background-color: #42ccae; }
 
 ::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);

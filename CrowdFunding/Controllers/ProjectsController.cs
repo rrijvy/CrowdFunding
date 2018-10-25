@@ -7,16 +7,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CrowdFunding.Data;
 using CrowdFunding.Models;
+using CrowdFunding.ViewModels;
+using CrowdFunding.Services;
 
 namespace CrowdFunding.Controllers
 {
     public class ProjectsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IGetFundedAmount _fundedAmount;
 
-        public ProjectsController(ApplicationDbContext context)
+        public ProjectsController(ApplicationDbContext context,
+                                    IGetFundedAmount fundedAmount)
         {
             _context = context;
+            _fundedAmount = fundedAmount;
         }
 
         // GET: Projects
@@ -27,23 +32,39 @@ namespace CrowdFunding.Controllers
         }
 
         // GET: Projects/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var project = await _context.Projects
-                .Include(p => p.Company)
-                .Include(p => p.ProjectCategory)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (project == null)
+            var project = _context.Projects
+                            .Include(x => x.Company)
+                            .ThenInclude(x => x.Entrepreneur)
+                            .ThenInclude(x => x.Country)
+                            .FirstOrDefault(x => x.Id == id);
+            var projectViewModel = new ProjectViewModel
+            {
+                Id = project.Id,
+                Image = project.Image1,
+                Name = project.Name,
+                ShortDescription = project.ProjectShortDescription,
+                LongDescription = project.DetailDescription,
+                EntreprenuerName = project.Company.Entrepreneur.FName + " " + project.Company.Entrepreneur.LName,
+                PledgedAmount = project.NeededFund,
+                DaysLeft = Math.Floor((project.EndingDate - DateTime.Now).TotalDays),
+                CompanyName = project.Company.Name,
+                CountryName = project.Company.Entrepreneur.Country.Name,
+                Funded = _fundedAmount.FundedAmount(project.Id)
+            };
+
+            if (projectViewModel == null)
             {
                 return NotFound();
             }
 
-            return View(project);
+            return View(projectViewModel);
         }
 
         // GET: Projects/Create
@@ -170,5 +191,36 @@ namespace CrowdFunding.Controllers
             var projects = _context.Projects.Where(x => x.ProjectCategoryId == id).ToList();
             return Json(projects);
         }
+
+        public IActionResult ShowProjectByCategory(int id)
+        {
+            List<ProjectViewModel> projectList = new List<ProjectViewModel>();
+            var projects = _context.Projects.Where(x => x.ProjectCategoryId == id).Include(x=>x.Company).ThenInclude(x=>x.Entrepreneur).ThenInclude(x=>x.Country);
+            
+            foreach (var item in projects)
+            {
+                var projectViewModel = new ProjectViewModel
+                {
+                    Id = item.Id,
+                    Image = item.Image1,
+                    Name = item.Name,
+                    ShortDescription = item.ProjectShortDescription,
+                    EntreprenuerName = item.Company.Entrepreneur.FName + " " + item.Company.Entrepreneur.LName,
+                    PledgedAmount = item.NeededFund,
+                    DaysLeft = Math.Floor((item.EndingDate - DateTime.Now).TotalDays),
+                    CompanyName = item.Company.Name,
+                    CountryName = item.Company.Entrepreneur.Country.Name,
+                    Funded = _fundedAmount.FundedAmount(item.Id)
+                };
+                projectList.Add(projectViewModel);
+
+
+            }
+            
+            
+            return View(projectList);
+        }
+
+        
     }
 }

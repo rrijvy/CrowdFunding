@@ -38,6 +38,7 @@ namespace CrowdFunding.Models
         [ForeignKey("CompanyTypeId")]
         public CompanyType CompanyType { get; set; }
 
+        [ForeignKey("EntrepreneurId")]
         public Entrepreneur Entrepreneur { get; set; }        
 
         public List<Project> Projects { get; set; }

@@ -1,102 +1,22 @@
-﻿@model CrowdFunding.Models.Project
+﻿@model ProjectViewModel
 
 @{
     ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>Project</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ProjectShortDescription)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ProjectShortDescription)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.DetailDescription)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DetailDescription)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ProjectTitle)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ProjectTitle)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IsRunning)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IsRunning)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IsCompleted)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IsCompleted)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.NeededFund)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.NeededFund)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.StartingDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.StartingDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.EndingDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.EndingDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Image1)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Image1)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Image2)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Image2)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Image3)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Image3)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Company)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Company.Email)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ProjectCategory)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ProjectCategory.Id)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="product group">
+    <div class="product-details">
+        <h1>@Model.Name</h1>
+        <p>@Model.ShortDescription</p>
+        <img src="~/images/img-1.jpg" />
+        <p>@Model.LongDescription</p>
+        <img src="~/images/img-1.jpg" />
+        <img src="~/images/img-1.jpg" />
+    </div>
+    <div class="product-back">
+        <p>Pledged of @Model.PledgedAmount goal</p>
+        <p>1003 backers</p>
+        <p>@Model.DaysLeft days to go</p>
+    </div>
 </div>

@@ -37,6 +37,7 @@ namespace CrowdFunding
 
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<ICustomizedId, CustomizedId>();
+            services.AddTransient<IGetFundedAmount, GetFundedAmount>();
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
