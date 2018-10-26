@@ -2,7 +2,7 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: 'Assistant', sans-serif;
+    font-family: 'Lato', sans-serif;
     font-weight: 400;
     font-size: 16px;
 }
@@ -397,7 +397,9 @@ a:hover, a:active, a:link, a:visited {
 
     &-details {
         width: 70%;
-        float:left;
+        float: left;
+        padding-right: 1rem;
+        margin-top: 3rem;
 
         img {
             height: 30rem;
@@ -407,9 +409,37 @@ a:hover, a:active, a:link, a:visited {
         }
     }
 
-    &-back{
-        width: 30%;
+    &-back {
+        border-top: 2px solid #42ccae;
         float: left;
+        padding-left: 1rem;
+        margin-top: 3rem;
+
+
+        &-p {
+            padding: 10px 0;
+        }
+
+        &-p-1 {
+            font-size: 2.5rem;
+        }
+
+        &-p-2 {
+            font-size: 1.2rem;
+            line-height: 1px;
+        }
+
+        &-amount {
+            color: #42ccae;
+        }
+
+        &-button {
+            background-color: #42ccae;
+            padding: .9rem 4.4rem;
+            color: #fff;
+            border: none;
+            margin-top: 20px;
+        }
     }
 }
 
