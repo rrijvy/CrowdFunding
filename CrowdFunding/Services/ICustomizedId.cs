@@ -10,5 +10,6 @@ namespace CrowdFunding.Services
     {
         string EntreprenuerCustomId(Entrepreneur model);
         string InvestorCustomId(Investor model);
+        string InvestmentRegNo(Investment model, string userId);
     }
 }

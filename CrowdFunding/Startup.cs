@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using CrowdFunding.Services;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using System;
 
 namespace CrowdFunding
 {
@@ -47,7 +48,7 @@ namespace CrowdFunding
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider service)
         {
             if (env.IsDevelopment())
             {
@@ -72,6 +73,8 @@ namespace CrowdFunding
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            
+            
         }
     }
 }

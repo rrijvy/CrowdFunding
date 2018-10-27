@@ -1,48 +1,29 @@
-﻿@model CrowdFunding.Models.Investment
-
+﻿@model InvestmentViewModel
 @{
     ViewData["Title"] = "Create";
+
 }
 
-<h2>Create</h2>
+<div class="investment">
+    <div class="investment-header"><h1>@Model.Project.Name</h1></div>
+    <div class="investment-body">
+        <h3>Support this project</h3>
+        @foreach (var item in Model.InvestmentTypes)
+        {
+            <div class="investment-body-item">
+                <div class="investment-body-item-p">@item.Type</div>
+                <form action="Investments/Create/" method="post">
+                    <input asp-for="@Model.Investment.InvestmentTypeId" type="number" value="@item.Id" hidden />
+                    <input asp-for="@Model.Investment.ProjectId" type="number" value="@Model.Project.Id" hidden />
+                    <div class="investment-body-item-div">
+                        <input asp-for="@Model.Investment.Amount" type="number" class="investment-body-item-amount" /> <input class="investment-body-item-continue" type="submit" value="Continue" />
+                    </div>
 
-<h4>Investment</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="InvestmentRegNo" class="control-label"></label>
-                <input asp-for="InvestmentRegNo" value="@ViewBag.registration" class="form-control" readonly />
-                <span asp-validation-for="InvestmentRegNo" class="text-danger"></span>
+                </form>
+
             </div>
-            <div class="form-group">
-                <label asp-for="Amount" class="control-label"></label>
-                <input asp-for="Amount" class="form-control" />
-                <span asp-validation-for="Amount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProjectId" class="control-label"></label>
-                <select asp-for="ProjectId" class ="form-control" asp-items="ViewBag.ProjectId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="InvestmentTypeId" class="control-label"></label>
-                <select asp-for="InvestmentTypeId" class ="form-control" asp-items="ViewBag.InvestmentTypeId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="InvestorId" class="control-label"></label>
-                <select asp-for="InvestorId" class ="form-control" asp-items="ViewBag.InvestorId"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </form>
+        }
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

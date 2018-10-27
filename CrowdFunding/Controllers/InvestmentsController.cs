@@ -7,16 +7,25 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CrowdFunding.Data;
 using CrowdFunding.Models;
+using CrowdFunding.ViewModels;
+using Microsoft.AspNetCore.Identity;
+using CrowdFunding.Services;
 
 namespace CrowdFunding.Controllers
 {
     public class InvestmentsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ICustomizedId _customizedId;
 
-        public InvestmentsController(ApplicationDbContext context)
+        public InvestmentsController(ApplicationDbContext context,
+                                    UserManager<ApplicationUser> userManager,
+                                    ICustomizedId customizedId)
         {
             _context = context;
+            _userManager = userManager;
+            _customizedId = customizedId;
         }
 
         // GET: Investments
@@ -48,36 +57,19 @@ namespace CrowdFunding.Controllers
         }
 
         // GET: Investments/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create(int id)
         {
-            ViewData["InvestmentTypeId"] = new SelectList(_context.investmentTypes, "Id", "Id");
-            ViewData["InvestorId"] = new SelectList(_context.Investors, "Id", "Id");
-            ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Name");
-
-
-            var rg = _context.Investments.OrderByDescending(e => e.Id).FirstOrDefault();
-            string rgNo = string.Empty;
-            string defaultValue = "33";
-            int id = 0;
-            if (rg == null)
+            var project = await _context.Projects.FindAsync(id);
+            
+            var investmentTypes = await _context.investmentTypes.ToListAsync();
+            var investmentViewModel = new InvestmentViewModel
             {
-                id = 1;
-                rgNo = defaultValue + id.ToString().Trim().PadLeft(5, '0');
+                Project = project,
+                InvestmentTypes = investmentTypes
+                
+            };
 
-
-            }
-            else
-            {
-                string newId = rg.InvestmentRegNo.ToString();
-                id = int.Parse(newId);
-                id += 1;
-                rgNo = defaultValue + id.ToString().Trim().PadLeft(5, '0');
-
-            }
-            ViewBag.registration = rgNo;
-
-
-            return View();
+            return View(investmentViewModel);
         }
 
         // POST: Investments/Create
@@ -85,17 +77,20 @@ namespace CrowdFunding.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,InvestmentRegNo,Amount,ProjectId,InvestmentTypeId,InvestorId")] Investment investment)
+        public IActionResult Create(Investment model)
         {
-            if (ModelState.IsValid)
+            var userId = _userManager.GetUserId(HttpContext.User);            
+            var investment = new Investment
             {
-                _context.Add(investment);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["InvestmentTypeId"] = new SelectList(_context.investmentTypes, "Id", "Id", investment.InvestmentTypeId);
-            ViewData["InvestorId"] = new SelectList(_context.Investors, "Id", "Id", investment.InvestorId);
-            ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Name", investment.ProjectId);
+                Amount = model.Amount,
+                InvestmentTypeId = model.InvestmentTypeId,
+                ProjectId = model.ProjectId,
+                InvestorId = userId
+            };
+            var regNo = _customizedId.InvestmentRegNo(model, userId);
+
+
+
             return View(investment);
         }
 

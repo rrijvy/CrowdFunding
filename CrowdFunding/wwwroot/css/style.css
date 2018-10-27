@@ -306,6 +306,35 @@ a:hover, a:active, a:link, a:visited {
       border: none;
       margin-top: 20px; }
 
+.investment {
+  width: 70%;
+  margin: auto; }
+  .investment-header {
+    text-align: center; }
+  .investment-body {
+    width: 100%; }
+    .investment-body-item {
+      width: 60%;
+      padding: 20px 30px;
+      border: 1px solid;
+      margin-bottom: 30px; }
+      .investment-body-item p {
+        width: 100%;
+        font: 2rem;
+        padding-bottom: 2.2rem; }
+      .investment-body-item-div {
+        width: 100%;
+        padding-top: 2.2rem; }
+      .investment-body-item-amount {
+        padding: 10px 20px;
+        width: 70%; }
+      .investment-body-item-continue {
+        margin-left: 3%;
+        padding: 10px 45px;
+        background-color: #42ccae;
+        border: none;
+        color: #fff; }
+
 .w3-border {
   border: 1px solid #42ccae;
   margin-bottom: 10px; }

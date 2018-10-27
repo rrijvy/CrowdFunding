@@ -273,18 +273,15 @@ a:hover, a:active, a:link, a:visited {
                 list-style: none;
                 width: 100%;
 
-                
+
 
                 li {
                     border-bottom: 1px solid;
 
-                    .group:last-child{
+                    .group:last-child {
                         border-bottom: none;
                     }
-                    
                 }
-
-                
             }
 
             &-image {
@@ -319,8 +316,8 @@ a:hover, a:active, a:link, a:visited {
 .how {
     width: 100%;
     padding: 50px 0 50px 0;
-    background-color: #eee; 
-    
+    background-color: #eee;
+
     &-works {
         width: 70%;
         margin: auto;
@@ -363,7 +360,7 @@ a:hover, a:active, a:link, a:visited {
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         height: 60vh;
 
-        &:hover{
+        &:hover {
             box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         }
 
@@ -445,11 +442,61 @@ a:hover, a:active, a:link, a:visited {
 
 
 
+///---- Investment ----////
+
+.investment {
+    width: 70%;
+    margin: auto;
+
+    &-header {
+        text-align: center;
+    }
+
+    &-body {
+        width: 100%;
+
+
+        &-item {
+            width: 60%;
+            padding: 20px 30px;
+            border: 1px solid;
+            margin-bottom: 30px;
+
+            p {
+                width: 100%;
+                font: 2rem;
+                padding-bottom: 2.2rem;
+            }
+
+            &-div {
+                width: 100%;
+                padding-top: 2.2rem;
+            }
+
+            &-amount {
+                padding: 10px 20px;
+                width: 70%;
+            }
+
+            &-continue {
+                margin-left: 3%;
+                padding: 10px 45px;
+                background-color: #42ccae;
+                border:none;
+                color: #fff;
+            }
+        }
+    }
+}
+
+
+
 
 .w3-border {
     border: 1px solid #42ccae;
     margin-bottom: 10px;
 }
+
 .w3-grey {
     background-color: #42ccae;
 }

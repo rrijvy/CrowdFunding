@@ -10,7 +10,7 @@ namespace CrowdFunding.Data
             : base(options)
         {
         }
-
+        
         public DbSet<Company> Companies { get; set; }
         public DbSet<CompanyType> CompanyTypes { get; set; }
         public DbSet<Country> Countries { get; set; }
@@ -22,5 +22,6 @@ namespace CrowdFunding.Data
         public DbSet<Project> Projects { get; set; }
         public DbSet<VerifiedCompany> VerifiedCompanies { get; set; }
         public DbSet<CrowdFunding.Models.ProjectCategory> ProjectCategory { get; set; }
+
     }
 }

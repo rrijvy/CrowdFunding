@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Identity\Services\" />
-    <Folder Include="Styles\NewFolder\" />
   </ItemGroup>
 
 </Project>
