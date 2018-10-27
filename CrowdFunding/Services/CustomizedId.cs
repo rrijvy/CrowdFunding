@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CrowdFunding.Data;
 using CrowdFunding.Models;
+using CrowdFunding.ViewModels;
 using Microsoft.AspNetCore.Identity;
 
 namespace CrowdFunding.Services
@@ -29,11 +30,11 @@ namespace CrowdFunding.Services
             return customId;
         }
 
-        public string InvestmentRegNo(Investment model, string userId)
+        public string InvestmentRegNo(InvestmentViewModel model, string userId)
         {
             string regNo = string.Empty;
-            var user = _userManager.
-            regNo += model.ProjectId + " " + model.Id;
+            var user = _userManager.FindByIdAsync(userId);
+            regNo += model.Project.Id.ToString() + model.Investment.Id.ToString();
             return regNo;
         }
 

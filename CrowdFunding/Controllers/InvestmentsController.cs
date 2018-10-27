@@ -77,21 +77,24 @@ namespace CrowdFunding.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Investment model)
+        public IActionResult Create(InvestmentViewModel model)
         {
-            var userId = _userManager.GetUserId(HttpContext.User);            
+            string userId = _userManager.GetUserId(HttpContext.User);
             var investment = new Investment
             {
-                Amount = model.Amount,
-                InvestmentTypeId = model.InvestmentTypeId,
-                ProjectId = model.ProjectId,
+                Amount = model.Investment.Amount,
+                InvestmentTypeId = model.Investment.InvestmentTypeId,
+                ProjectId = model.Project.Id,
                 InvestorId = userId
             };
-            var regNo = _customizedId.InvestmentRegNo(model, userId);
+            string regNo = _customizedId.InvestmentRegNo(model, userId);
+            investment.InvestmentRegNo = regNo;
+
+            _context.Investments.Add(investment);
+            _context.SaveChanges();
 
 
-
-            return View(investment);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Investments/Edit/5
