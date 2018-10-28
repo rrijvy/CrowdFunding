@@ -353,19 +353,20 @@ a:hover, a:active, a:link, a:visited {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
-    align-items: flex-start;
+    align-items: flex-end;
 
     &-item {
-        width: 25%;
+        width: 28%;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        height: 60vh;
+        height: auto;
+        margin-bottom: 40px;
 
         &:hover {
             box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         }
 
         &-img {
-            height: 38%;
+            height: 200px;
             width: 100%;
             object-fit: cover;
             overflow: hidden;
@@ -475,7 +476,7 @@ a:hover, a:active, a:link, a:visited {
 
             &-amount {
                 padding: 10px 20px;
-                width: 70%;
+                width: 65%;
             }
 
             &-continue {
