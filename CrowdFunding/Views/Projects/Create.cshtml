@@ -1,36 +1,40 @@
-﻿@model CrowdFunding.Models.Project
+﻿@model Project
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
 
-<h4>Project</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
+<div class="create">
+    
+    <div class="create-items">
+        <p>Have an account? <a class="create-project-login" href="/Identity/Account/Login">Log In</a></p>
+        <hr />
+        <h3>Please sign up to continue</h3>
+        <hr />
+        <form method="post" asp-action="CreatePost">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                @*<span asp-validation-for="Name" class="text-danger"></span>*@
             </div>
-            <div class="form-group">
-                <label asp-for="ProjectShortDescription" class="control-label"></label>
-                <input asp-for="ProjectShortDescription" class="form-control" />
-                <span asp-validation-for="ProjectShortDescription" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DetailDescription" class="control-label"></label>
-                <input asp-for="DetailDescription" class="form-control" />
-                <span asp-validation-for="DetailDescription" class="text-danger"></span>
-            </div>
+
+            <input asp-for="ProjectCategoryId" value="@Model.ProjectCategoryId" hidden/>
+            <input asp-for="ProjectShortDescription" value="@Model.ProjectShortDescription"  hidden/>
+
+            @*<div class="form-group">
+            <label asp-for="DetailDescription" class="control-label"></label>
+            <input asp-for="DetailDescription" class="form-control" />
+            <span asp-validation-for="DetailDescription" class="text-danger"></span>
+        </div>*@
+
+
+
             <div class="form-group">
                 <label asp-for="ProjectTitle" class="control-label"></label>
                 <input asp-for="ProjectTitle" class="form-control" />
-                <span asp-validation-for="ProjectTitle" class="text-danger"></span>
+                @*<span asp-validation-for="ProjectTitle" class="text-danger"></span>*@
             </div>
             <div class="form-group">
                 <div class="checkbox">
@@ -61,154 +65,154 @@
                 <input asp-for="EndingDate" class="form-control" />
                 <span asp-validation-for="EndingDate" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Image1" class="control-label"></label>
-                <input asp-for="Image1" id="imagePath1" class="form-control" />
-                <span asp-validation-for="Image1" class="text-danger"></span>
-                <input type="file" id="files1"
-                       name="files" multiple />
-                <input type="button"
-                       id="upload1"
-                       value="Upload Selected Files" />
-            </div>
-            <div class="form-group">
-                <label asp-for="Image2" class="control-label"></label>
-                <input asp-for="Image2"  id="imagePath2" class="form-control" />
-                <span asp-validation-for="Image2" class="text-danger"></span>
-                <input type="file" id="files2"
-                       name="files" multiple />
-                <input type="button"
-                       id="upload2"
-                       value="Upload Selected Files" />
-            </div>
-            <div class="form-group">
-                <label asp-for="Image3" class="control-label"></label>
-                <input asp-for="Image3" id="imagePath3" class="form-control" />
-                <span asp-validation-for="Image3" class="text-danger"></span>
-                <input type="file" id="files3"
-                       name="files" multiple />
-                <input type="button"
-                       id="upload3"
-                       value="Upload Selected Files" />
-            </div>
+
+
+            @*<div class="form-group">
+            <label asp-for="Image1" class="control-label"></label>
+            <input asp-for="Image1" id="imagePath1" class="form-control" />
+            <span asp-validation-for="Image1" class="text-danger"></span>
+            <input type="file" id="files1"
+                   name="files" multiple />
+            <input type="button"
+                   id="upload1"
+                   value="Upload Selected Files" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Image2" class="control-label"></label>
+            <input asp-for="Image2" id="imagePath2" class="form-control" />
+            <span asp-validation-for="Image2" class="text-danger"></span>
+            <input type="file" id="files2"
+                   name="files" multiple />
+            <input type="button"
+                   id="upload2"
+                   value="Upload Selected Files" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Image3" class="control-label"></label>
+            <input asp-for="Image3" id="imagePath3" class="form-control" />
+            <span asp-validation-for="Image3" class="text-danger"></span>
+            <input type="file" id="files3"
+                   name="files" multiple />
+            <input type="button"
+                   id="upload3"
+                   value="Upload Selected Files" />
+        </div>*@
+
+
+
             <div class="form-group">
                 <label asp-for="CompanyId" class="control-label"></label>
-                <select asp-for="CompanyId" class ="form-control" asp-items="ViewBag.CompanyId"></select>
+                <select asp-for="CompanyId" class="form-control" asp-items="ViewBag.CompanyId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="ProjectCategoryId" class="control-label"></label>
-                <select asp-for="ProjectCategoryId" class ="form-control" asp-items="ViewBag.ProjectCategoryId"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-default create-btn" />
             </div>
         </form>
+        <div class="project-category-foo">
+            By signing up, you agree to our terms of use, privacy policy, and cookie policy. Our policies explain how we use your data to deliver, improve, and promote our service and our site, and how you can exercise your rights to control that use.
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
 
-    <script>
+        <script>
 
-         $(document).ready(function () {
-            $("#upload1").click(function (evt) {
-                var fileUpload = $("#files1").get(0);
-                var files = fileUpload.files;
-                var data = new FormData();
-                for (var i = 0; i < files.length; i++) {
-                    data.append(files[i].name, files[i]);
-                }
-                $.ajax({
-                    type: "POST",
-                    url: "/home/UploadFilesAjax",
-                    contentType: false,
-                    processData: false,
-                    data: data,
-                    success: function (location) {
-                        //alert(location);
-                        $("#imagePath1").val(location);
-                    
-                        //console.log(location);
-                        //$("#divId").append(location);
-                        //
-
-                    },
-                    error: function () {
-                        alert("There was error uploading files!");
+             $(document).ready(function () {
+                $("#upload1").click(function (evt) {
+                    var fileUpload = $("#files1").get(0);
+                    var files = fileUpload.files;
+                    var data = new FormData();
+                    for (var i = 0; i < files.length; i++) {
+                        data.append(files[i].name, files[i]);
                     }
-                });
-             });
+                    $.ajax({
+                        type: "POST",
+                        url: "/home/UploadFilesAjax",
+                        contentType: false,
+                        processData: false,
+                        data: data,
+                        success: function (location) {
+                            //alert(location);
+                            $("#imagePath1").val(location);
 
+                            //console.log(location);
+                            //$("#divId").append(location);
+                            //
 
-
-
-             $("#upload2").click(function (evt) {
-                 var fileUpload = $("#files2").get(0);
-                 var files = fileUpload.files;
-                 var data = new FormData();
-                 for (var i = 0; i < files.length; i++) {
-                     data.append(files[i].name, files[i]);
-                 }
-                 $.ajax({
-                     type: "POST",
-                     url: "/home/UploadFilesAjax",
-                     contentType: false,
-                     processData: false,
-                     data: data,
-                     success: function (location) {
-                         //alert(location);
-                         $("#imagePath2").val(location);
-
-                         //console.log(location);
-                         //$("#divId").append(location);
-                         //
-
-                     },
-                     error: function () {
-                         alert("There was error uploading files!");
-                     }
+                        },
+                        error: function () {
+                            alert("There was error uploading files!");
+                        }
+                    });
                  });
-             });
 
 
 
 
-             $("#upload3").click(function (evt) {
-                 var fileUpload = $("#files3").get(0);
-                 var files = fileUpload.files;
-                 var data = new FormData();
-                 for (var i = 0; i < files.length; i++) {
-                     data.append(files[i].name, files[i]);
-                 }
-                 $.ajax({
-                     type: "POST",
-                     url: "/home/UploadFilesAjax",
-                     contentType: false,
-                     processData: false,
-                     data: data,
-                     success: function (location) {
-                         //alert(location);
-                         $("#imagePath3").val(location);
-
-                         //console.log(location);
-                         //$("#divId").append(location);
-                         //
-
-                     },
-                     error: function () {
-                         alert("There was error uploading files!");
+                 $("#upload2").click(function (evt) {
+                     var fileUpload = $("#files2").get(0);
+                     var files = fileUpload.files;
+                     var data = new FormData();
+                     for (var i = 0; i < files.length; i++) {
+                         data.append(files[i].name, files[i]);
                      }
+                     $.ajax({
+                         type: "POST",
+                         url: "/home/UploadFilesAjax",
+                         contentType: false,
+                         processData: false,
+                         data: data,
+                         success: function (location) {
+                             //alert(location);
+                             $("#imagePath2").val(location);
+
+                             //console.log(location);
+                             //$("#divId").append(location);
+                             //
+
+                         },
+                         error: function () {
+                             alert("There was error uploading files!");
+                         }
+                     });
                  });
+
+
+
+
+                 $("#upload3").click(function (evt) {
+                     var fileUpload = $("#files3").get(0);
+                     var files = fileUpload.files;
+                     var data = new FormData();
+                     for (var i = 0; i < files.length; i++) {
+                         data.append(files[i].name, files[i]);
+                     }
+                     $.ajax({
+                         type: "POST",
+                         url: "/home/UploadFilesAjax",
+                         contentType: false,
+                         processData: false,
+                         data: data,
+                         success: function (location) {
+                             //alert(location);
+                             $("#imagePath3").val(location);
+
+                             //console.log(location);
+                             //$("#divId").append(location);
+                             //
+
+                         },
+                         error: function () {
+                             alert("There was error uploading files!");
+                         }
+                     });
+                 });
+
+
              });
 
-
-         });
-
-    </script>
-}
+        </script>
+    }

@@ -1,0 +1,10 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <a class="centered-create-project" href="/Projects/CreateProject/">Start a project</a>
+}

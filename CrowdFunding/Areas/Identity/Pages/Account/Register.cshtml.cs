@@ -102,6 +102,9 @@ namespace CrowdFunding.Areas.Identity.Pages.Account
                     user.EntrepreneurCustomizedId = _customId.EntreprenuerCustomId(user);
 
                     var result = await _userManager.CreateAsync(user, Input.Password);
+
+                    await _userManager.AddToRoleAsync(user, "Entreprenuer");
+
                     if (result.Succeeded)
                     {
                         _logger.LogInformation("User created a new account with password.");
@@ -140,6 +143,7 @@ namespace CrowdFunding.Areas.Identity.Pages.Account
                     };
                     user.InvestorCustomizedId = _customId.InvestorCustomId(user);
                     var result = await _userManager.CreateAsync(user, Input.Password);
+                    await _userManager.AddToRoleAsync(user, "Investor");
                     if (result.Succeeded)
                     {
                         _logger.LogInformation("User created a new account with password.");

@@ -67,12 +67,37 @@ namespace CrowdFunding.Controllers
             return View(projectViewModel);
         }
 
-        // GET: Projects/Create
-        public IActionResult Create()
+
+        public IActionResult CreateProject()
         {
-            ViewData["CompanyId"] = new SelectList(_context.Companies, "Id", "Email");
-            ViewData["ProjectCategoryId"] = new SelectList(_context.Set<ProjectCategory>(), "Id", "Id");
             return View();
+        }
+        public IActionResult SelectCategory()
+        {
+            ViewData["ProjectCategory"] = new SelectList(_context.ProjectCategory, "Id", "Type");
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ShortDescription(ProjectCategory projectCategory)
+        {
+            var project = new Project
+            {
+                ProjectCategoryId = projectCategory.Id
+            };
+            return View(project);
+        }
+
+        [HttpPost]
+        public IActionResult Create(Project model)
+        {
+            var project = new Project
+            {
+                ProjectShortDescription = model.ProjectShortDescription,
+                ProjectCategoryId = model.ProjectCategoryId
+            };
+            ViewData["CompanyId"] = new SelectList(_context.Companies, "Id", "Name");
+            return View(project);
         }
 
         // POST: Projects/Create
@@ -80,17 +105,27 @@ namespace CrowdFunding.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,ProjectShortDescription,DetailDescription,ProjectTitle,IsRunning,IsCompleted,NeededFund,StartingDate,EndingDate,Image1,Image2,Image3,CompanyId,ProjectCategoryId")] Project project)
+        public async Task<IActionResult> CreatePost([Bind("Id,Name,ProjectShortDescription,ProjectCategoryId,ProjectTitle,NeededFund,StartingDate,EndingDate,CompanyId")] Project model)
         {
-            if (ModelState.IsValid)
+            var project = new Project
             {
-                _context.Add(project);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["CompanyId"] = new SelectList(_context.Companies, "Id", "Email", project.CompanyId);
-            ViewData["ProjectCategoryId"] = new SelectList(_context.Set<ProjectCategory>(), "Id", "Id", project.ProjectCategoryId);
-            return View(project);
+                Name = model.Name,
+                ProjectShortDescription = model.ProjectShortDescription,
+                ProjectCategoryId = model.ProjectCategoryId,
+                ProjectTitle = model.ProjectTitle,
+                NeededFund = model.NeededFund,
+                StartingDate = model.StartingDate,
+                EndingDate = model.EndingDate,
+                CompanyId = model.CompanyId
+            };
+            await _context.Projects.AddAsync(project);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("ProjectDashboard");
+        }
+
+        public IActionResult ProjectDashboard(Project model)
+        {
+            return View(model);
         }
 
         // GET: Projects/Edit/5
@@ -183,8 +218,7 @@ namespace CrowdFunding.Controllers
         {
             return _context.Projects.Any(e => e.Id == id);
         }
-
-
+        
 
         public IActionResult ShowByCategory(int id)
         {

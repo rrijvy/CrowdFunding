@@ -1,4 +1,7 @@
-﻿body {
+﻿* {
+}
+
+body {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -10,6 +13,7 @@
 .main-content {
     margin-top: 83px;
     padding: 0;
+    height: auto;
 }
 
 .container {
@@ -99,10 +103,22 @@ a:hover, a:active, a:link, a:visited {
 
 .centered {
     position: absolute;
-    top: 30%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     color: #fff;
+    width: 50%;
+    padding-bottom: 35px;
+    background-color: rgba(45, 52, 54,.70);
+
+    h1 {
+        margin-bottom: 50px;
+    }
+
+    &-create-project {
+        padding: 14px 30px;
+        background-color: #42ccae;
+    }
 }
 
 
@@ -358,7 +374,7 @@ a:hover, a:active, a:link, a:visited {
     &-item {
         width: 28%;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        height: auto;
+        height: 600px;
         margin-bottom: 40px;
 
         &:hover {
@@ -483,11 +499,174 @@ a:hover, a:active, a:link, a:visited {
                 margin-left: 3%;
                 padding: 10px 45px;
                 background-color: #42ccae;
-                border:none;
+                border: none;
                 color: #fff;
             }
         }
     }
+}
+
+////---- create project ----///
+.create-project {
+    width: 70%;
+    margin: auto;
+    padding-top: 30px;
+    padding-bottom: 30px;
+
+
+    &-header {
+        width: 100%;
+
+        h1 {
+            padding-bottom: 30px;
+        }
+
+        a {
+            padding: 16px 24px;
+            background-color: #42ccae;
+            color: #fff;
+            display: block;
+            width: 197px;
+        }
+    }
+
+    &-image {
+        width: 100%;
+        height: 700px;
+        padding: 30px 0px;
+
+        &-1 {
+            width: 50%;
+            float: left;
+            height: 100%;
+
+            &-i {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                padding: 10px 14px 10px 0px;
+                overflow: hidden;
+            }
+        }
+
+        &-2 {
+            width: 50%;
+            float: left;
+            height: 50%;
+
+            &-i {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                padding: 10px 0px 10px 14px;
+                overflow: hidden;
+            }
+        }
+    }
+}
+
+.create-project-quotes {
+    padding-top: 40px;
+    width: 100%;
+    height: 500px;
+    text-align: center;
+    background-color: #42ccae;
+    color: #fff;
+
+    h1 {
+        width: 80%;
+        margin: auto;
+        font-size: 6rem;
+        font-family: 'Mukta', sans-serif;
+        padding-top: 100px;
+    }
+}
+
+
+
+
+////----- project-category -----////
+
+.project-category {
+    width: 40%;
+    margin: auto;
+    padding-top: 50px;
+    text-align: center;
+
+    &-p {
+        font-size: 2rem;
+        color: #333;
+        padding: 20px 0px;
+    }
+
+    &-list {
+        width: 80%;
+        margin: auto;
+
+        textarea {
+            width: 100%;
+            height: 150px;
+        }
+
+        select {
+            width: 100%;
+            height: 45px;
+        }
+    }
+
+    &-a {
+        padding-top: 30px;
+        width: 80%;
+        margin: auto;
+
+        input {
+            padding: 12px 80px;
+            color: #fff;
+            background-color: #42ccae;
+            display: block;
+            border: none;
+        }
+    }
+
+    &-foo {
+        padding: 50px 10px 30px 10px;
+        font-size: 12px;
+        color: #444;
+    }
+}
+
+
+////--- create-project ----////
+.create {
+    width: 40%;
+    margin: auto;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding-top: 30px;
+
+    &-items {
+        width: 80%;
+        margin: auto;
+    }
+
+    &-login {
+        padding-left: 20px;
+
+        a {
+            color: #42ccae;
+        }
+    }
+}
+
+
+
+
+
+.create-btn {
+    width: 100%;
+    padding: 12px 80px;
+    color: #fff;
+    background-color: #42ccae;
+    border: none;
 }
 
 

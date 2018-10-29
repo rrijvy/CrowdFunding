@@ -1,0 +1,13 @@
+﻿@model ProjectCategory
+
+<div class="project-category">
+    <h1>First, let’s get you set up.</h1>
+    <div class="project-category-p"><p>Pick a project category to connect with a specific community. You can always update this later.</p></div>
+    <form method="post" asp-controller="Projects" asp-action="ShortDescription">
+        <div class="project-category-list"><select asp-for="Id" asp-items="@ViewBag.ProjectCategory"></select></div>
+        <div class="project-category-a"><input type="submit" value="Next" /></div>
+    </form>
+    <div class="project-category-foo">
+        To create a project, you're required to provide your location, age, national ID, banking and tax information, email, and mailing address. This information is necessary to prevent fraud, comply with the law, and — if your project is successful — to deliver funds. Please note: after launch, your ability to edit, hide, or delete a project is limited.
+    </div>
+</div>

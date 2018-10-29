@@ -10,6 +10,7 @@ using CrowdFunding.Models;
 using CrowdFunding.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using CrowdFunding.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CrowdFunding.Controllers
 {
@@ -59,9 +60,9 @@ namespace CrowdFunding.Controllers
         // GET: Investments/Create
         public async Task<IActionResult> Create(int id)
         {
-            var project = await _context.Projects.FindAsync(id);
-            
+            var project = await _context.Projects.FindAsync(id);            
             var investmentTypes = await _context.investmentTypes.ToListAsync();
+
             var investmentViewModel = new InvestmentViewModel
             {
                 Project = project,
@@ -77,6 +78,7 @@ namespace CrowdFunding.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Investor")]
         public IActionResult Create(InvestmentViewModel model)
         {
             string userId = _userManager.GetUserId(HttpContext.User);

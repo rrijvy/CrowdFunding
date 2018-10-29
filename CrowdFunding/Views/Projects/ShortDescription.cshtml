@@ -1,0 +1,23 @@
+﻿@model Project
+@{
+    ViewData["Title"] = "ShortDescription";
+}
+
+
+<div class="project-category">
+    <h1>Describe what you’ll be creating.</h1>
+    <div class="project-category-p"><p>And don’t worry, you can edit this later, too.</p></div>
+    <form method="post" asp-controller="Projects" asp-action="Create">
+        <input hidden asp-for="ProjectCategoryId" value="@Model.ProjectCategoryId" />
+        <div class="project-category-list">
+            <textarea asp-for="ProjectShortDescription" placeholder="Here give a short description of your project.">
+
+            </textarea>
+        </div>
+        <div class="project-category-a"><input type="submit" value="Next" /></div>
+    </form>
+    <div class="project-category-foo">
+        To create a project, you're required to provide your location, age, national ID, banking and tax information, email, and mailing address. This information is necessary to prevent fraud, comply with the law, and — if your project is successful — to deliver funds. Please note: after launch, your ability to edit, hide, or delete a project is limited.
+    </div>
+</div>
+
