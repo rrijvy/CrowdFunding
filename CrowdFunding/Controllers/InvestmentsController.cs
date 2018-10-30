@@ -60,8 +60,8 @@ namespace CrowdFunding.Controllers
         // GET: Investments/Create
         public async Task<IActionResult> Create(int id)
         {
-            var project = await _context.Projects.FindAsync(id);            
-            var investmentTypes = await _context.investmentTypes.ToListAsync();
+            var project = await _context.Projects.FindAsync(id);
+            var investmentTypes = await _context.investmentTypes.Where(x => x.ProjectId == id).ToListAsync();
 
             var investmentViewModel = new InvestmentViewModel
             {
@@ -79,7 +79,7 @@ namespace CrowdFunding.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Investor")]
-        public IActionResult Create(InvestmentViewModel model)
+        public async Task<IActionResult> Create(InvestmentViewModel model)
         {
             string userId = _userManager.GetUserId(HttpContext.User);
             var investment = new Investment
@@ -92,9 +92,8 @@ namespace CrowdFunding.Controllers
             string regNo = _customizedId.InvestmentRegNo(model, userId);
             investment.InvestmentRegNo = regNo;
 
-            _context.Investments.Add(investment);
-            _context.SaveChanges();
-
+            await _context.Investments.AddAsync(investment);
+            await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }

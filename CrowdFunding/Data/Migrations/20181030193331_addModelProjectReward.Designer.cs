@@ -4,14 +4,16 @@ using CrowdFunding.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CrowdFunding.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181030193331_addModelProjectReward")]
+    partial class addModelProjectReward
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -218,13 +220,9 @@ namespace CrowdFunding.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ProjectId");
-
                     b.Property<string>("Type");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProjectId");
 
                     b.ToTable("investmentTypes");
                 });
@@ -286,6 +284,23 @@ namespace CrowdFunding.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProjectCategory");
+                });
+
+            modelBuilder.Entity("CrowdFunding.Models.ProjectReward", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ProjectId");
+
+                    b.Property<string>("RewardDescription");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("ProjectRewards");
                 });
 
             modelBuilder.Entity("CrowdFunding.Models.VerifiedCompany", b =>
@@ -489,14 +504,6 @@ namespace CrowdFunding.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("CrowdFunding.Models.InvestmentType", b =>
-                {
-                    b.HasOne("CrowdFunding.Models.Project", "Project")
-                        .WithMany("InvestmentTypes")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("CrowdFunding.Models.Project", b =>
                 {
                     b.HasOne("CrowdFunding.Models.Company", "Company")
@@ -507,6 +514,14 @@ namespace CrowdFunding.Data.Migrations
                     b.HasOne("CrowdFunding.Models.ProjectCategory", "ProjectCategory")
                         .WithMany("Projects")
                         .HasForeignKey("ProjectCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("CrowdFunding.Models.ProjectReward", b =>
+                {
+                    b.HasOne("CrowdFunding.Models.Project", "Project")
+                        .WithMany("ProjectRewards")
+                        .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

@@ -12,9 +12,9 @@ $(document).ready(function () {
         console.log(newPosition);
         if (prevPosition > newPosition) {
             $(".top-header").css("top", "0");
-            $("#nav").css("top", "33px");
+            $("#nav").css("top", "40px");
         } else {
-            $(".top-header").css("top", "-33px");
+            $(".top-header").css("top", "-40px");
             $("#nav").css("top", "0");
         }
         prevPosition = newPosition;
