@@ -118,14 +118,16 @@ namespace CrowdFunding.Controllers
                 EndingDate = model.EndingDate,
                 CompanyId = model.CompanyId
             };
+            TempData["Project"] = project;
             await _context.Projects.AddAsync(project);
             await _context.SaveChangesAsync();
             return RedirectToAction("ProjectDashboard");
         }
 
-        public IActionResult ProjectDashboard(Project model)
+        public IActionResult ProjectDashboard()
         {
-            return View(model);
+            Project project = TempData["Project"] as Project;
+            return View(project);
         }
 
         // GET: Projects/Edit/5
