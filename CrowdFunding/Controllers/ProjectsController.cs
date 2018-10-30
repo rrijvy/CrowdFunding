@@ -9,6 +9,7 @@ using CrowdFunding.Data;
 using CrowdFunding.Models;
 using CrowdFunding.ViewModels;
 using CrowdFunding.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace CrowdFunding.Controllers
 {
@@ -72,6 +73,7 @@ namespace CrowdFunding.Controllers
         {
             return View();
         }
+
         public IActionResult SelectCategory()
         {
             ViewData["ProjectCategory"] = new SelectList(_context.ProjectCategory, "Id", "Type");
@@ -99,10 +101,7 @@ namespace CrowdFunding.Controllers
             ViewData["CompanyId"] = new SelectList(_context.Companies, "Id", "Name");
             return View(project);
         }
-
-        // POST: Projects/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreatePost([Bind("Id,Name,ProjectShortDescription,ProjectCategoryId,ProjectTitle,NeededFund,StartingDate,EndingDate,CompanyId")] Project model)
@@ -118,15 +117,14 @@ namespace CrowdFunding.Controllers
                 EndingDate = model.EndingDate,
                 CompanyId = model.CompanyId
             };
-            TempData["Project"] = project;
             await _context.Projects.AddAsync(project);
             await _context.SaveChangesAsync();
-            return RedirectToAction("ProjectDashboard");
+            return RedirectToAction("ProjectDashboard", new { id = project.Id });
         }
 
-        public IActionResult ProjectDashboard()
+        public IActionResult ProjectDashboard(int id)
         {
-            Project project = TempData["Project"] as Project;
+            var project = _context.Projects.Where(x => x.Id == id);
             return View(project);
         }
 
