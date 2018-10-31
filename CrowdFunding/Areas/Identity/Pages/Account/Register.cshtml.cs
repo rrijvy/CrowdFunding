@@ -65,14 +65,27 @@ namespace CrowdFunding.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
-            public int CountryId { get; set; }
+            [Display(Name = "National ID no.")]
             public string NID { get; set; }
+
+            [Display(Name = "First name")]
             public string FName { get; set; }
+
+            [Display(Name = "Last name")]
             public string LName { get; set; }
+
             [Display(Name = "Date of birth"), DataType(DataType.Date)]
             public DateTime DateofBirth { get; set; }
+
+            [Display(Name = "Present address")]
             public string PresentAddress { get; set; }
-            public string ParmanantAddress { get; set; }        }
+
+            [Display(Name = "Parmanent address")]
+            public string ParmanantAddress { get; set; }
+
+            [Display(Name ="Country name")]
+            public int CountryId { get; set; }
+        }
 
         public void OnGet(string returnUrl = null)
         {

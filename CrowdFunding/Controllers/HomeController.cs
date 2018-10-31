@@ -47,8 +47,7 @@ namespace CrowdFunding.Controllers
             return Json(_context.Entrepreneurs.ToList());
             //return View();
         }
-
-        [Authorize(Roles ="Investor")]
+        
         public IActionResult Contact()
         {
             return Json(_context.Investors.ToList());

@@ -22,7 +22,7 @@ namespace CrowdFunding.Models
         [Required, Display(Name = "Project title")]
         public string ProjectTitle { get; set; }
 
-        [Display(Name = "Is this project running")]
+        [Display(Name = "Is this project running?")]
         public bool IsRunning { get; set; }
 
         [Display(Name = "Is this project completed?")]
@@ -31,10 +31,10 @@ namespace CrowdFunding.Models
         [Display(Name = "Needed fund")]
         public double NeededFund { get; set; }
 
-        [Required, DataType(DataType.Date)]
+        [Required, DataType(DataType.Date), Display(Name ="Starting date")]
         public DateTime StartingDate { get; set; }
 
-        [Required, DataType(DataType.Date)]
+        [Required, DataType(DataType.Date), Display(Name ="Ending date")]
         public DateTime EndingDate { get; set; }
 
         public string Image1 { get; set; }
@@ -43,6 +43,7 @@ namespace CrowdFunding.Models
 
         public string Image3 { get; set; }
 
+        [Display(Name = "Company name")]
         public int CompanyId { get; set; }
 
         [ForeignKey("CompanyId")]

@@ -23,8 +23,8 @@ footer {
   padding: 0; }
 
 h1 {
-  font-family: 'Inconsolata', monospace;
-  font-weight: 700; }
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500; }
 
 a {
   text-decoration: none;
@@ -51,12 +51,13 @@ a:hover, a:active, a:link, a:visited {
   background-color: #fff;
   top: 40px;
   transition: top 0.3s;
-  font-family: 'Inconsolata', monospace; }
+  font-family: 'Lato', sans-serif; }
   #nav-bar {
     width: 75%;
     margin: auto; }
   #nav-list :hover {
-    background-color: #42ccae; }
+    background-color: #42ccae;
+    color: #fff; }
   #nav-btn {
     background-color: #42ccae; }
 
@@ -88,10 +89,13 @@ a:hover, a:active, a:link, a:visited {
   transform: translate(-50%, -50%);
   color: #fff;
   width: 50%;
-  padding-bottom: 35px;
-  background-color: rgba(45, 52, 54, 0.7); }
+  padding: 35px 30px 60px 30px;
+  background-color: rgba(45, 52, 54, 0.8); }
   .centered h1 {
-    margin-bottom: 50px; }
+    font-weight: 300;
+    text-transform: uppercase;
+    margin-bottom: 50px;
+    letter-spacing: 4px; }
   .centered-create-project {
     padding: 14px 30px;
     background-color: #42ccae; }
@@ -164,7 +168,6 @@ a:hover, a:active, a:link, a:visited {
   border: 1px solid;
   box-shadow: 5px;
   font-size: 1.3rem;
-  font-family: 'Crimson Text', serif;
   text-align: center; }
   .regForm-form {
     width: 90%;
@@ -270,15 +273,18 @@ a:hover, a:active, a:link, a:visited {
   padding-top: 2rem;
   width: 80%;
   margin: auto;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-around;
-  align-items: flex-end; }
+  /*display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: flex-end;*/ }
   .project-list-item {
-    width: 28%;
+    width: 27%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     height: 600px;
-    margin-bottom: 40px; }
+    margin-bottom: 70px;
+    float: left;
+    margin-left: 3.05%;
+    margin-right: 3.05%; }
     .project-list-item:hover {
       box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.19); }
     .project-list-item-img {
@@ -410,7 +416,6 @@ a:hover, a:active, a:link, a:visited {
     width: 80%;
     margin: auto;
     font-size: 6rem;
-    font-family: 'Mukta', sans-serif;
     padding-top: 100px; }
 
 .project-category {
