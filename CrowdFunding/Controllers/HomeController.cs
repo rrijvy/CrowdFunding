@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using System.Net.Http.Headers;
 using CrowdFunding.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CrowdFunding.Controllers
 {
@@ -47,6 +48,7 @@ namespace CrowdFunding.Controllers
             //return View();
         }
 
+        [Authorize(Roles ="Investor")]
         public IActionResult Contact()
         {
             return Json(_context.Investors.ToList());

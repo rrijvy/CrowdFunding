@@ -7,16 +7,20 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CrowdFunding.Data;
 using CrowdFunding.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace CrowdFunding.Controllers
 {
     public class InvestmentTypesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public InvestmentTypesController(ApplicationDbContext context)
+        public InvestmentTypesController(ApplicationDbContext context,
+                                        UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: InvestmentTypes
@@ -46,6 +50,9 @@ namespace CrowdFunding.Controllers
         // GET: InvestmentTypes/Create
         public IActionResult Create()
         {
+            var project = _context.Projects.Include(x => x.Company).ThenInclude(x => x.Entrepreneur);
+            var userId = _userManager.GetUserId(HttpContext.User);
+            ViewData["ProjectId"] = new SelectList(project.Where(x => x.Company.Entrepreneur.Id == userId), "Id", "Name"); 
             return View();
         }
 
@@ -54,7 +61,7 @@ namespace CrowdFunding.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Type")] InvestmentType investmentType)
+        public async Task<IActionResult> Create([Bind("Id,Type,ProjectId")] InvestmentType investmentType)
         {
             if (ModelState.IsValid)
             {

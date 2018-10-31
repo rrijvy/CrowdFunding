@@ -122,9 +122,9 @@ namespace CrowdFunding.Controllers
             return RedirectToAction("ProjectDashboard", new { id = project.Id });
         }
 
-        public IActionResult ProjectDashboard(int id)
+        public async Task<IActionResult> ProjectDashboard(int id)
         {
-            var project = _context.Projects.Where(x => x.Id == id);
+            Project project = await _context.Projects.FindAsync(id);
             return View(project);
         }
 
