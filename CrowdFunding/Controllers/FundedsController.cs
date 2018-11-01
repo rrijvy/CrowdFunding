@@ -7,16 +7,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CrowdFunding.Data;
 using CrowdFunding.Models;
+using CrowdFunding.ViewModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace CrowdFunding.Controllers
 {
     public class FundedsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public FundedsController(ApplicationDbContext context)
+        public FundedsController(ApplicationDbContext context,
+                                UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Fundeds
@@ -48,12 +53,15 @@ namespace CrowdFunding.Controllers
         }
 
         // GET: Fundeds/Create
-        public IActionResult Create()
+        public IActionResult Create(InvestmentViewModel model)
         {
-            ViewData["InvestmentId"] = new SelectList(_context.Investments, "Id", "Id");
-            ViewData["InvestorId"] = new SelectList(_context.Investors, "Id", "Id");
-            ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Name");
-
+            var userId = _userManager.GetUserId(HttpContext.User);
+            var funded = new Funded
+            {
+                ProjectId = model.Project.Id,
+                InvestorId = userId,
+                Amount = model.Investment.Amount
+            };
 
             
 

@@ -10,6 +10,7 @@ using CrowdFunding.Models;
 using CrowdFunding.ViewModels;
 using CrowdFunding.Services;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CrowdFunding.Controllers
 {
@@ -129,6 +130,7 @@ namespace CrowdFunding.Controllers
         }
 
         // GET: Projects/Edit/5
+        [Authorize(Policy = "EditProjectPolicy")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)

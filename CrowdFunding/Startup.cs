@@ -11,6 +11,8 @@ using CrowdFunding.Services;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using System;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using CrowdFunding.Authorization;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CrowdFunding
 {
@@ -40,6 +42,16 @@ namespace CrowdFunding
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<ICustomizedId, CustomizedId>();
             services.AddTransient<IGetFundedAmount, GetFundedAmount>();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("EditProjectPolicy", policy => 
+                {
+                    policy.Requirements.Add(new CheckProjectUserId());
+                });
+            });
+
+            services.AddSingleton<IAuthorizationHandler, CheckProjectUserIdAuthorizationHandler>();
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
