@@ -11,6 +11,7 @@ using CrowdFunding.ViewModels;
 using CrowdFunding.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
+using CrowdFunding.Authorization;
 
 namespace CrowdFunding.Controllers
 {
@@ -18,12 +19,15 @@ namespace CrowdFunding.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IGetFundedAmount _fundedAmount;
+        private readonly IAuthorizationService _authorizationService;
 
         public ProjectsController(ApplicationDbContext context,
-                                    IGetFundedAmount fundedAmount)
+                                    IGetFundedAmount fundedAmount,
+                                    IAuthorizationService authorizationService)
         {
             _context = context;
             _fundedAmount = fundedAmount;
+            _authorizationService = authorizationService;
         }
 
         // GET: Projects
@@ -130,15 +134,20 @@ namespace CrowdFunding.Controllers
         }
 
         // GET: Projects/Edit/5
-        [Authorize(Policy = "EditProjectPolicy")]
         public async Task<IActionResult> Edit(int? id)
         {
+            var project = _context.Projects.Find(id);
+            var checkProjectUserIdModel = new CheckProjectUserIdModel
+            {
+                ProjectId = project.Id
+            };
+            var authResult = await _authorizationService.AuthorizeAsync(User, checkProjectUserIdModel, "EditProjectPolicy");
             if (id == null)
             {
                 return NotFound();
             }
 
-            var project = await _context.Projects.FindAsync(id);
+            
             if (project == null)
             {
                 return NotFound();
@@ -148,9 +157,7 @@ namespace CrowdFunding.Controllers
             return View(project);
         }
 
-        // POST: Projects/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ProjectShortDescription,DetailDescription,ProjectTitle,IsRunning,IsCompleted,NeededFund,StartingDate,EndingDate,Image1,Image2,Image3,CompanyId,ProjectCategoryId")] Project project)

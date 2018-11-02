@@ -7,6 +7,7 @@ namespace CrowdFunding.Models
 {
     public class Project
     {
+        
         public int Id { get; set; }
 
         [Required]

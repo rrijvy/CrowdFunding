@@ -51,7 +51,7 @@ namespace CrowdFunding
                 });
             });
 
-            services.AddSingleton<IAuthorizationHandler, CheckProjectUserIdAuthorizationHandler>();
+            services.AddTransient<IAuthorizationHandler, CheckProjectUserIdAuthorizationHandler>();
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()

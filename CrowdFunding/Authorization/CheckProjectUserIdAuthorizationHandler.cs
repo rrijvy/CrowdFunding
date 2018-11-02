@@ -12,13 +12,21 @@ using System.Threading.Tasks;
 namespace CrowdFunding.Authorization
 {
     public class CheckProjectUserIdAuthorizationHandler : AuthorizationHandler<CheckProjectUserId, Project>
-    {        
+    {
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public CheckProjectUserIdAuthorizationHandler(UserManager<ApplicationUser> userManager)
+        {
+            _userManager = userManager;
+        }
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, CheckProjectUserId requirement, Project resource)
         {
-            if (!context.User.HasClaim(c => c.Type == "Id" ))
-                return Task.CompletedTask;
+            //if (!context.User.HasClaim(c => c.Type == "Id" ))
+            //    return Task.CompletedTask;
 
-            string userId = context.User.FindFirst(c => c.Type == "Id").Value;
+
+
+            var userId = _userManager.GetUserId(context.User);
 
             if (resource.Company.EntrepreneurId == userId)
             {
