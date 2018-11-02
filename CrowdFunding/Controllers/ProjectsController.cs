@@ -126,12 +126,58 @@ namespace CrowdFunding.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("ProjectDashboard", new { id = project.Id });
         }
-
-        public async Task<IActionResult> ProjectDashboard(int id)
+        //Get projectdashboard
+        public async Task<IActionResult> ProjectDashboard(int? id)
         {
-            Project project = await _context.Projects.FindAsync(id);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var project = await _context.Projects.FindAsync(id);
+            if (project == null)
+            {
+                return NotFound();
+            }
+
             return View(project);
         }
+
+
+        //post projectdashboard
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ProjectDashboard(int id, [Bind("Id,Name,ProjectShortDescription,DetailDescription,ProjectTitle,IsRunning,IsCompleted,NeededFund,StartingDate,EndingDate,Image1,Image2,Image3,CompanyId,ProjectCategoryId")] Project project)
+        {
+            if (id != project.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(project);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ProjectExists(project.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                //return RedirectToAction(nameof(Details));
+            }
+
+            return View(project);
+        }
+
 
         // GET: Projects/Edit/5
         public async Task<IActionResult> Edit(int? id)
