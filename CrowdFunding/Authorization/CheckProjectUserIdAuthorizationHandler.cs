@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CrowdFunding.Authorization
 {
-    public class CheckProjectUserIdAuthorizationHandler : AuthorizationHandler<CheckProjectUserId, Project>
+    public class CheckProjectUserIdAuthorizationHandler : AuthorizationHandler<CheckProjectUserId, CheckProjectUserIdModel>
     {
         private readonly UserManager<ApplicationUser> _userManager;
 
@@ -19,7 +19,7 @@ namespace CrowdFunding.Authorization
         {
             _userManager = userManager;
         }
-        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, CheckProjectUserId requirement, Project resource)
+        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, CheckProjectUserId requirement, CheckProjectUserIdModel resource)
         {
             //if (!context.User.HasClaim(c => c.Type == "Id" ))
             //    return Task.CompletedTask;
@@ -28,7 +28,7 @@ namespace CrowdFunding.Authorization
 
             var userId = _userManager.GetUserId(context.User);
 
-            if (resource.Company.EntrepreneurId == userId)
+            if (resource.EntreprenuerId == userId)
             {
                 context.Succeed(requirement);
             }

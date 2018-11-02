@@ -106,7 +106,7 @@ namespace CrowdFunding.Controllers
             ViewData["CompanyId"] = new SelectList(_context.Companies, "Id", "Name");
             return View(project);
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreatePost([Bind("Id,Name,ProjectShortDescription,ProjectCategoryId,ProjectTitle,NeededFund,StartingDate,EndingDate,CompanyId")] Project model)
@@ -135,29 +135,39 @@ namespace CrowdFunding.Controllers
 
         // GET: Projects/Edit/5
         public async Task<IActionResult> Edit(int? id)
-        {
-            var project = _context.Projects.Find(id);
-            var checkProjectUserIdModel = new CheckProjectUserIdModel
+        {        
+            var proj = _context.Projects.Where(x => x.Id == id).Include(x => x.Company);
+
+            var checkProjectUserIdModel = new CheckProjectUserIdModel();
+            foreach (var item in proj)
             {
-                ProjectId = project.Id
-            };
-            var authResult = await _authorizationService.AuthorizeAsync(User, checkProjectUserIdModel, "EditProjectPolicy");
-            if (id == null)
-            {
-                return NotFound();
+                checkProjectUserIdModel.EntreprenuerId = item.Company.EntrepreneurId;
             }
 
-            
-            if (project == null)
+            var authResult = await _authorizationService.AuthorizeAsync(User, checkProjectUserIdModel, "EditProjectPolicy");
+
+            if (authResult.Succeeded)
             {
-                return NotFound();
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var project = _context.Projects.Find(id);
+
+                if (project == null)
+                {
+                    return NotFound();
+                }
+
+                ViewData["CompanyId"] = new SelectList(_context.Companies, "Id", "Email", project.CompanyId);
+                ViewData["ProjectCategoryId"] = new SelectList(_context.Set<ProjectCategory>(), "Id", "Id", project.ProjectCategoryId);
+                return View(project);
             }
-            ViewData["CompanyId"] = new SelectList(_context.Companies, "Id", "Email", project.CompanyId);
-            ViewData["ProjectCategoryId"] = new SelectList(_context.Set<ProjectCategory>(), "Id", "Id", project.ProjectCategoryId);
-            return View(project);
+            return RedirectToAction("Index", "Home");
         }
 
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ProjectShortDescription,DetailDescription,ProjectTitle,IsRunning,IsCompleted,NeededFund,StartingDate,EndingDate,Image1,Image2,Image3,CompanyId,ProjectCategoryId")] Project project)
@@ -227,7 +237,7 @@ namespace CrowdFunding.Controllers
         {
             return _context.Projects.Any(e => e.Id == id);
         }
-        
+
 
         public IActionResult ShowByCategory(int id)
         {
@@ -238,8 +248,8 @@ namespace CrowdFunding.Controllers
         public IActionResult ShowProjectByCategory(int id)
         {
             List<ProjectViewModel> projectList = new List<ProjectViewModel>();
-            var projects = _context.Projects.Where(x => x.ProjectCategoryId == id).Include(x=>x.Company).ThenInclude(x=>x.Entrepreneur).ThenInclude(x=>x.Country);
-            
+            var projects = _context.Projects.Where(x => x.ProjectCategoryId == id).Include(x => x.Company).ThenInclude(x => x.Entrepreneur).ThenInclude(x => x.Country);
+
             foreach (var item in projects)
             {
                 var projectViewModel = new ProjectViewModel
@@ -259,11 +269,11 @@ namespace CrowdFunding.Controllers
 
 
             }
-            
-            
+
+
             return View(projectList);
         }
 
-        
+
     }
 }

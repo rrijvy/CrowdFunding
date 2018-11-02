@@ -46,6 +46,7 @@ namespace CrowdFunding
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("EditProjectPolicy", policy => 
+                
                 {
                     policy.Requirements.Add(new CheckProjectUserId());
                 });
