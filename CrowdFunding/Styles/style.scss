@@ -27,7 +27,14 @@ footer {
 }
 
 .container {
-    padding: 0;
+    padding: 0;  
+}
+
+.middle {
+    margin: auto;
+    width: 70%;
+    top: 50%;
+    transform: translateY(50%);
 }
 
 h1 {
@@ -60,6 +67,16 @@ a:hover, a:active, a:link, a:visited {
 
 .btn {
     border-radius: 0px;
+
+    &-reg {
+        margin-top: 20px;
+        background-color: #42ccae;
+        padding: 8px 40px 8px 14px;
+    }
+
+    &-default {
+        background-color: #42ccae;
+    }
 }
 
 #nav {

@@ -22,6 +22,12 @@ footer {
 .container {
   padding: 0; }
 
+.middle {
+  margin: auto;
+  width: 70%;
+  top: 50%;
+  transform: translateY(50%); }
+
 h1 {
   font-family: 'Raleway', sans-serif;
   font-weight: 500; }
@@ -46,6 +52,12 @@ a:hover, a:active, a:link, a:visited {
 
 .btn {
   border-radius: 0px; }
+  .btn-reg {
+    margin-top: 20px;
+    background-color: #42ccae;
+    padding: 8px 40px 8px 14px; }
+  .btn-default {
+    background-color: #42ccae; }
 
 #nav {
   background-color: #fff;
