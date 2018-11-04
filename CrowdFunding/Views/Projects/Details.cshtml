@@ -10,18 +10,18 @@
     <p>@Model.ShortDescription</p>
     <div class="product-details">
 
-        <img src="~/images/img-1.jpg" />
+        <img src="~/images/Amesa Spentas/T-Shirts.jpg" />
         <p>@Model.LongDescription</p>
         <img src="~/images/img-1.jpg" />
         <img src="~/images/img-1.jpg" />
     </div>
     <div class="product-back">
         <div class="product-back-p">
-            <p class="product-back-amount product-back-p-1 "><i class="fas fa-dollar-sign"></i> @Model.PledgedAmount</p>
+            <p class="product-back-amount product-back-p-1 "><i class="fas fa-dollar-sign"></i> @Model.Funded</p>
             <p class="product-back-p-2">Pledged of taka @Model.PledgedAmount goal</p>
         </div>
         <div class="product-back-p">
-            <p class="product-back-p-1">1003</p>
+            <p class="product-back-p-1">@Model.TotalBacker</p>
             <p class="product-back-p-2">backers</p>
         </div>   
         <div class="product-back-p">

@@ -220,6 +220,8 @@ namespace CrowdFunding.Data.Migrations
 
                     b.Property<int>("ProjectId");
 
+                    b.Property<string>("ShortDescription");
+
                     b.Property<string>("Type");
 
                     b.HasKey("Id");

@@ -5,22 +5,38 @@
 }
 
 <div class="investment">
-    <div class="investment-header"><h1>@Model.Project.Name</h1></div>
-    <div class="investment-body">
-        <h3>Support this project</h3>
-        @foreach (var item in Model.InvestmentTypes)
-        {
-            <div class="investment-body-item">
-                <div class="investment-body-item-p">@item.Type</div>
-                <form asp-controller="Investments" asp-action="Create" method="post">
-                    <input asp-for="Investment.InvestmentTypeId" type="number" value="@item.Id" hidden />
-                    <input asp-for="Project.Id" type="number" value="@Model.Project.Id" hidden />
-                    <div class="investment-body-item-div">
-                        <input asp-for="Investment.Amount" type="number" class="investment-body-item-amount" /> <input class="investment-body-item-continue" type="submit" value="Continue" />
+    <div class="investment-header">
+        <a href="/Projects/Details/@Model.Project.Id"><h1>@Model.Project.Name</h1></a>
+    </div>
+    <div class="investment-main group">
+        <div class="investment-body">
+            <h3>Support this project</h3>
+            <hr />
+            @foreach (var item in Model.InvestmentTypes)
+            {
+                <div class="investment-body-item ">
+                    <div class="investment-body-item-1">
+                        <div class="investment-body-item-p">@item.Type</div>
+                        <div class="investment-body-item-p" style="font-weight:300">@item.ShortDescription</div>
                     </div>
-                </form>
-            </div>
-        }
+
+                    <form asp-controller="Investments" asp-action="Create" method="post">
+                        <input asp-for="Investment.InvestmentTypeId" type="number" value="@item.Id" hidden />
+                        <input asp-for="Project.Id" type="number" value="@Model.Project.Id" hidden />
+                        <div class="investment-body-item-div">
+                            <input asp-for="Investment.Amount" type="number" value="" class="investment-body-item-amount" /> <input class="investment-body-item-continue" type="submit" value="Continue" />
+                        </div>
+                    </form>
+                </div>
+            }
+        </div>
+        <div class="investment-side">
+            <h2>Our platform is not a store.</h2>
+            <h4>It's a way to bring creative projects to life.</h4>
+            <p>
+                It does not guarantee projects or investigate a creator's ability to complete their project. It is the responsibility of the project creator to complete their project as promised, and the claims of this project are theirs alone.
+            </p>
+        </div>
     </div>
 </div>
 

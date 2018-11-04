@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using CrowdFunding.Data;
 using CrowdFunding.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using CrowdFunding.Authorization;
 
 namespace CrowdFunding.Controllers
 {
@@ -15,12 +17,15 @@ namespace CrowdFunding.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IAuthorizationService _authorizationService;
 
         public InvestmentTypesController(ApplicationDbContext context,
-                                        UserManager<ApplicationUser> userManager)
+                                        UserManager<ApplicationUser> userManager,
+                                        IAuthorizationService authorizationService)
         {
             _context = context;
             _userManager = userManager;
+            _authorizationService = authorizationService;
         }
 
         // GET: InvestmentTypes
@@ -61,7 +66,7 @@ namespace CrowdFunding.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Type,ProjectId")] InvestmentType investmentType)
+        public async Task<IActionResult> Create([Bind("Id,Type,ShortDescription,ProjectId")] InvestmentType investmentType)
         {
             if (ModelState.IsValid)
             {
@@ -155,6 +160,43 @@ namespace CrowdFunding.Controllers
         private bool InvestmentTypeExists(int id)
         {
             return _context.investmentTypes.Any(e => e.Id == id);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> CreateReward(int? id)
+        {
+            var project = _context.Projects.Where(x => x.Id == id).Include(x => x.Company).ThenInclude(x=>x.Entrepreneur);
+
+            var checkProjectUserIdModel = new CheckProjectUserIdModel();
+
+            foreach (var item in project)
+            {
+                checkProjectUserIdModel.EntreprenuerId = item.Company.Entrepreneur.Id;
+            }
+
+            var authResult = await _authorizationService.AuthorizeAsync(User, checkProjectUserIdModel, "EditProjectPolicy");
+
+            if (authResult.Succeeded)
+            {
+                ViewData["ProjectId"] = id;
+                return View();
+            }
+                       
+            return RedirectToAction("Login", "Account");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateReward([Bind("Id,Type,ShortDescription,ProjectId")] InvestmentType model)
+        {
+            var type = new InvestmentType
+            {
+                Type = model.Type,
+                ShortDescription = model.ShortDescription,
+                ProjectId = model.ProjectId
+            };
+            await _context.investmentTypes.AddAsync(type);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("ProjectDashboard", "Projects", new { id = model.ProjectId });
         }
     }
 }

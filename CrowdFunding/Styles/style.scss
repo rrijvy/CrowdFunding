@@ -16,7 +16,7 @@ footer {
     padding-bottom: 30px;
 }
 
-.container{
+.container {
     height: 100%;
 }
 
@@ -27,7 +27,7 @@ footer {
 }
 
 .container {
-    padding: 0;  
+    padding: 0;
 }
 
 .middle {
@@ -98,7 +98,6 @@ a:hover, a:active, a:link, a:visited {
 
     &-btn {
         background-color: #42ccae;
-
     }
 }
 
@@ -143,7 +142,7 @@ a:hover, a:active, a:link, a:visited {
     h1 {
         font-weight: 300;
         text-transform: uppercase;
-        margin-bottom: 50px; 
+        margin-bottom: 50px;
         letter-spacing: 4px;
     }
 
@@ -409,7 +408,6 @@ a:hover, a:active, a:link, a:visited {
     flex-flow: row wrap;
     justify-content: space-around;
     align-items: flex-end;*/
-
     &-item {
         width: 27%;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -428,6 +426,11 @@ a:hover, a:active, a:link, a:visited {
             width: 100%;
             object-fit: cover;
             overflow: hidden;
+
+            &:hover {
+                -webkit-transform: scaleX(-1);
+                transform: scaleX(-1);
+            }
         }
 
         &-info {
@@ -458,10 +461,11 @@ a:hover, a:active, a:link, a:visited {
         margin-top: 3rem;
 
         img {
-            height: 30rem;
+            height: auto;
             width: 100%;
             object-fit: cover;
             overflow: hidden;
+            margin-bottom: 60px;
         }
     }
 
@@ -473,7 +477,7 @@ a:hover, a:active, a:link, a:visited {
 
 
         &-p {
-            padding: 10px 0;
+            padding: 15px 0;
         }
 
         &-p-1 {
@@ -491,10 +495,14 @@ a:hover, a:active, a:link, a:visited {
 
         &-button {
             background-color: #42ccae;
-            padding: .9rem 4.4rem;
-            color: #fff;
+            padding: 1.3rem 4.4rem;
             border: none;
+            display: block;
             margin-top: 20px;
+        }
+
+        a {
+            color: #fff;
         }
     }
 }
@@ -506,30 +514,65 @@ a:hover, a:active, a:link, a:visited {
 .investment {
     width: 70%;
     margin: auto;
+    margin-top: 100px;
 
     &-header {
         text-align: center;
+        padding: 20px 0px;
+        margin-bottom: 40px;
+        width: 100%;
+    }
+
+    &-main {
+        width: 100%;
+    }
+
+    &-side {
+        width: 40%;
+        float: right;
+        padding: 60px;
+        font-weight: 300;
     }
 
     &-body {
-        width: 100%;
+        width: 60%;
+        float: left;
 
 
         &-item {
-            width: 60%;
+            width: 100%;
             padding: 20px 30px;
-            border: 1px solid;
+            border: 1px solid #dbdbdb;
             margin-bottom: 30px;
 
-            p {
+            &:hover {
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+            }
+
+            &-1 {
+                width: 70%;
+            }
+
+
+
+            &-p {
                 width: 100%;
                 font: 2rem;
                 padding-bottom: 2.2rem;
+                padding: 10px 0px;
             }
 
             &-div {
                 width: 100%;
-                padding-top: 2.2rem;
+                margin-top: 2.2rem;
+
+                input {
+                    border: 1px solid #42ccae;
+
+                    &:focus {
+                        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);
+                    }
+                }
             }
 
             &-amount {
@@ -539,7 +582,7 @@ a:hover, a:active, a:link, a:visited {
 
             &-continue {
                 margin-left: 3%;
-                padding: 10px 45px;
+                padding: 10px 35px;
                 background-color: #42ccae;
                 border: none;
                 color: #fff;

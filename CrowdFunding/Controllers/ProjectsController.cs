@@ -12,32 +12,41 @@ using CrowdFunding.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
 using CrowdFunding.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace CrowdFunding.Controllers
 {
+    [Authorize(Roles = "Entreprenuer")]
     public class ProjectsController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly IGetFundedAmount _fundedAmount;
         private readonly IAuthorizationService _authorizationService;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public ProjectsController(ApplicationDbContext context,
                                     IGetFundedAmount fundedAmount,
-                                    IAuthorizationService authorizationService)
+                                    IAuthorizationService authorizationService,
+                                    UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _fundedAmount = fundedAmount;
             _authorizationService = authorizationService;
+            _userManager = userManager;
         }
 
+
         // GET: Projects
+        
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Projects.Include(p => p.Company).Include(p => p.ProjectCategory);
             return View(await applicationDbContext.ToListAsync());
         }
 
+
         // GET: Projects/Details/5
+        [AllowAnonymous]
         public IActionResult Details(int? id)
         {
             if (id == null)
@@ -62,7 +71,8 @@ namespace CrowdFunding.Controllers
                 DaysLeft = Math.Floor((project.EndingDate - DateTime.Now).TotalDays),
                 CompanyName = project.Company.Name,
                 CountryName = project.Company.Entrepreneur.Country.Name,
-                Funded = _fundedAmount.FundedAmount(project.Id)
+                Funded = _fundedAmount.FundedAmount(project.Id),
+                TotalBacker = _fundedAmount.Backers(project.Id)
             };
 
             if (projectViewModel == null)
@@ -73,17 +83,33 @@ namespace CrowdFunding.Controllers
             return View(projectViewModel);
         }
 
-
+        
         public IActionResult CreateProject()
         {
+            var userId = _userManager.GetUserId(HttpContext.User);
+
+            var companies = _context.Companies.Where(x => x.EntrepreneurId == userId);
+
+            var company = new Company();
+
+            foreach (var item in companies)
+            {
+                company = item;
+            }
+
+            if (company.Id == 0)
+                return RedirectToAction("Create", "Companies");
+
             return View();
         }
+
 
         public IActionResult SelectCategory()
         {
             ViewData["ProjectCategory"] = new SelectList(_context.ProjectCategory, "Id", "Type");
             return View();
         }
+
 
         [HttpPost]
         public IActionResult ShortDescription(ProjectCategory projectCategory)
@@ -94,6 +120,7 @@ namespace CrowdFunding.Controllers
             };
             return View(project);
         }
+
 
         [HttpPost]
         public IActionResult Create(Project model)
@@ -106,6 +133,7 @@ namespace CrowdFunding.Controllers
             ViewData["CompanyId"] = new SelectList(_context.Companies, "Id", "Name");
             return View(project);
         }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -126,21 +154,37 @@ namespace CrowdFunding.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("ProjectDashboard", new { id = project.Id });
         }
+        
+        
         //Get projectdashboard
         public async Task<IActionResult> ProjectDashboard(int? id)
         {
-            if (id == null)
+            var proj = _context.Projects.Where(x => x.Id == id).Include(x => x.Company);
+
+            var checkProjectUserIdModel = new CheckProjectUserIdModel();
+            foreach (var item in proj)
             {
-                return NotFound();
+                checkProjectUserIdModel.EntreprenuerId = item.Company.EntrepreneurId;
             }
 
-            var project = await _context.Projects.FindAsync(id);
-            if (project == null)
-            {
-                return NotFound();
-            }
+            var authResult = await _authorizationService.AuthorizeAsync(User, checkProjectUserIdModel, "EditProjectPolicy");
 
-            return View(project);
+            if (authResult.Succeeded)
+            {
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var project = await _context.Projects.FindAsync(id);
+                if (project == null)
+                {
+                    return NotFound();
+                }
+
+                return View(project);
+            }
+            return RedirectToAction("Index", "Home");
         }
 
 
@@ -248,6 +292,7 @@ namespace CrowdFunding.Controllers
             return View(project);
         }
 
+
         // GET: Projects/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -268,6 +313,7 @@ namespace CrowdFunding.Controllers
             return View(project);
         }
 
+
         // POST: Projects/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -278,19 +324,23 @@ namespace CrowdFunding.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        
 
         private bool ProjectExists(int id)
         {
             return _context.Projects.Any(e => e.Id == id);
         }
+        
 
-
+        [AllowAnonymous]
         public IActionResult ShowByCategory(int id)
         {
             var projects = _context.Projects.Where(x => x.ProjectCategoryId == id).ToList();
             return Json(projects);
         }
 
+
+        [AllowAnonymous]
         public IActionResult ShowProjectByCategory(int id)
         {
             List<ProjectViewModel> projectList = new List<ProjectViewModel>();
@@ -309,7 +359,10 @@ namespace CrowdFunding.Controllers
                     DaysLeft = Math.Floor((item.EndingDate - DateTime.Now).TotalDays),
                     CompanyName = item.Company.Name,
                     CountryName = item.Company.Entrepreneur.Country.Name,
-                    Funded = _fundedAmount.FundedAmount(item.Id)
+                    Funded = _fundedAmount.FundedAmount(item.Id),
+                    Image1 = item.Image1,
+                    Image2 = item.Image2,
+                    Image3 = item.Image3
                 };
                 projectList.Add(projectViewModel);
 

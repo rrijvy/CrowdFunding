@@ -8,5 +8,7 @@ namespace CrowdFunding.Services
     public interface IGetFundedAmount
     {
         double FundedAmount(int projectId);
+
+        int Backers(int projectId);
     }
 }

@@ -9,6 +9,8 @@ namespace CrowdFunding.Models
 
         public string Type { get; set; }
 
+        public string ShortDescription { get; set; }
+
         public int ProjectId { get; set; }
 
         [ForeignKey("ProjectId")]

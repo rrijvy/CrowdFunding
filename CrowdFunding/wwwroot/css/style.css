@@ -304,6 +304,9 @@ a:hover, a:active, a:link, a:visited {
       width: 100%;
       object-fit: cover;
       overflow: hidden; }
+      .project-list-item-img:hover {
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1); }
     .project-list-item-info {
       padding: 3rem;
       height: 62%;
@@ -323,17 +326,18 @@ a:hover, a:active, a:link, a:visited {
     padding-right: 1rem;
     margin-top: 3rem; }
     .product-details img {
-      height: 30rem;
+      height: auto;
       width: 100%;
       object-fit: cover;
-      overflow: hidden; }
+      overflow: hidden;
+      margin-bottom: 60px; }
   .product-back {
     border-top: 2px solid #42ccae;
     float: left;
     padding-left: 1rem;
     margin-top: 3rem; }
     .product-back-p {
-      padding: 10px 0; }
+      padding: 15px 0; }
     .product-back-p-1 {
       font-size: 2.5rem; }
     .product-back-p-2 {
@@ -343,36 +347,59 @@ a:hover, a:active, a:link, a:visited {
       color: #42ccae; }
     .product-back-button {
       background-color: #42ccae;
-      padding: .9rem 4.4rem;
-      color: #fff;
+      padding: 1.3rem 4.4rem;
       border: none;
+      display: block;
       margin-top: 20px; }
+    .product-back a {
+      color: #fff; }
 
 .investment {
   width: 70%;
-  margin: auto; }
+  margin: auto;
+  margin-top: 100px; }
   .investment-header {
-    text-align: center; }
-  .investment-body {
+    text-align: center;
+    padding: 20px 0px;
+    margin-bottom: 40px;
     width: 100%; }
+  .investment-main {
+    width: 100%; }
+  .investment-side {
+    width: 40%;
+    float: right;
+    padding: 60px;
+    font-weight: 300; }
+  .investment-body {
+    width: 60%;
+    float: left; }
     .investment-body-item {
-      width: 60%;
+      width: 100%;
       padding: 20px 30px;
-      border: 1px solid;
+      border: 1px solid #dbdbdb;
       margin-bottom: 30px; }
-      .investment-body-item p {
+      .investment-body-item:hover {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19); }
+      .investment-body-item-1 {
+        width: 70%; }
+      .investment-body-item-p {
         width: 100%;
         font: 2rem;
-        padding-bottom: 2.2rem; }
+        padding-bottom: 2.2rem;
+        padding: 10px 0px; }
       .investment-body-item-div {
         width: 100%;
-        padding-top: 2.2rem; }
+        margin-top: 2.2rem; }
+        .investment-body-item-div input {
+          border: 1px solid #42ccae; }
+          .investment-body-item-div input:focus {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19); }
       .investment-body-item-amount {
         padding: 10px 20px;
         width: 65%; }
       .investment-body-item-continue {
         margin-left: 3%;
-        padding: 10px 45px;
+        padding: 10px 35px;
         background-color: #42ccae;
         border: none;
         color: #fff; }
