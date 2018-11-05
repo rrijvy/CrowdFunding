@@ -13,6 +13,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
 using CrowdFunding.Authorization;
 using Microsoft.AspNetCore.Identity;
+using System.Net.Http.Headers;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace CrowdFunding.Controllers
 {
@@ -23,8 +26,10 @@ namespace CrowdFunding.Controllers
         private readonly IGetFundedAmount _fundedAmount;
         private readonly IAuthorizationService _authorizationService;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IHostingEnvironment _environment;
 
         public ProjectsController(ApplicationDbContext context,
+                                    IHostingEnvironment environment,
                                     IGetFundedAmount fundedAmount,
                                     IAuthorizationService authorizationService,
                                     UserManager<ApplicationUser> userManager)
@@ -33,6 +38,7 @@ namespace CrowdFunding.Controllers
             _fundedAmount = fundedAmount;
             _authorizationService = authorizationService;
             _userManager = userManager;
+            _environment = environment;
         }
 
 
@@ -159,7 +165,7 @@ namespace CrowdFunding.Controllers
         //Get projectdashboard
         public async Task<IActionResult> ProjectDashboard(int? id)
         {
-            var proj = _context.Projects.Where(x => x.Id == id).Include(x => x.Company);
+            var proj = _context.Projects.Where(x => x.Id == id).Include(x => x.Company).AsQueryable();
 
             var checkProjectUserIdModel = new CheckProjectUserIdModel();
             foreach (var item in proj)
@@ -181,6 +187,8 @@ namespace CrowdFunding.Controllers
                 {
                     return NotFound();
                 }
+                ViewData["ProjectCategoryId"] = new SelectList(_context.ProjectCategory, "Id", "Name");
+
 
                 return View(project);
             }
@@ -191,12 +199,65 @@ namespace CrowdFunding.Controllers
         //post projectdashboard
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ProjectDashboard(int id, [Bind("Id,Name,ProjectShortDescription,DetailDescription,ProjectTitle,IsRunning,IsCompleted,NeededFund,StartingDate,EndingDate,Image1,Image2,Image3,CompanyId,ProjectCategoryId")] Project project)
+        public async Task<IActionResult> ProjectDashboard(int id, List<IFormFile> files, [Bind("Id,Name,ProjectShortDescription,DetailDescription,ProjectTitle,IsRunning,IsCompleted,NeededFund,StartingDate,EndingDate,CompanyId,ProjectCategoryId")] Project project)
         {
             if (id != project.Id)
             {
                 return NotFound();
             }
+            
+            string fileNames = string.Empty;
+
+            foreach (var item in files)
+            {
+                string fileName = ContentDispositionHeaderValue.Parse(item.ContentDisposition).FileName.Trim('"');
+                string sFileExtension = Path.GetExtension(item.FileName).ToLower();
+                if((sFileExtension == ".jpg")|| (sFileExtension == ".JPGE") || (sFileExtension == ".PNG") || (sFileExtension == ".JPG"))
+                {
+                    using (var stream = new FileStream(GetPath(fileName, project.ProjectTitle), FileMode.Create))
+                    {
+                        fileNames += fileName + ",";
+                    }
+                }    
+            }
+
+            string[] nameOfFile = fileNames.Split(",");
+            int nameLength = nameOfFile.Length;
+            if (nameLength == 1)
+            {
+                if (!string.IsNullOrEmpty(nameOfFile[0]))
+                {
+                    project.Image1 = nameOfFile[0];
+                }
+            }
+            if (nameLength == 2)
+            {
+                if (!string.IsNullOrEmpty(nameOfFile[0]))
+                {
+                    project.Image1 = nameOfFile[0];
+                }
+                if (!string.IsNullOrEmpty(nameOfFile[1]))
+                {
+                    project.Image2 = nameOfFile[1];
+                }
+            }
+
+            if (nameLength >= 3)
+            {
+                if (!string.IsNullOrEmpty(nameOfFile[0]))
+                {
+                    project.Image1 = nameOfFile[0];
+                }
+                if (!string.IsNullOrEmpty(nameOfFile[1]))
+                {
+                    project.Image2 = nameOfFile[1];
+                }
+                if (!string.IsNullOrEmpty(nameOfFile[2]))
+                {
+                    project.Image3 = nameOfFile[2];
+                }
+            }
+            
 
             if (ModelState.IsValid)
             {
@@ -216,7 +277,6 @@ namespace CrowdFunding.Controllers
                         throw;
                     }
                 }
-                //return RedirectToAction(nameof(Details));
             }
 
             return View(project);
@@ -371,6 +431,17 @@ namespace CrowdFunding.Controllers
 
 
             return View(projectList);
+        }
+
+
+        private string GetPath(string fileName, string projectTitle)
+        {
+            string path = _environment.WebRootPath + "\\Upload\\" + projectTitle + '\\';
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            return path + fileName;
         }
 
 

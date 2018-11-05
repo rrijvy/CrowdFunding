@@ -1,14 +1,8 @@
-﻿@model CrowdFunding.Models.Project
+﻿@model Project
 
 @{
     ViewData["Title"] = "ProjectDashboard";
 
-}
-
-
-
-@{
-    var data = ViewData["Message"];
 }
 
 <div class="container">
@@ -18,263 +12,147 @@
 </div>
 <hr />
 <div class="container">
-
-
-    <form asp-action="ProjectDashboard">
+    <form class="form-horizontal" name="form" method="post" enctype="multipart/form-data" asp-action="ProjectDashboard">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="Id" />
 
-        <div class="form-group row">
-            <div class="col-md-4">
 
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+        <div class="form-group">
+            <label asp-for="Name" class="control-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <input asp-for="Name" type="text" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
-
             </div>
-            <div class="col-md-4">
-                <label asp-for="ProjectTitle" class="control-label"></label>
-                <input asp-for="ProjectTitle" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="ProjectShortDescription" class="control-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <input asp-for="ProjectShortDescription" type="text" class="form-control" />
+                <span asp-validation-for="ProjectShortDescription" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="ProjectTitle" class="control-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <input asp-for="ProjectTitle" type="text" class="form-control" />
                 <span asp-validation-for="ProjectTitle" class="text-danger"></span>
-
             </div>
-            <div class="col-md-4">
+        </div>
+        <div class="form-group">
+            <label asp-for="IsRunning" class="control-label col-sm-2"></label>
+            <div class="col-sm-10">
                 <div class="checkbox">
                     <label>
                         <input asp-for="IsRunning" /> @Html.DisplayNameFor(model => model.IsRunning)
                     </label>
                 </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="IsCompleted" class="control-label col-sm-2"></label>
+            <div class="col-sm-10">
                 <div class="checkbox">
                     <label>
                         <input asp-for="IsCompleted" /> @Html.DisplayNameFor(model => model.IsCompleted)
                     </label>
                 </div>
-
             </div>
-
-
-        </div>
-
-
-        <div class="form-group row">
-            <div class="col-md-4">
-                <label asp-for="NeededFund" class="control-label"></label>
-                <input asp-for="NeededFund" class="form-control" />
-                <span asp-validation-for="NeededFund" class="text-danger"></span>
-
-            </div>
-            <div class="col-md-4">
-                <label asp-for="StartingDate" class="control-label"></label>
-                <input asp-for="StartingDate" class="form-control" />
-                <span asp-validation-for="StartingDate" class="text-danger"></span>
-
-            </div>
-            <div class="col-md-4">
-                <label asp-for="EndingDate" class="control-label"></label>
-                <input asp-for="EndingDate" class="form-control" />
-                <span asp-validation-for="EndingDate" class="text-danger"></span>
-
-            </div>
-
-        </div>
-
-        <div class="form-group row">
-            <div class="col-md-4">
-                <label asp-for="Image1" class="control-label"></label>
-                <input asp-for="Image1" class="form-control" id="imagePath1" />
-                <span asp-validation-for="Image1" class="text-danger"></span>
-                <input type="file" id="files1"
-                       name="files" multiple />
-                <input type="button"
-                       id="upload1"
-                       value="Upload Selected Files" />
-
-            </div>
-            <div class="col-md-4">
-                <label asp-for="Image2" class="control-label"></label>
-                <input asp-for="Image2" class="form-control" id="imagePath2" />
-                <span asp-validation-for="Image2" class="text-danger"></span>
-                <input type="file" id="files2"
-                       name="files" multiple />
-                <input type="button"
-                       id="upload2"
-                       value="Upload Selected Files" />
-
-            </div>
-            <div class="col-md-4">
-                <label asp-for="Image3" class="control-label"></label>
-                <input asp-for="Image3" class="form-control" id="imagePath3" />
-                <span asp-validation-for="Image3" class="text-danger"></span>
-                <input type="file" id="files3"
-                       name="files" multiple />
-                <input type="button"
-                       id="upload3"
-                       value="Upload Selected Files" />
-
-            </div>
-
-        </div>
-
-
-        <div class="form-group row">
-            <div class="col-md-4">
-                <label asp-for="CompanyId" class="control-label"></label>
-                <input asp-for="CompanyId" class="form-control" readonly />
-                <span asp-validation-for="CompanyId" class="text-danger"></span>
-
-            </div>
-            <div class="col-md-4">
-                <label asp-for="ProjectCategoryId" class="control-label"></label>
-                <input asp-for="ProjectCategoryId" class="form-control" readonly />
-                <span asp-validation-for="ProjectCategoryId" class="text-danger"></span>
-
-            </div>
-            <div class="col-md-4">
-
-
-            </div>
-
-        </div>
-
-        <div class="form-group row">
-            <div class="col-md-4">
-                <label asp-for="ProjectShortDescription" class="control-label"></label>
-                <textarea asp-for="ProjectShortDescription" rows="10" class="form-control"></textarea>
-                <span asp-validation-for="ProjectShortDescription" class="text-danger"></span>
-
-            </div>
-            <div class="col-md-8">
-                <label asp-for="DetailDescription" class="control-label"></label>
-                <textarea asp-for="DetailDescription" rows="10" class="form-control"></textarea>
-                <span asp-validation-for="DetailDescription" class="text-danger"></span>
-
-            </div>
-
-
         </div>
         <div class="form-group">
-            <div class="col-md-4">
-                <input type="submit" value="Update Project" id="btn" class="btn btn-success btn-lg" />
+            <label asp-for="NeededFund" class="control-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <input asp-for="NeededFund" type="text" class="form-control" />
+                <span asp-validation-for="NeededFund" class="text-danger"></span>
             </div>
         </div>
+        <div class="form-group">
+            <label asp-for="StartingDate" class="control-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <input asp-for="StartingDate" type="text" class="form-control" />
+                <span asp-validation-for="StartingDate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="EndingDate" class="control-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <input asp-for="EndingDate" type="text" class="form-control" />
+                <span asp-validation-for="EndingDate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="CompanyId" class="control-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <input asp-for="CompanyId" type="text" class="form-control" readonly />
+                <span asp-validation-for="CompanyId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="ProjectCategoryId" class="control-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <input asp-for="ProjectCategoryId" type="text" class="form-control" />
+                <span asp-validation-for="ProjectCategoryId" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label asp-for="Image1" class="control-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <input id="files" type="file" name="files" multiple />
+                <span asp-validation-for="Image1" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="DetailDescription" class="control-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <textarea asp-for="DetailDescription" type="text" class="form-control" style="height: 400px;"></textarea>
+                <span asp-validation-for="DetailDescription" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <input type="submit" value="Update Project" id="btn btn-submit" class="btn btn-success btn-lg" />
+            </div>
+        </div>
+
     </form>
-    <div class="col-md-4">
-        <a href="/InvestmentTypes/CreateReward/@Model.Id" id="btn" class="btn btn-success btn-lg">Set Rewards</a>
+    <div class="form-group">
+        <label class="control-label col-sm-2"></label>
+        <div class="col-sm-10">
+            <a href="/InvestmentTypes/CreateReward/@Model.Id" id="btn" class="btn btn-success btn-lg">Set Rewards</a>
+        </div>
     </div>
+    
 
-
+    @*<div>
+        <a asp-action="Index">Back to List</a>
+    </div>*@
 
 
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-
 
 @section Scripts{
     <script>
-
-        $(document).ready(function () {
-            $("#upload1").click(function (evt) {
-                var fileUpload = $("#files1").get(0);
-                var files = fileUpload.files;
-                var data = new FormData();
-                for (var i = 0; i < files.length; i++) {
-                    data.append(files[i].name, files[i]);
+        $('#btn-submit').on('click', function () {
+            var inputFile = document.getElementById('files');;
+            var files = inputFile.files;
+            var fdata = new FormData();
+            for (var i = 0; i <= files.length; i++) {
+                fdata.append("files", files[i]);
+            }
+            $.ajax({
+                url: '/Projects/ProjectDashboard',
+                data: fdata,
+                processData: false,
+                contentType: false,
+                type: 'POST',
+                success: function (data) {
+                    alert("File upload.");
                 }
-                $.ajax({
-                    type: "POST",
-                    url: "/home/UploadFilesAjax",
-                    contentType: false,
-                    processData: false,
-                    data: data,
-                    success: function (location) {
-                        //alert(location);
-                        $("#imagePath1").val(location);
-                        alert("Image Uploaded Successfully!!!")
-
-                        //console.log(location);
-                        //$("#divId").append(location);
-                        //
-
-                    },
-                    error: function () {
-                        alert("There was error uploading files!");
-                    }
-                });
             });
-
-
-
-
-            $("#upload2").click(function (evt) {
-                var fileUpload = $("#files2").get(0);
-                var files = fileUpload.files;
-                var data = new FormData();
-                for (var i = 0; i < files.length; i++) {
-                    data.append(files[i].name, files[i]);
-                }
-                $.ajax({
-                    type: "POST",
-                    url: "/home/UploadFilesAjax",
-                    contentType: false,
-                    processData: false,
-                    data: data,
-                    success: function (location) {
-                        //alert(location);
-                        $("#imagePath2").val(location);
-                        alert("Image Uploaded Successfully!!!")
-
-                        //console.log(location);
-                        //$("#divId").append(location);
-                        //
-
-                    },
-                    error: function () {
-                        alert("There was error uploading files!");
-                    }
-                });
-            });
-
-
-
-
-            $("#upload3").click(function (evt) {
-                var fileUpload = $("#files3").get(0);
-                var files = fileUpload.files;
-                var data = new FormData();
-                for (var i = 0; i < files.length; i++) {
-                    data.append(files[i].name, files[i]);
-                }
-                $.ajax({
-                    type: "POST",
-                    url: "/home/UploadFilesAjax",
-                    contentType: false,
-                    processData: false,
-                    data: data,
-                    success: function (location) {
-                        //alert(location);
-                        $("#imagePath3").val(location);
-                        alert("Image Uploaded Successfully!!!")
-
-                        //console.log(location);
-                        //$("#divId").append(location);
-                        //
-
-                    },
-                    error: function () {
-                        alert("There was error uploading files!");
-                    }
-                });
-            });
-
-            $("#btn").click(function () {
-                alert("Update Successfully");
-            })
-        });
-
+        }
+        );
     </script>
 
 }
