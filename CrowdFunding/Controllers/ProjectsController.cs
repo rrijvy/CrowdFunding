@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Net.Http.Headers;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace CrowdFunding.Controllers
 {
@@ -60,26 +61,34 @@ namespace CrowdFunding.Controllers
                 return NotFound();
             }
 
-            var project = _context.Projects
+            var projects = _context.Projects
+                            .Where(x => x.Id == id)
                             .Include(x => x.Company)
                             .ThenInclude(x => x.Entrepreneur)
-                            .ThenInclude(x => x.Country)
-                            .FirstOrDefault(x => x.Id == id);
-            var projectViewModel = new ProjectViewModel
+                            .ThenInclude(x => x.Country);
+
+
+            var projectViewModel = new ProjectViewModel();
+            
+
+            foreach (var project in projects)
             {
-                Id = project.Id,
-                Image = project.Image1,
-                Name = project.Name,
-                ShortDescription = project.ProjectShortDescription,
-                LongDescription = project.DetailDescription,
-                EntreprenuerName = project.Company.Entrepreneur.FName + " " + project.Company.Entrepreneur.LName,
-                PledgedAmount = project.NeededFund,
-                DaysLeft = Math.Floor((project.EndingDate - DateTime.Now).TotalDays),
-                CompanyName = project.Company.Name,
-                CountryName = project.Company.Entrepreneur.Country.Name,
-                Funded = _fundedAmount.FundedAmount(project.Id),
-                TotalBacker = _fundedAmount.Backers(project.Id)
-            };
+                projectViewModel.Id = project.Id;
+                projectViewModel.Image = project.Image1;
+                projectViewModel.Name = project.Name;
+                projectViewModel.ProjectTitle = project.ProjectTitle;
+                projectViewModel.ShortDescription = project.ProjectShortDescription;
+                projectViewModel.LongDescription = project.DetailDescription;
+                projectViewModel.EntreprenuerName = project.Company.Entrepreneur.FName + " " + project.Company.Entrepreneur.LName;
+                projectViewModel.PledgedAmount = project.NeededFund;
+                projectViewModel.DaysLeft = Math.Floor((project.EndingDate - DateTime.Now).TotalDays);
+                projectViewModel.CompanyName = project.Company.Name;
+                projectViewModel.CountryName = project.Company.Entrepreneur.Country.Name;
+                projectViewModel.Funded = _fundedAmount.FundedAmount(project.Id);
+                projectViewModel.TotalBacker = _fundedAmount.Backers(project.Id);
+                projectViewModel.Image2 = project.Image2;
+                projectViewModel.Image3 = project.Image3;
+            }
 
             if (projectViewModel == null)
             {
@@ -165,7 +174,7 @@ namespace CrowdFunding.Controllers
         //Get projectdashboard
         public async Task<IActionResult> ProjectDashboard(int? id)
         {
-            var proj = _context.Projects.Where(x => x.Id == id).Include(x => x.Company).AsQueryable();
+            var proj = _context.Projects.Where(x => x.Id == id).Include(x => x.Company);
 
             var checkProjectUserIdModel = new CheckProjectUserIdModel();
             foreach (var item in proj)
@@ -189,7 +198,6 @@ namespace CrowdFunding.Controllers
                 }
                 ViewData["ProjectCategoryId"] = new SelectList(_context.ProjectCategory, "Id", "Name");
 
-
                 return View(project);
             }
             return RedirectToAction("Index", "Home");
@@ -210,12 +218,13 @@ namespace CrowdFunding.Controllers
 
             foreach (var item in files)
             {
-                string fileName = ContentDispositionHeaderValue.Parse(item.ContentDisposition).FileName.Trim('"');
+                string fileName = ContentDispositionHeaderValue.Parse(item.ContentDisposition).FileName.Trim('"').Replace(" ", string.Empty);
                 string sFileExtension = Path.GetExtension(item.FileName).ToLower();
-                if((sFileExtension == ".jpg")|| (sFileExtension == ".JPGE") || (sFileExtension == ".PNG") || (sFileExtension == ".JPG"))
+                if((sFileExtension == ".jpg")|| (sFileExtension == ".JPGE") || (sFileExtension == ".PNG") || (sFileExtension == ".JPG") || (sFileExtension == ".png"))
                 {
                     using (var stream = new FileStream(GetPath(fileName, project.ProjectTitle), FileMode.Create))
                     {
+                        await item.CopyToAsync(stream);
                         fileNames += fileName + ",";
                     }
                 }    
@@ -413,6 +422,7 @@ namespace CrowdFunding.Controllers
                     Id = item.Id,
                     Image = item.Image1,
                     Name = item.Name,
+                    ProjectTitle = item.ProjectTitle,
                     ShortDescription = item.ProjectShortDescription,
                     EntreprenuerName = item.Company.Entrepreneur.FName + " " + item.Company.Entrepreneur.LName,
                     PledgedAmount = item.NeededFund,
@@ -420,7 +430,6 @@ namespace CrowdFunding.Controllers
                     CompanyName = item.Company.Name,
                     CountryName = item.Company.Entrepreneur.Country.Name,
                     Funded = _fundedAmount.FundedAmount(item.Id),
-                    Image1 = item.Image1,
                     Image2 = item.Image2,
                     Image3 = item.Image3
                 };
@@ -436,7 +445,8 @@ namespace CrowdFunding.Controllers
 
         private string GetPath(string fileName, string projectTitle)
         {
-            string path = _environment.WebRootPath + "\\Upload\\" + projectTitle + '\\';
+            string title = projectTitle.Replace(" ", string.Empty);
+            string path = _environment.WebRootPath + "\\images\\" + title + '\\';
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);

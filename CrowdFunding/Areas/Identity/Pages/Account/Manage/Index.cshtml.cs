@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace CrowdFunding.Areas.Identity.Pages.Account.Manage
 {
@@ -17,15 +18,18 @@ namespace CrowdFunding.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
+        private readonly ApplicationDbContext _context;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
+            ApplicationDbContext context,
             IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
+            _context = context;
         }
 
         public string Username { get; set; }
@@ -47,6 +51,27 @@ namespace CrowdFunding.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [Required, Display(Name = "First name")]
+            public string FName { get; set; }
+
+            [Required, Display(Name = "Last name")]
+            public string LName { get; set; }
+
+            [Required, Display(Name = "Permanent Address")]
+            public string PermanentAddress { get; set; }
+
+            [Required, Display(Name = "Present Address")]
+            public string PresentAddress { get; set; }
+
+            public string Image { get; set; }
+
+            [Display(Name = "Date of birth"), DataType(DataType.Date)]
+            public DateTime DateOfBirth { get; set; }
+
+            [Required]
+            public string NID { get; set; }
+
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -66,7 +91,13 @@ namespace CrowdFunding.Areas.Identity.Pages.Account.Manage
             Input = new InputModel
             {
                 Email = email,
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                FName = user.FName,
+                LName = user.LName,
+                NID = user.NID,
+                PermanentAddress = user.ParmanantAddress,
+                PresentAddress = user.PresentAddress,
+                Image = user.Image
             };
 
             IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
@@ -87,27 +118,41 @@ namespace CrowdFunding.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
+            user.FName = Input.FName;
+            user.LName = Input.LName;
+            user.NID = Input.NID;
+            user.PresentAddress = Input.PresentAddress;
+            user.ParmanantAddress = Input.PermanentAddress;            
+
             var email = await _userManager.GetEmailAsync(user);
             if (Input.Email != email)
             {
-                var setEmailResult = await _userManager.SetEmailAsync(user, Input.Email);
-                if (!setEmailResult.Succeeded)
-                {
-                    var userId = await _userManager.GetUserIdAsync(user);
-                    throw new InvalidOperationException($"Unexpected error occurred setting email for user with ID '{userId}'.");
-                }
+                user.Email = Input.Email;
+                //var setEmailResult = await _userManager.SetEmailAsync(user, Input.Email);
+                //if (!setEmailResult.Succeeded)
+                //{
+                //    var userId = await _userManager.GetUserIdAsync(user);
+                //    throw new InvalidOperationException($"Unexpected error occurred setting email for user with ID '{userId}'.");
+                //}
             }
 
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             if (Input.PhoneNumber != phoneNumber)
             {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
-                {
-                    var userId = await _userManager.GetUserIdAsync(user);
-                    throw new InvalidOperationException($"Unexpected error occurred setting phone number for user with ID '{userId}'.");
-                }
+                user.PhoneNumber = Input.PhoneNumber;
+                //var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
+                //if (!setPhoneResult.Succeeded)
+                //{
+                //    var userId = await _userManager.GetUserIdAsync(user);
+                //    throw new InvalidOperationException($"Unexpected error occurred setting phone number for user with ID '{userId}'.");
+                //}
             }
+
+
+
+            await _userManager.UpdateAsync(user);
+            await _context.SaveChangesAsync();
+
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";

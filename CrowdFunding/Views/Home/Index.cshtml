@@ -42,6 +42,7 @@
         <div class="category-projects-big">
             <img src="~/images/img-4.jpg" alt="project image" />
         </div>
+
         <div class="category-projects-box">
             <div class="category-projects-box-list">
                 @foreach (var item in Model.FileProjects)
@@ -50,7 +51,7 @@
                     <ul>
                         <li class="group">
                             <div class="category-projects-box-list-image">
-                                <img src="#" alt="project image" />
+                                <img src="~/images/AmesaSpentas/T-Shirts.jpg" alt="project image" />
                             </div>
                             <div class="category-projects-box-list-info">
                                 <a href="/Projects/Details/@item.Id"><h4>@item.Name</h4></a>
@@ -127,8 +128,10 @@
                     var str;
 
                     $.each(response, function (i, item) {
+                        var url = "/images/" + item.projectTitle.replace(/\s/g, '') + "/" + item.image1.replace(/\s/g, '');
+                        console.log(url);
                         str += "<ul> <li class=" + "group" + "> ";
-                        str += "<div class=" + "category-projects-box-list-image" + "> <img src=" + item.image1 + " /> </div>";
+                        str += "<div class=" + "category-projects-box-list-image" + "> <img src=" + url + " /> </div>";
                         str += "<div class=" + "category-projects-box-list-info" + ">";
                         str += "<h4><a href=" + "/Projects/Details/" + item.id + ">" + item.name + "</a></h4>";
                         str += "<p>" + item.projectShortDescription + "</p>";

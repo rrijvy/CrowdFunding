@@ -7,26 +7,29 @@
 <div class="project-list group">
     @foreach (var item in Model)
     {
-    <div class="project-list-item">
-        <div class="project-list-item-img"><img src="~/images/Amesa Spentas/T-Shirts.jpg" /></div>
-        <div class="project-list-item-info">
-            <div class="project-list-item-info-1">
-                <a href="/Projects/Details/@item.Id"><h4>@item.Name</h4></a>
-                <p>@item.ShortDescription</p>
-                <p>by @item.EntreprenuerName</p>
-            </div>
-            <div class="project-list-item-info-2">
-                <div class="w3-border">
-                    <div class="w3-grey" style="height:5px;width:20%"></div>
+
+        string title = item.ProjectTitle.Replace(" ", string.Empty);
+
+        <div class="project-list-item">
+            <div class="project-list-item-img"><img src="~/images/@title/@item.Image" /></div>
+            <div class="project-list-item-info">
+                <div class="project-list-item-info-1">
+                    <a href="/Projects/Details/@item.Id"><h4>@item.Name</h4></a>
+                    <p>@item.ShortDescription</p>
+                    <p>by @item.EntreprenuerName</p>
                 </div>
-                <p class="project-list-item-info-pledged">@item.PledgedAmount pledged</p>
-                <p>@item.Funded</p>
-                <p>@item.DaysLeft days to go.</p>
-                <p>
-                    <span>@item.CompanyName</span> <span>@item.CountryName</span>
-                </p>
+                <div class="project-list-item-info-2">
+                    <div class="w3-border">
+                        <div class="w3-grey" style="height:5px;width:20%"></div>
+                    </div>
+                    <p class="project-list-item-info-pledged">@item.PledgedAmount pledged</p>
+                    <p>@item.Funded</p>
+                    <p>@item.DaysLeft days to go.</p>
+                    <p>
+                        <span>@item.CompanyName</span> <span>@item.CountryName</span>
+                    </p>
+                </div>
             </div>
         </div>
-    </div>
     }
 </div>

@@ -342,9 +342,12 @@ a:hover, a:active, a:link, a:visited {
                 width: 30%;
                 float: left;
                 height: 100%;
+                padding: 15px 10px 10px 0px;
 
                 img {
-                    display: block;
+                    width: 100%;
+                    height: auto;
+                    object-fit: contain;
                 }
             }
 
@@ -422,14 +425,14 @@ a:hover, a:active, a:link, a:visited {
         }
 
         &-img {
-            height: 200px;
+            height: 250px;
             width: 100%;
-            object-fit: cover;
             overflow: hidden;
 
-            &:hover {
-                -webkit-transform: scaleX(-1);
-                transform: scaleX(-1);
+            img {
+                object-fit: cover;
+                height: 250px;
+                width: 100%;
             }
         }
 
@@ -791,6 +794,104 @@ a:hover, a:active, a:link, a:visited {
 }
 
 
+/////---- user dashboard ----/////
+.sidebar {
+    margin: 0;
+    padding: 0;
+    width: 220px;
+    background-color: #f1f1f1;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+}
+
+.sidebar a {
+    display: block;
+    color: black;
+    padding: 16px;
+    text-decoration: none;
+}
+
+.sidebar a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.sidebar a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+}
+
+div.content {
+    margin-left: 220px;
+    padding: 1px 16px;
+    height: auto;
+}
+
+@media screen and (max-width: 700px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .sidebar a {
+        float: left;
+    }
+
+    div.content {
+        margin-left: 0;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .sidebar a {
+        text-align: center;
+        float: none;
+    }
+}
+
+.dashboard {
+    width: 100%;
+
+    &-avater {
+        width: 34%;
+        background-color: #f6f6f6;
+        float: left;
+        padding: 10px;
+        margin-right: 5px;
+        text-align: center;
+
+        &-image {
+            width: 260px;
+            height: auto;
+            border-radius: 50%;
+            margin: 0px auto;
+        }
+    }
+
+    &-info {
+        width: 64%;
+        background-color: #f6f6f6;
+        float: left;
+        padding: 10px;
+        margin-left: 5px;
+
+        h4 {
+            width: 100%;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
 .create-btn {
     width: 100%;
     padding: 12px 80px;
@@ -798,9 +899,6 @@ a:hover, a:active, a:link, a:visited {
     background-color: #42ccae;
     border: none;
 }
-
-
-
 
 .w3-border {
     border: 1px solid #42ccae;
@@ -810,14 +908,6 @@ a:hover, a:active, a:link, a:visited {
 .w3-grey {
     background-color: #42ccae;
 }
-
-
-
-
-
-
-
-
 
 ::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
@@ -832,10 +922,6 @@ a:hover, a:active, a:link, a:visited {
 ::-webkit-scrollbar-thumb {
     background-color: #000000;
 }
-
-
-
-
 
 .group:before,
 .group:after {

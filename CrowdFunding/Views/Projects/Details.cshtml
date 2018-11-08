@@ -3,17 +3,26 @@
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var title = Model.ProjectTitle.Replace(" ", string.Empty);
 }
 
 <div class="product group">
     <h1>@Model.Name</h1>
     <p>@Model.ShortDescription</p>
     <div class="product-details">
-
-        <img src="~/images/Amesa Spentas/T-Shirts.jpg" />
+        <img src="~/images/@title/@Model.Image" />
         <p>@Model.LongDescription</p>
-        <img src="~/images/img-1.jpg" />
-        <img src="~/images/img-1.jpg" />
+
+        @if (!string.IsNullOrEmpty(Model.Image2))
+        {
+            <img src="~/images/@title/@Model.Image2" />
+        }
+
+        @if (!string.IsNullOrEmpty(Model.Image2))
+        {
+            <img src="~/images/@title/@Model.Image3" />
+        }
+        
     </div>
     <div class="product-back">
         <div class="product-back-p">
