@@ -26,14 +26,30 @@
     </environment>
 </head>
 <body>
+    <div class="top-header">
+        <div class="container">
+            <ul class="login-form-left group">
+                <li>
+                    <i class="fab fa-facebook-f"></i>
+                    <i class="fab fa-google-plus-g"></i>
+                </li>
+                <li>@DateTime.Now.DayOfWeek || @DateTime.Now</li>
+                <li>support@mail.com</li>
+                <li><partial name="_LoginPartial" /></li>
+            </ul>
+
+        </div>
+    </div>
     <div class="sidebar">
-        <a class="active" href="/Identity/Account/Manage">Profile</a>
-        <a href="#news">Projects</a>
+        <a href="/Home">Home</a>
+        <a href="/Identity/Account/Manage">Profile</a>
+        <a href="/Projects/UserProject">Projects</a>
         <a href="#contact">Projects you love</a>
-        <a href="#about">Projects you back</a>
+        <a href="/Projects/BakcedProject">Projects you back</a>
         <a href="#about">Notifications</a>
         <a href="#about">Messages</a>
         <a href="#about">Company</a>
+        <a href="#about">Payment methods</a>
     </div>
 
 

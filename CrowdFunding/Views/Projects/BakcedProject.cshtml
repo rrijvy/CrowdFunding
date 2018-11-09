@@ -1,0 +1,25 @@
+﻿@model IEnumerable<BackedProjectViewModel>
+@{
+    ViewData["Title"] = "BakcedProject";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+<h3>Backed projects</h3>
+@foreach (var item in Model)
+{
+    <div class="dashboard-project group">
+        <div class="dashboard-project-image">
+            <img src="~/images/@item.ProjectTitle.Replace(" ", string.Empty)/@item.Image" alt="@item.ProjectTitle" />
+        </div>
+        <div class="dashboard-project-shortDes">
+            <p class="name">@item.ProjectName</p>
+            <p><b>Rewards you get,</b> @item.ChoosenReward</p>
+        </div>
+        <div class="dashboard-project-crud">
+            <div>You backed <b>@item.BackedAmount</b> taka</div>
+            <div class="dashboard-project-crud-m">
+                <a style="color:#fff" class="btn-default" href="/Projects/Details/@item.ProjectId">Go to project</a>
+            </div>
+        </div>
+    </div>
+    <hr />
+}

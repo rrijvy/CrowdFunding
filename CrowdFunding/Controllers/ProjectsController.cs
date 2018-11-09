@@ -20,7 +20,7 @@ using Microsoft.EntityFrameworkCore.Query;
 
 namespace CrowdFunding.Controllers
 {
-    [Authorize(Roles = "Entreprenuer")]
+    [Authorize]
     public class ProjectsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -440,6 +440,43 @@ namespace CrowdFunding.Controllers
 
 
             return View(projectList);
+        }
+
+        public async Task<IActionResult> UserProject()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var projects = _context.Projects.Include(x => x.Company).Where(x => x.Company.EntrepreneurId == user.Id);
+            
+            return View(projects);
+        }
+
+
+        public async Task<IActionResult> BakcedProject()
+        {
+            List<BackedProjectViewModel> BackedProjectList = new List<BackedProjectViewModel>();
+            var user = await _userManager.GetUserAsync(User);
+            var backs = _context.Investments.Include(x=>x.InvestmentType).Include(x=>x.Project).Where(x => x.InvestorId == user.Id);
+            foreach (var item in backs)
+            {
+                var BackModel = new BackedProjectViewModel
+                {
+                    ProjectId = item.ProjectId,
+                    ProjectName = item.Project.Name,
+                    BackedAmount = item.Amount,
+                    ChoosenReward = item.InvestmentType.Type,
+                    ProjectTitle = item.Project.ProjectTitle,
+                    Image = item.Project.Image1
+                };
+
+                BackedProjectList.Add(BackModel);
+            }
+            
+            return View(BackedProjectList);
         }
 
 

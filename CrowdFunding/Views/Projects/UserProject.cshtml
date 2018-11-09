@@ -1,0 +1,31 @@
+﻿@model IEnumerable<CrowdFunding.Models.Project>
+@{
+    ViewData["Title"] = "UserProject";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+
+}
+
+<h1>Your projects</h1>
+
+@foreach (var item in Model)
+{
+    <div class="dashboard-project group">
+        <div class="dashboard-project-image">
+            <img src="~/images/@item.ProjectTitle.Replace(" ", string.Empty)/@item.Image1" alt="@item.ProjectTitle" />
+        </div>
+        <div class="dashboard-project-shortDes">
+            <p>@item.ProjectShortDescription</p>
+            <p>Fund started - @item.StartingDate.Date</p>
+            <p>Ending date - @item.EndingDate.Date</p>
+        </div>
+        <div class="dashboard-project-crud">
+            <div>Needed @item.NeededFund taka</div>
+            <div class="dashboard-project-crud-m">
+                <a class="btn-default" style="color:#fff" href="/Projects/ProjectDashboard/@item.Id">Edit</a>
+                <a class="btn-default" style="color:#fff" href="/Projects/Delete/@item.Id">Delete</a>
+            </div>
+
+        </div>
+    </div>
+    <hr />
+}

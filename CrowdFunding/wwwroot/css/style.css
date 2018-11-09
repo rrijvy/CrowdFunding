@@ -19,6 +19,11 @@ footer {
   padding: 0;
   height: auto; }
 
+.content {
+  margin-top: 40px;
+  padding: 0;
+  height: auto; }
+
 .container {
   padding: 0; }
 
@@ -57,7 +62,10 @@ a:hover, a:active, a:link, a:visited {
     background-color: #42ccae;
     padding: 8px 40px 8px 14px; }
   .btn-default {
-    background-color: #42ccae; }
+    padding: 8px 20px;
+    color: #fff;
+    background-color: #42ccae;
+    border: none; }
 
 #nav {
   background-color: #fff;
@@ -540,24 +548,28 @@ a:hover, a:active, a:link, a:visited {
   margin: 0;
   padding: 0;
   width: 220px;
-  background-color: #f1f1f1;
+  background-color: #333;
   position: fixed;
   height: 100%;
   overflow: auto; }
 
 .sidebar a {
   display: block;
-  color: black;
+  color: #fff;
   padding: 16px;
-  text-decoration: none; }
+  text-decoration: none;
+  border-top: 1px solid #fff;
+  font-weight: 300;
+  font-size: 1.7rem; }
 
 .sidebar a.active {
   background-color: #4CAF50;
   color: white; }
 
 .sidebar a:hover:not(.active) {
-  background-color: #555;
-  color: white; }
+  background-color: #42ccae;
+  color: black;
+  font-weight: 600; }
 
 div.content {
   margin-left: 220px;
@@ -601,6 +613,34 @@ div.content {
     margin-left: 5px; }
     .dashboard-info h4 {
       width: 100%; }
+
+.dashboard-project {
+  width: 100%;
+  height: auto; }
+  .dashboard-project-image {
+    width: 20%;
+    height: 100%;
+    float: left; }
+    .dashboard-project-image img {
+      object-fit: contain;
+      height: 100%;
+      width: 100%;
+      padding: 10px 10px 10px 0px; }
+  .dashboard-project-shortDes {
+    width: 60%;
+    height: 100%;
+    float: left;
+    padding: 10px 10px 10px 0px; }
+    .dashboard-project-shortDes .name {
+      font-size: 2rem;
+      font-weight: 600; }
+  .dashboard-project-crud {
+    width: 20%;
+    height: 100%;
+    float: left;
+    padding: 10px 10px 10px 0px; }
+    .dashboard-project-crud-m {
+      margin-top: 20px; }
 
 .create-btn {
   width: 100%;
