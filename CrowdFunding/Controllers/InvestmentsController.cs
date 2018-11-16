@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CrowdFunding.Controllers
 {
+    [Authorize(Roles ="Investor")]
     public class InvestmentsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -78,7 +79,6 @@ namespace CrowdFunding.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Investor")]
         public async Task<IActionResult> Create(InvestmentViewModel model)
         {
             string userId = _userManager.GetUserId(HttpContext.User);

@@ -365,6 +365,10 @@ a:hover, a:active, a:link, a:visited {
     .product-back a {
       color: #fff; }
 
+.fixed {
+  position: fixed;
+  top: 10px; }
+
 .investment {
   width: 70%;
   margin: auto;
@@ -548,19 +552,23 @@ a:hover, a:active, a:link, a:visited {
   margin: 0;
   padding: 0;
   width: 220px;
-  background-color: #333;
+  background-color: #fff;
   position: fixed;
   height: 100%;
   overflow: auto; }
 
 .sidebar a {
   display: block;
-  color: #fff;
+  color: #000;
   padding: 16px;
   text-decoration: none;
-  border-top: 1px solid #fff;
+  border-bottom: 1px solid #42ccae;
   font-weight: 300;
   font-size: 1.7rem; }
+  .sidebar a:last-child {
+    border-bottom: none; }
+  .sidebar a i {
+    font-size: 6rem; }
 
 .sidebar a.active {
   background-color: #4CAF50;

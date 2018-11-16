@@ -53,12 +53,23 @@ namespace CrowdFunding.Controllers
 
             return View(company);
         }
+             
 
-        // GET: Companies/Create
-        public IActionResult Create()
+        public IActionResult SelectType()
         {
-            ViewData["CompanyTypeId"] = new SelectList(_context.CompanyTypes, "Id", "TypeName");
+            ViewData["CompanyTypes"] = new SelectList(_context.CompanyTypes, "Id", "TypeName");
             return View();
+        }
+
+
+        [HttpPost]
+        public IActionResult Create(CompanyType model)
+        {
+            var company = new Company
+            {
+                CompanyTypeId = model.Id
+            };
+            return View(company);
         }
 
         // POST: Companies/Create
@@ -66,7 +77,7 @@ namespace CrowdFunding.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Company model)
+        public async Task<IActionResult> CreatePost(Company model)
         {
             if (ModelState.IsValid)
             {

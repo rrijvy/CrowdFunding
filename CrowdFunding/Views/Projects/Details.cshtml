@@ -22,7 +22,7 @@
         {
             <img src="~/images/@title/@Model.Image3" />
         }
-        
+
     </div>
     <div class="product-back">
         <div class="product-back-p">
@@ -32,12 +32,36 @@
         <div class="product-back-p">
             <p class="product-back-p-1">@Model.TotalBacker</p>
             <p class="product-back-p-2">backers</p>
-        </div>   
+        </div>
         <div class="product-back-p">
             <p class="product-back-p-1">@Model.DaysLeft</p>
             <p class="product-back-p-2">days to go</p>
         </div>
-        
+
         <a href="/Investments/Create/@Model.Id" class="product-back-button">Back this project</a>
     </div>
 </div>
+
+
+@section Scripts{
+    <script>
+        var projectBackOffsetTop = $('.product-back').offset().top;
+
+        $('.product-back').wrap('<div class="placeholder"></div>');
+        
+        var projectBackOffsetLeft = $('.product-back').offset().left;
+        $(window).scroll(function () {
+            var scrollPos = window.pageYOffset;
+
+            if (scrollPos >= projectBackOffsetTop) {
+                $('.product-back').addClass('fixed');
+                $('.fixed').css("left", projectBackOffsetLeft);
+            } else {
+                $('.product-back').removeClass('fixed');
+            }
+        });
+
+
+
+    </script>
+}

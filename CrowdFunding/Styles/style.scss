@@ -519,6 +519,11 @@ a:hover, a:active, a:link, a:visited {
     }
 }
 
+.fixed {
+    position: fixed;
+    top: 10px;
+}
+
 
 
 ///---- Investment ----////
@@ -808,7 +813,7 @@ a:hover, a:active, a:link, a:visited {
     margin: 0;
     padding: 0;
     width: 220px;
-    background-color: #333;
+    background-color: #fff;
     position: fixed;
     height: 100%;
     overflow: auto;
@@ -816,12 +821,20 @@ a:hover, a:active, a:link, a:visited {
 
 .sidebar a {
     display: block;
-    color: #fff;
+    color: #000;
     padding: 16px;
     text-decoration: none;
-    border-top: 1px solid #fff;
+    border-bottom: 1px solid #42ccae;
     font-weight: 300;
     font-size: 1.7rem;
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    i {
+        font-size: 6rem;
+    }
 }
 
 .sidebar a.active {
@@ -833,7 +846,6 @@ a:hover, a:active, a:link, a:visited {
     background-color: #42ccae;
     color: black;
     font-weight: 600;
-
 }
 
 div.content {
@@ -920,7 +932,7 @@ div.content {
         float: left;
         padding: 10px 10px 10px 0px;
 
-        .name{
+        .name {
             font-size: 2rem;
             font-weight: 600;
         }
@@ -932,8 +944,9 @@ div.content {
         height: 100%;
         float: left;
         padding: 10px 10px 10px 0px;
-        &-m{
-            margin-top:20px;
+
+        &-m {
+            margin-top: 20px;
         }
     }
 }
@@ -990,3 +1003,5 @@ div.content {
 .group {
     zoom: 1; /* For IE 6/7 (trigger hasLayout) */
 }
+
+

@@ -6,7 +6,7 @@
 
 
 <div class="create">
-    
+
     <div class="create-items">
         <p>Have an account? <a class="create-project-login" href="/Identity/Account/Login">Log In</a></p>
         <hr />
@@ -20,14 +20,9 @@
                 @*<span asp-validation-for="Name" class="text-danger"></span>*@
             </div>
 
-            <input asp-for="ProjectCategoryId" value="@Model.ProjectCategoryId" hidden/>
-            <input asp-for="ProjectShortDescription" value="@Model.ProjectShortDescription"  hidden/>
+            <input asp-for="ProjectCategoryId" value="@Model.ProjectCategoryId" hidden />
+            <input asp-for="ProjectShortDescription" value="@Model.ProjectShortDescription" hidden />
 
-            @*<div class="form-group">
-            <label asp-for="DetailDescription" class="control-label"></label>
-            <input asp-for="DetailDescription" class="form-control" />
-            <span asp-validation-for="DetailDescription" class="text-danger"></span>
-        </div>*@
 
 
 
@@ -66,40 +61,6 @@
                 <span asp-validation-for="EndingDate" class="text-danger"></span>
             </div>
 
-
-            @*<div class="form-group">
-            <label asp-for="Image1" class="control-label"></label>
-            <input asp-for="Image1" id="imagePath1" class="form-control" />
-            <span asp-validation-for="Image1" class="text-danger"></span>
-            <input type="file" id="files1"
-                   name="files" multiple />
-            <input type="button"
-                   id="upload1"
-                   value="Upload Selected Files" />
-        </div>
-        <div class="form-group">
-            <label asp-for="Image2" class="control-label"></label>
-            <input asp-for="Image2" id="imagePath2" class="form-control" />
-            <span asp-validation-for="Image2" class="text-danger"></span>
-            <input type="file" id="files2"
-                   name="files" multiple />
-            <input type="button"
-                   id="upload2"
-                   value="Upload Selected Files" />
-        </div>
-        <div class="form-group">
-            <label asp-for="Image3" class="control-label"></label>
-            <input asp-for="Image3" id="imagePath3" class="form-control" />
-            <span asp-validation-for="Image3" class="text-danger"></span>
-            <input type="file" id="files3"
-                   name="files" multiple />
-            <input type="button"
-                   id="upload3"
-                   value="Upload Selected Files" />
-        </div>*@
-
-
-
             <div class="form-group">
                 <label asp-for="CompanyId" class="control-label"></label>
                 <select asp-for="CompanyId" class="form-control" asp-items="ViewBag.CompanyId"></select>
@@ -114,105 +75,12 @@
     </div>
 </div>
 
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
+@{
 
-        <script>
-
-             $(document).ready(function () {
-                $("#upload1").click(function (evt) {
-                    var fileUpload = $("#files1").get(0);
-                    var files = fileUpload.files;
-                    var data = new FormData();
-                    for (var i = 0; i < files.length; i++) {
-                        data.append(files[i].name, files[i]);
-                    }
-                    $.ajax({
-                        type: "POST",
-                        url: "/home/UploadFilesAjax",
-                        contentType: false,
-                        processData: false,
-                        data: data,
-                        success: function (location) {
-                            //alert(location);
-                            $("#imagePath1").val(location);
-
-                            //console.log(location);
-                            //$("#divId").append(location);
-                            //
-
-                        },
-                        error: function () {
-                            alert("There was error uploading files!");
-                        }
-                    });
-                 });
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
 
 
 
 
-                 $("#upload2").click(function (evt) {
-                     var fileUpload = $("#files2").get(0);
-                     var files = fileUpload.files;
-                     var data = new FormData();
-                     for (var i = 0; i < files.length; i++) {
-                         data.append(files[i].name, files[i]);
-                     }
-                     $.ajax({
-                         type: "POST",
-                         url: "/home/UploadFilesAjax",
-                         contentType: false,
-                         processData: false,
-                         data: data,
-                         success: function (location) {
-                             //alert(location);
-                             $("#imagePath2").val(location);
-
-                             //console.log(location);
-                             //$("#divId").append(location);
-                             //
-
-                         },
-                         error: function () {
-                             alert("There was error uploading files!");
-                         }
-                     });
-                 });
-
-
-
-
-                 $("#upload3").click(function (evt) {
-                     var fileUpload = $("#files3").get(0);
-                     var files = fileUpload.files;
-                     var data = new FormData();
-                     for (var i = 0; i < files.length; i++) {
-                         data.append(files[i].name, files[i]);
-                     }
-                     $.ajax({
-                         type: "POST",
-                         url: "/home/UploadFilesAjax",
-                         contentType: false,
-                         processData: false,
-                         data: data,
-                         success: function (location) {
-                             //alert(location);
-                             $("#imagePath3").val(location);
-
-                             //console.log(location);
-                             //$("#divId").append(location);
-                             //
-
-                         },
-                         error: function () {
-                             alert("There was error uploading files!");
-                         }
-                     });
-                 });
-
-
-             });
-
-        </script>
-    }
