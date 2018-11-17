@@ -4,6 +4,10 @@ namespace CrowdFunding.Models
 {
     public class Investment
     {
+        public Investment()
+        {
+            IsApproved = false;
+        }
         public int Id { get; set; }
 
         public string InvestmentRegNo { get; set; }
