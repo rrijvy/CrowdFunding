@@ -46,14 +46,12 @@
 @section Scripts{
     <script>
         var projectBackOffsetTop = $('.product-back').offset().top;
-
-        $('.product-back').wrap('<div class="placeholder"></div>');
         
         var projectBackOffsetLeft = $('.product-back').offset().left;
         $(window).scroll(function () {
             var scrollPos = window.pageYOffset;
 
-            if (scrollPos >= projectBackOffsetTop) {
+            if (scrollPos >= (projectBackOffsetTop)) {
                 $('.product-back').addClass('fixed');
                 $('.fixed').css("left", projectBackOffsetLeft);
             } else {

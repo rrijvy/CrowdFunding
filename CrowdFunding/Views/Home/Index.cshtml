@@ -129,7 +129,6 @@
 
                     $.each(response, function (i, item) {
                         var url = "/images/" + item.projectTitle.replace(/\s/g, '') + "/" + item.image1.replace(/\s/g, '');
-                        console.log(url);
                         str += "<ul> <li class=" + "group" + "> ";
                         str += "<div class=" + "category-projects-box-list-image" + "> <img src=" + url + " /> </div>";
                         str += "<div class=" + "category-projects-box-list-info" + ">";

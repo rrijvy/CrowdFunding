@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using CrowdFunding.Data;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -13,21 +17,24 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CrowdFunding.Areas.Identity.Pages.Account.Manage
 {
-    public partial class IndexModel : PageModel
+    public class IndexModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IHostingEnvironment _environment;
         private readonly IEmailSender _emailSender;
         private readonly ApplicationDbContext _context;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
+            IHostingEnvironment environment,
             ApplicationDbContext context,
             IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _environment = environment;
             _emailSender = emailSender;
             _context = context;
         }
@@ -105,7 +112,7 @@ namespace CrowdFunding.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(IFormFile userAvater)
         {
             if (!ModelState.IsValid)
             {
@@ -116,6 +123,23 @@ namespace CrowdFunding.Areas.Identity.Pages.Account.Manage
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+
+            if (!(userAvater == null))
+            {
+                var fileName = ContentDispositionHeaderValue.Parse(userAvater.ContentDisposition).FileName.Trim('"').Replace(" ", string.Empty);
+                var fileExtension = Path.GetExtension(userAvater.FileName).ToLower();
+                if ((fileExtension == ".jpg") || (fileExtension == ".jpeg") || (fileExtension == ".png") || (fileExtension == ".bmp"))
+                {
+                    using (var stream = new FileStream(GetPath(fileName, user.Email), FileMode.Create))
+                    {
+                        await userAvater.CopyToAsync(stream);
+                    }
+                }
+                    
+
+                user.Image = fileName;
             }
 
             user.FName = Input.FName;
@@ -188,6 +212,17 @@ namespace CrowdFunding.Areas.Identity.Pages.Account.Manage
 
             StatusMessage = "Verification email sent. Please check your email.";
             return RedirectToPage();
+        }
+
+        private string GetPath(string fileName, string userEmail)
+        {
+            string path = _environment.WebRootPath + "\\images\\" + userEmail + "\\";
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            return path + fileName;
         }
     }
 }

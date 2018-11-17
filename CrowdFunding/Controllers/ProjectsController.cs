@@ -16,7 +16,6 @@ using Microsoft.AspNetCore.Identity;
 using System.Net.Http.Headers;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore.Query;
 
 namespace CrowdFunding.Controllers
 {
@@ -220,7 +219,7 @@ namespace CrowdFunding.Controllers
             {
                 string fileName = ContentDispositionHeaderValue.Parse(item.ContentDisposition).FileName.Trim('"').Replace(" ", string.Empty);
                 string sFileExtension = Path.GetExtension(item.FileName).ToLower();
-                if((sFileExtension == ".jpg")|| (sFileExtension == ".JPGE") || (sFileExtension == ".PNG") || (sFileExtension == ".JPG") || (sFileExtension == ".png"))
+                if((sFileExtension == ".jpg")|| (sFileExtension == ".jpge") || (sFileExtension == ".png") || (sFileExtension == ".bmp"))
                 {
                     using (var stream = new FileStream(GetPath(fileName, project.ProjectTitle), FileMode.Create))
                     {
@@ -455,7 +454,7 @@ namespace CrowdFunding.Controllers
             return View(projects);
         }
 
-
+        [Authorize(Roles ="Investor")]
         public async Task<IActionResult> BakcedProject()
         {
             List<BackedProjectViewModel> BackedProjectList = new List<BackedProjectViewModel>();

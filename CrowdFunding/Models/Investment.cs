@@ -16,6 +16,7 @@ namespace CrowdFunding.Models
 
         public string InvestorId { get; set; }
 
+        public bool IsApproved { get; set; }
 
         [ForeignKey("ProjectId")]
         public Project Project { get; set; }

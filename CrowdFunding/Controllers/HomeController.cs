@@ -11,6 +11,8 @@ using System.IO;
 using System.Net.Http.Headers;
 using CrowdFunding.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 
 namespace CrowdFunding.Controllers
 {
@@ -19,13 +21,13 @@ namespace CrowdFunding.Controllers
 
         private readonly ApplicationDbContext _context;
         private readonly IHostingEnvironment _environment;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-
-
-        public HomeController(ApplicationDbContext context, IHostingEnvironment environment)
+        public HomeController(ApplicationDbContext context, IHostingEnvironment environment, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _environment = environment;
+            _userManager = userManager;
         }
         public IActionResult Index(int? categoryId)
         {
@@ -94,6 +96,38 @@ namespace CrowdFunding.Controllers
 
             //string message = $"{files.Count} file(s) / { size} bytes uploaded successfully!";
             return Json(location);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> UploadUserAvater(IFormFile userAvater)
+        {
+            if (!(userAvater == null))
+            {
+                var user = await _userManager.GetUserAsync(User);
+                var fileName = ContentDispositionHeaderValue.Parse(userAvater.ContentDisposition).FileName.Trim('"').Replace(" ", string.Empty);
+                var fileExtension = Path.GetExtension(userAvater.FileName).ToLower();
+
+                using (var stream = new FileStream(GetPath(fileName, user.Email), FileMode.Create))
+                {
+                    await userAvater.CopyToAsync(stream);
+                }
+
+                return Ok();
+            }
+            return BadRequest();
+            
+        }
+
+        private string GetPath(string fileName, string userEmail)
+        {
+            string path = _environment.WebRootPath + "\\images\\" + userEmail + "\\";
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            return path + fileName;
         }
     }
 }
