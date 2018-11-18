@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Investment>
+@{
+    ViewData["Title"] = "PendingFunds";
+    Layout = "~/Views/Shared/_LayoutAdminDashboard.cshtml";
+}
+
+<h2>PendingFunds</h2>
+<hr />
+
+<table class="schedule-table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.InvestmentRegNo)</th>
+            <th>@Html.DisplayNameFor(model => model.InvestmentTypeId)</th>
+            <th>@Html.DisplayNameFor(model => model.InvestorId)</th>
+            <th>@Html.DisplayNameFor(model => model.ProjectId)</th>
+            <th>@Html.DisplayNameFor(model => model.Amount)</th>
+            <th>@Html.DisplayNameFor(model => model.IsApproved)</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.InvestmentRegNo</td>
+                <td>@item.InvestmentType.Type</td>
+                <td>@item.Investor.Email</td>
+                <td>@item.Project.ProjectTitle</td>
+                <td>@item.Amount</td>
+                <td>
+                    <form id="post-form" action="/Admin/PendingFunds" method="post">
+                        <input type="text" name="Id" value="@item.Id" hidden />
+                        <input type="text" name="Amount" value="@item.Amount" hidden />
+                        <input type="text" name="InvestmentRegNo" value="@item.InvestmentRegNo" hidden />
+                        <input type="text" name="InvestmentTypeId" value="@item.InvestmentTypeId" hidden />
+                        <input type="text" name="InvestorId" value="@item.InvestorId" hidden />
+                        <input type="text" name="ProjectId" value="@item.ProjectId" hidden />
+                        <input type="text" name="IsApproved" value="true" hidden />
+                        <input id="post-form-btn" class="btn" style="background-color:#42ccae;color:#fff" type="submit" value="Approve"/>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section Scripts{
+    <script>
+        $('#post-form').on('submit', function (e) {
+            e.preventDefault();
+            var action = $(this).attr('action');
+            var fdata = $(this).serialize();
+            $.ajax({
+                url: action,
+                data: fdata,
+                type: 'POST'
+            });
+
+            $('#post-form-btn').attr('value', 'Approved');
+            $('#post-form-btn').attr('disabled');
+            $('#post-form-btn').css('background-color', '#fff');
+            $('#post-form-btn').css('color', '#000');
+
+
+        }); //end off post-btn
+    </script>
+}

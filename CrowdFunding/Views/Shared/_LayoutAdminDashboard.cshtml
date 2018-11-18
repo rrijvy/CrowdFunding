@@ -18,7 +18,7 @@
         <link href="~/css/style.css" rel="stylesheet" />
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     </environment>
-    <environment exclude="Development">
+    <environment exclude="Development">        
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
@@ -42,7 +42,7 @@
     </div>
     <div class="sidebar">
         <a href="/Home"><i class="fas fa-house-damage"></i></a>
-        <a href="#">Pending funds</a>
+        <a href="/Admin/PendingFunds">Pending funds</a>
         <a href="#">Pending Companies</a>
         <a href="#contact">Pending projects</a>
         <a href="#">Projects you back</a>
@@ -58,7 +58,7 @@
     </div>
 
 
-    <environment include="Development">
+    <environment include="Development">        
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>

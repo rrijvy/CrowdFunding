@@ -2,12 +2,13 @@
 @{
     ViewData["Title"] = "ShowProjectByCategory";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    
 }
 
 <div class="project-list group">
     @foreach (var item in Model)
     {
-
+        var widthOfBar = (item.Funded * 100) / item.PledgedAmount;
         string title = item.ProjectTitle.Replace(" ", string.Empty);
 
         <div class="project-list-item">
@@ -20,13 +21,13 @@
                 </div>
                 <div class="project-list-item-info-2">
                     <div class="w3-border">
-                        <div class="w3-grey" style="height:5px;width:20%"></div>
+                        <div class="w3-grey" style="height:5px;width:@widthOfBar%"></div>
                     </div>
-                    <p class="project-list-item-info-pledged">@item.PledgedAmount pledged</p>
-                    <p>@item.Funded</p>
+                    <p class="project-list-item-info-pledged">Pledged of taka @item.PledgedAmount goal.</p>
+                    <p>@item.Funded funded.</p>
                     <p>@item.DaysLeft days to go.</p>
                     <p>
-                        <span>@item.CompanyName</span> <span>@item.CountryName</span>
+                        <span>@item.CompanyName</span> <span>||</span> <span>@item.CountryName</span>
                     </p>
                 </div>
             </div>

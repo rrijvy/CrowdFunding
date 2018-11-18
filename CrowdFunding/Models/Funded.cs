@@ -17,9 +17,7 @@ namespace CrowdFunding.Models
         public double RaisedAmount { get; set; }
 
         public bool IsLive { get; set; }
-
         
-
         [ForeignKey("InvestmentId")]
         public Investment Investment { get; set; }
 

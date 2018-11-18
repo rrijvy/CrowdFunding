@@ -17,15 +17,15 @@ namespace CrowdFunding.Services
 
         public int Backers(int projectId)
         {
-            var backer = _context.Fundeds.Where(x => x.Id == projectId).ToList();
-            var totalBacker = backer.Count;
+            var backer = _context.Fundeds.Where(x => x.ProjectId == projectId).ToList();
+            var totalBacker = backer.Count();
             return totalBacker;
         }
 
         public double FundedAmount(int projectId)
         {
-            var funds = _context.Fundeds.Where(x => x.Id == projectId).ToList();
-            var totalFunded = funds.Select(x => x.Amount).Count();
+            var funds = _context.Fundeds.Where(x => x.ProjectId == projectId).ToList();
+            var totalFunded = funds.Sum(x => x.Amount);
             return totalFunded;
         }
 
