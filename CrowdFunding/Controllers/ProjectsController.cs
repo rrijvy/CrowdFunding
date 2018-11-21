@@ -137,14 +137,15 @@ namespace CrowdFunding.Controllers
 
 
         [HttpPost]
-        public IActionResult Create(Project model)
+        public async Task<IActionResult> Create(Project model)
         {
             var project = new Project
             {
                 ProjectShortDescription = model.ProjectShortDescription,
                 ProjectCategoryId = model.ProjectCategoryId
             };
-            ViewData["CompanyId"] = new SelectList(_context.Companies, "Id", "Name");
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            ViewData["CompanyId"] = new SelectList(_context.Companies.Where(x => x.EntrepreneurId == (user.Id).ToString()), "Id", "Name");
             return View(project);
         }
 
