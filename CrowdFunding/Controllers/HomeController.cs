@@ -34,13 +34,23 @@ namespace CrowdFunding.Controllers
             var projectCategories = _context.ProjectCategory.ToList();
             var projects = _context.Projects.Where(x => x.ProjectCategoryId == categoryId).ToList();
             var fileProjects = _context.Projects.Where(x => x.ProjectCategoryId == 1).ToList();
-
+                 
             var inputViewModel = new HomeIndexVIewModel
             {
                 ProjectCategories = projectCategories,
                 Projects = projects,
                 FileProjects = fileProjects
             };
+
+            if (categoryId == null)
+            {
+                inputViewModel.LastProject = _context.Projects.Where(x => x.ProjectCategoryId == 1).LastOrDefault();
+            }
+            else
+            {
+                inputViewModel.LastProject = _context.Projects.Where(x => x.ProjectCategoryId == categoryId).LastOrDefault();
+            }            
+
             return View(inputViewModel);
         }
 
@@ -97,6 +107,13 @@ namespace CrowdFunding.Controllers
             //string message = $"{files.Count} file(s) / { size} bytes uploaded successfully!";
             return Json(location);
         }
+
+        public IActionResult RemindProject(int id)
+        {
+
+            return Ok();
+        }
+
 
 
         [HttpPost]

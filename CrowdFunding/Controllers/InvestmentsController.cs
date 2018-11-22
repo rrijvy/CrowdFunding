@@ -92,7 +92,7 @@ namespace CrowdFunding.Controllers
             string regNo = _customizedId.InvestmentRegNo(model, userId);
             investment.InvestmentRegNo = regNo;
 
-            await _context.Investments.AddAsync(investment);
+            _context.Investments.Add(investment);
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));

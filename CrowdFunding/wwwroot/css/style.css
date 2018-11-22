@@ -2,9 +2,9 @@ body {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: 'Lato', sans-serif;
-  font-weight: 400;
-  font-size: 16px; }
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 300;
+  font-size: 18px; }
 
 footer {
   background-color: #333;
@@ -33,9 +33,19 @@ footer {
   top: 50%;
   transform: translateY(50%); }
 
+p {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  color: #333; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Raleway', sans-serif; }
+
 h1 {
-  font-family: 'Raleway', sans-serif;
   font-weight: 500; }
+
+h2, h3, h4, h5, h6, h7 {
+  font-weight: 300; }
 
 a {
   text-decoration: none;
@@ -45,9 +55,9 @@ a {
   width: 100%;
   padding: 10px; }
 
-a:hover, a:active, a:link, a:visited {
+a:active, a:link, a:visited {
   text-decoration: none;
-  color: #333333; }
+  color: #111; }
 
 #boder-radious-zero {
   border-radius: 0px; }
@@ -56,25 +66,32 @@ a:hover, a:active, a:link, a:visited {
   padding: 0; }
 
 .btn {
-  border-radius: 0px; }
+  border-radius: 0px;
+  text-transform: none; }
   .btn-reg {
     margin-top: 20px;
     background-color: #42ccae;
-    padding: 8px 40px 8px 14px; }
+    padding: 8px 40px 8px 14px;
+    text-transform: none; }
   .btn-default {
     padding: 8px 20px;
     color: #fff;
     background-color: #42ccae;
-    border: none; }
+    border: none;
+    text-transform: none; }
 
 #nav {
   background-color: #fff;
   top: 40px;
   transition: top 0.3s;
-  font-family: 'Lato', sans-serif; }
+  height: 50px; }
   #nav-bar {
     width: 75%;
     margin: auto; }
+  #nav-list a {
+    font-weight: 600;
+    color: #555;
+    text-transform: uppercase; }
   #nav-list :hover {
     background-color: #42ccae;
     color: #fff; }
@@ -229,17 +246,21 @@ a:hover, a:active, a:link, a:visited {
   .category-projects-big {
     width: 50%;
     float: left;
-    height: 100%; }
+    height: 100%;
+    position: relative; }
+    .category-projects-big-favourite {
+      top: 20px;
+      right: 20px; }
     .category-projects-big img {
       width: 100%;
-      height: 100%;
+      height: 70%;
       object-fit: cover;
       overflow: hidden; }
   .category-projects-box {
     height: 100%;
     width: 50%;
     float: left;
-    font-size: 13px; }
+    font-size: 15px; }
     .category-projects-box-list {
       width: 100%;
       height: 85%;
@@ -249,7 +270,7 @@ a:hover, a:active, a:link, a:visited {
         list-style: none;
         width: 100%; }
         .category-projects-box-list ul li {
-          border-bottom: 1px solid; }
+          border-bottom: 1px solid #ddd; }
           .category-projects-box-list ul li .group:last-child {
             border-bottom: none; }
       .category-projects-box-list-image {
@@ -263,7 +284,13 @@ a:hover, a:active, a:link, a:visited {
           object-fit: contain; }
       .category-projects-box-list-info {
         width: 70%;
-        float: left; }
+        float: left;
+        position: relative; }
+        .category-projects-box-list-info-favourite {
+          bottom: 5px;
+          right: 5px; }
+          .category-projects-box-list-info-favourite i {
+            font-weight: 500; }
     .category-projects-box-all {
       padding: 50px 0px 0px 40px; }
       .category-projects-box-all a {
@@ -313,11 +340,15 @@ a:hover, a:active, a:link, a:visited {
     .project-list-item-img {
       height: 250px;
       width: 100%;
-      overflow: hidden; }
+      overflow: hidden;
+      position: relative; }
       .project-list-item-img img {
         object-fit: cover;
         height: 250px;
         width: 100%; }
+      .project-list-item-img-favourite {
+        top: 20px;
+        right: 30px; }
     .project-list-item-info {
       padding: 3rem;
       height: 62%;
@@ -688,6 +719,26 @@ div.content {
   .schedule-table th {
     background-color: #333;
     color: white; }
+
+#favourite {
+  position: absolute;
+  border-radius: 50%;
+  border: none;
+  font-size: 12px;
+  padding: 8px 10px;
+  background: #999;
+  color: #fff; }
+  #favourite:hover {
+    background-color: transparent;
+    color: #42ccae; }
+
+.fund {
+  font-size: 13px;
+  font-weight: 600; }
+
+a:hover h1, a:hover h2, a:hover h3, a:hover h4, a:hover h5, a:hover h6 {
+  text-decoration: underline;
+  text-decoration-color: #777; }
 
 .create-btn {
   width: 100%;

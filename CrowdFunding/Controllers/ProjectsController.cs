@@ -97,10 +97,11 @@ namespace CrowdFunding.Controllers
             return View(projectViewModel);
         }
 
-        
-        public IActionResult CreateProject()
+        [Authorize(Roles = "Entreprenuer")]
+        public async Task<IActionResult> CreateProject()
         {
-            var userId = _userManager.GetUserId(HttpContext.User);
+            var user = await _userManager.GetUserAsync(User);
+            var userId = user.Id;
 
             var companies = _context.Companies.Where(x => x.EntrepreneurId == userId);
 
@@ -112,20 +113,20 @@ namespace CrowdFunding.Controllers
             }
 
             if (company.Id == 0)
-                return RedirectToAction("Create", "Companies");
+                return RedirectToAction("SelectType", "Companies");
 
             return View();
         }
 
-
+        [Authorize(Roles = "Entreprenuer")]
         public IActionResult SelectCategory()
         {
             ViewData["ProjectCategory"] = new SelectList(_context.ProjectCategory, "Id", "Type");
             return View();
         }
-
-
+        
         [HttpPost]
+        [Authorize(Roles = "Entreprenuer")]
         public IActionResult ShortDescription(ProjectCategory projectCategory)
         {
             var project = new Project
@@ -137,6 +138,7 @@ namespace CrowdFunding.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "Entreprenuer")]
         public async Task<IActionResult> Create(Project model)
         {
             var project = new Project
@@ -152,6 +154,7 @@ namespace CrowdFunding.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Entreprenuer")]
         public async Task<IActionResult> CreatePost([Bind("Id,Name,ProjectShortDescription,ProjectCategoryId,ProjectTitle,NeededFund,StartingDate,EndingDate,CompanyId")] Project model)
         {
             var project = new Project
@@ -169,9 +172,10 @@ namespace CrowdFunding.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("ProjectDashboard", new { id = project.Id });
         }
-        
-        
+
+
         //Get projectdashboard
+        [Authorize(Roles = "Entreprenuer")]
         public async Task<IActionResult> ProjectDashboard(int? id)
         {
             var proj = _context.Projects.Where(x => x.Id == id).Include(x => x.Company);
@@ -207,6 +211,7 @@ namespace CrowdFunding.Controllers
         //post projectdashboard
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Entreprenuer")]
         public async Task<IActionResult> ProjectDashboard(int id, List<IFormFile> files, [Bind("Id,Name,ProjectShortDescription,DetailDescription,ProjectTitle,IsRunning,IsCompleted,NeededFund,StartingDate,EndingDate,CompanyId,ProjectCategoryId")] Project project)
         {
             if (id != project.Id)
@@ -293,6 +298,7 @@ namespace CrowdFunding.Controllers
 
 
         // GET: Projects/Edit/5
+        [Authorize(Roles = "Entreprenuer")]
         public async Task<IActionResult> Edit(int? id)
         {        
             var proj = _context.Projects.Where(x => x.Id == id).Include(x => x.Company);
@@ -329,6 +335,7 @@ namespace CrowdFunding.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Entreprenuer")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ProjectShortDescription,DetailDescription,ProjectTitle,IsRunning,IsCompleted,NeededFund,StartingDate,EndingDate,Image1,Image2,Image3,CompanyId,ProjectCategoryId")] Project project)
         {
             if (id != project.Id)
@@ -363,6 +370,7 @@ namespace CrowdFunding.Controllers
 
 
         // GET: Projects/Delete/5
+        [Authorize(Roles = "Entreprenuer")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -386,6 +394,7 @@ namespace CrowdFunding.Controllers
         // POST: Projects/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Entreprenuer")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var project = await _context.Projects.FindAsync(id);
@@ -394,21 +403,18 @@ namespace CrowdFunding.Controllers
             return RedirectToAction(nameof(Index));
         }
         
-
         private bool ProjectExists(int id)
         {
             return _context.Projects.Any(e => e.Id == id);
         }
         
-
         [AllowAnonymous]
         public IActionResult ShowByCategory(int id)
         {
             var projects = _context.Projects.Where(x => x.ProjectCategoryId == id).ToList();
             return Json(projects);
         }
-
-
+        
         [AllowAnonymous]
         public IActionResult ShowProjectByCategory(int id)
         {
@@ -442,6 +448,7 @@ namespace CrowdFunding.Controllers
             return View(projectList);
         }
 
+        [Authorize(Roles = "Entreprenuer")]
         public async Task<IActionResult> UserProject()
         {
             var user = await _userManager.GetUserAsync(User);

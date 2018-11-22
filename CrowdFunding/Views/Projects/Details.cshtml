@@ -1,5 +1,7 @@
 ﻿@model ProjectViewModel
 
+@inject IAuthorizationService AuthorizationService
+
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -37,8 +39,11 @@
             <p class="product-back-p-1">@Model.DaysLeft</p>
             <p class="product-back-p-2">days to go</p>
         </div>
+        @if ((await AuthorizationService.AuthorizeAsync(User, "Investor")).Succeeded)
+        {
+            <a href="/Investments/Create/@Model.Id" class="product-back-button">Back this project</a>
+        }
 
-        <a href="/Investments/Create/@Model.Id" class="product-back-button">Back this project</a>
     </div>
 </div>
 

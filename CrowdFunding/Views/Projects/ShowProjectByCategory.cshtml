@@ -12,7 +12,12 @@
         string title = item.ProjectTitle.Replace(" ", string.Empty);
 
         <div class="project-list-item">
-            <div class="project-list-item-img"><img src="~/images/@title/@item.Image" /></div>
+            <div class="project-list-item-img">
+                <img src="~/images/@title/@item.Image" />
+                <button id="favourite" class="project-list-item-img-favourite" value="@item.Id">
+                    <i class="far fa-heart"></i>
+                </button>
+            </div>
             <div class="project-list-item-info">
                 <div class="project-list-item-info-1">
                     <a href="/Projects/Details/@item.Id"><h4>@item.Name</h4></a>
@@ -27,7 +32,7 @@
                     <p>@item.Funded funded.</p>
                     <p>@item.DaysLeft days to go.</p>
                     <p>
-                        <span>@item.CompanyName</span> <span>||</span> <span>@item.CountryName</span>
+                        <span>@item.CompanyName  </span> <span> || </span> <span><i class="fas fa-map-marker-alt"></i>  @item.CountryName</span>
                     </p>
                 </div>
             </div>

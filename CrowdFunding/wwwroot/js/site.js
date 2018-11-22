@@ -11,5 +11,19 @@
         }
         prevPosition = newPosition;
     };
+
+
+    $('#favourite').on("click", function () {
+        var projectId = $(this).val();
+        console.log(projectId);
+        var url = '/Home/RemindProject/' + projectId;
+        $.ajax({
+            url: url,
+            cache: false,
+            dataType: "JSON",
+            contentType: "application/x-www-form-urlencoded",
+            type: 'GET'
+        });
+    });
 });
 

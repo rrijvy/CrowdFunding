@@ -7,7 +7,7 @@
     <div class="ownCarousel">
         <div class="mySlides" id="mySlides-1">
             <div class="centered">
-                <h1>Asking the crowd for money in return for products, experiences, promotional items or some other form of perks.</h1>  
+                <h1>Asking the crowd for money in return for products, experiences, promotional items or some other form of perks.</h1>
                 <partial name="_StartProjectPartial" />
             </div>
         </div>
@@ -40,7 +40,14 @@
     </div>
     <div class="category-projects group">
         <div class="category-projects-big">
-            <img src="~/images/img-4.jpg" alt="project image" />
+            <img src="~/images/@Model.LastProject.ProjectTitle.Replace(" ",string.Empty)/@Model.LastProject.Image1" alt="project image" />
+            <button id="favourite" class="category-projects-big-favourite" value="@Model.LastProject.Id">
+                <i class="far fa-heart"></i>
+            </button>
+            <div class="category-projects-big-info">
+                <a href="/Projects/Details/@Model.LastProject.Id"><h2>@Model.LastProject.Name</h2></a>
+                <p>@Model.LastProject.ProjectShortDescription</p>
+            </div>
         </div>
 
         <div class="category-projects-box">
@@ -56,7 +63,10 @@
                             <div class="category-projects-box-list-info">
                                 <a href="/Projects/Details/@item.Id"><h4>@item.Name</h4></a>
                                 <p>@item.ProjectShortDescription</p>
-                                <p>@item.NeededFund</p>
+                                <p class="fund">Pledged of taka @item.NeededFund goal</p>
+                                <button id="favourite" class="category-projects-box-list-info-favourite" value="@item.Id">
+                                    <i class="far fa-heart"></i>
+                                </button>
                             </div>
                         </li>
                     </ul>
@@ -125,17 +135,21 @@
                     var dvItems = $(".category-projects-box-list");
                     dvItems.html(" ");
                     var categoryId = 0;
-                    var str;
+                    var str, str2;
+                    var lastElement = response.length - 1;
+
 
                     $.each(response, function (i, item) {
                         var url = "/images/" + item.projectTitle.replace(/\s/g, '') + "/" + item.image1.replace(/\s/g, '');
-                        str += "<ul> <li class=" + "group" + "> ";
-                        str += "<div class=" + "category-projects-box-list-image" + "> <img src=" + url + " /> </div>";
-                        str += "<div class=" + "category-projects-box-list-info" + ">";
-                        str += "<h4><a href=" + "/Projects/Details/" + item.id + ">" + item.name + "</a></h4>";
-                        str += "<p>" + item.projectShortDescription + "</p>";
-                        str += "<p>" + item.neededFund + "</p>";
-                        str += "</div> </li> </ul>";
+                        str += '<ul> <li class="group"> ';
+                        str += '<div class="category-projects-box-list-image"> <img src=' + url + ' /> </div>';
+                        str += '<div class="category-projects-box-list-info">';
+                        str += '<h4><a href="/Projects/Details/' + item.id + '">' + item.name + '</a></h4>';
+                        str += '<p>' + item.projectShortDescription + '</p>';
+                        str += '<p class="fund">Pledged of taka ' + item.neededFund + ' goal</p>';
+                        str += '<button id="favourite" class="category-projects-box-list-info-favourite"><i class="far fa-heart"></i></button>';
+                        str += '</div> </li> </ul>';
+
                         categoryId = item.projectCategoryId;
                     });
 
@@ -148,10 +162,7 @@
                 }
             });
 
-        })
-
-
-
+        });
 
     </script>
 }

@@ -45,10 +45,21 @@ namespace CrowdFunding
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("EditProjectPolicy", policy => 
-                
+                options.AddPolicy("EditProjectPolicy", policy =>                 
                 {
                     policy.Requirements.Add(new CheckProjectUserId());
+                });
+                options.AddPolicy("Investor", policy =>
+                {
+                    policy.RequireRole("Investor");
+                });
+                options.AddPolicy("Entrepreneur", policy =>
+                {
+                    policy.RequireRole("Entrepreneur");
+                });
+                options.AddPolicy("Admin", policy =>
+                {
+                    policy.RequireRole("Admin");
                 });
             });
 
