@@ -486,6 +486,40 @@ namespace CrowdFunding.Controllers
             return View(BackedProjectList);
         }
 
+        public async Task<IActionResult> LovedProjects()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            List<LovedProjectsViewModel> lovedProjects = new List<LovedProjectsViewModel>();
+            var favourites = _context.Favourites.Where(x => x.UserId == user.Id).ToList();            
+            foreach (var item in favourites)
+            {
+                var projects = _context.Projects.Find(item.ProjectId);
+                var lovedProjectsViewModel = new LovedProjectsViewModel
+                {
+                    ProjectId = projects.Id,
+                    Name = projects.Name,
+                    ShortDescription = projects.ProjectShortDescription,
+                    StartingDate = projects.StartingDate,
+                    EndingDate = projects.EndingDate,
+                    Image = projects.Image1,
+                    NeededFund = projects.NeededFund,
+                    ProjectTitle = projects.ProjectTitle,
+                    FavouriteId = item.Id
+                };
+                lovedProjects.Add(lovedProjectsViewModel);
+
+            }
+            return View(lovedProjects);
+        }
+
+        public IActionResult DeleteFavourite(int id)
+        {
+            var deleteItem = _context.Favourites.Find(id);
+            _context.Favourites.Remove(deleteItem);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(LovedProjects));
+        }
+
 
         private string GetPath(string fileName, string projectTitle)
         {

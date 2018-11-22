@@ -1000,6 +1000,7 @@ div.content {
 .dashboard-project {
     width: 100%;
     height: auto;
+    font-size: 14px;
 
     &-image {
         width: 20%;
@@ -1007,8 +1008,8 @@ div.content {
         float: left;
 
         img {
-            object-fit: contain;
-            height: 100%;
+            object-fit: cover;
+            height: 160px;
             width: 100%;
             padding: 10px 10px 10px 0px;
         }
@@ -1038,7 +1039,7 @@ div.content {
         }
     }
 }
-
+ 
 
 .schedule-table {
     border-collapse: separate;
@@ -1062,7 +1063,7 @@ div.content {
 
 
 
-#favourite {
+.favourite {
     position: absolute;
     border-radius: 50%;
     border: none;

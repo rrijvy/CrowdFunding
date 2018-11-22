@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {
+﻿jQuery(document).ready(function () {
     var prevPosition = window.pageYOffset;
     window.onscroll = function () {
         var newPosition = window.pageYOffset;
@@ -13,7 +13,7 @@
     };
 
 
-    $('#favourite').on("click", function () {
+    $('.favourite').click(function () {
         var projectId = $(this).val();
         console.log(projectId);
         var url = '/Home/RemindProject/' + projectId;

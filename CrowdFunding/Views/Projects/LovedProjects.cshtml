@@ -1,0 +1,27 @@
+﻿@model IEnumerable<LovedProjectsViewModel>
+@{
+    ViewData["Title"] = "LovedProjects";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+@foreach (var item in Model)
+{
+    <div class="dashboard-project group">
+        <div class="dashboard-project-image">
+            <img src="~/images/@item.ProjectTitle.Replace(" ", string.Empty)/@item.Image" alt="@item.ProjectTitle" />
+        </div>
+        <div class="dashboard-project-shortDes">
+            <p>@item.ShortDescription</p>
+            <p>Fund started - @item.StartingDate.Date</p>
+            <p>Ending date - @item.EndingDate.Date</p>
+        </div>
+        <div class="dashboard-project-crud">
+            <div>Pleged of taka @item.NeededFund goal</div>
+            <div class="dashboard-project-crud-m">
+                <a class="btn-default" style="color:#fff" href="/Projects/Details/@item.ProjectId">Go to project</a>
+                <a class="btn-default" style="color:#fff" href="/Projects/DeleteFavourite/@item.FavouriteId"><i class="fas fa-trash"></i></a>
+            </div>
+        </div>
+    </div>
+    <hr />
+}

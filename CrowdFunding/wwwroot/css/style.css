@@ -682,14 +682,15 @@ div.content {
 
 .dashboard-project {
   width: 100%;
-  height: auto; }
+  height: auto;
+  font-size: 14px; }
   .dashboard-project-image {
     width: 20%;
     height: 100%;
     float: left; }
     .dashboard-project-image img {
-      object-fit: contain;
-      height: 100%;
+      object-fit: cover;
+      height: 160px;
       width: 100%;
       padding: 10px 10px 10px 0px; }
   .dashboard-project-shortDes {
@@ -720,7 +721,7 @@ div.content {
     background-color: #333;
     color: white; }
 
-#favourite {
+.favourite {
   position: absolute;
   border-radius: 50%;
   border: none;
@@ -728,7 +729,7 @@ div.content {
   padding: 8px 10px;
   background: #999;
   color: #fff; }
-  #favourite:hover {
+  .favourite:hover {
     background-color: transparent;
     color: #42ccae; }
 

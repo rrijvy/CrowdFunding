@@ -13,6 +13,7 @@ using CrowdFunding.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace CrowdFunding.Controllers
 {
@@ -22,19 +23,24 @@ namespace CrowdFunding.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IHostingEnvironment _environment;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public HomeController(ApplicationDbContext context, IHostingEnvironment environment, UserManager<ApplicationUser> userManager)
+        public HomeController(ApplicationDbContext context,
+            IHostingEnvironment environment,
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager)
         {
             _context = context;
             _environment = environment;
             _userManager = userManager;
+            _signInManager = signInManager;
         }
         public IActionResult Index(int? categoryId)
         {
             var projectCategories = _context.ProjectCategory.ToList();
             var projects = _context.Projects.Where(x => x.ProjectCategoryId == categoryId).ToList();
             var fileProjects = _context.Projects.Where(x => x.ProjectCategoryId == 1).ToList();
-                 
+
             var inputViewModel = new HomeIndexVIewModel
             {
                 ProjectCategories = projectCategories,
@@ -49,7 +55,7 @@ namespace CrowdFunding.Controllers
             else
             {
                 inputViewModel.LastProject = _context.Projects.Where(x => x.ProjectCategoryId == categoryId).LastOrDefault();
-            }            
+            }
 
             return View(inputViewModel);
         }
@@ -58,7 +64,7 @@ namespace CrowdFunding.Controllers
         {
             return Json(_context.Entrepreneurs.ToList());
         }
-        
+
         public IActionResult Contact()
         {
             return Json(_context.Investors.ToList());
@@ -108,10 +114,26 @@ namespace CrowdFunding.Controllers
             return Json(location);
         }
 
-        public IActionResult RemindProject(int id)
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> RemindProject(int id)
         {
+            var user = await _userManager.GetUserAsync(User);
+            var favProjects = _context.Favourites.Where(x => x.UserId == user.Id).ToList();
+            bool isExist = favProjects.Any(x => x.ProjectId == id);
+            if (!isExist == true)
+            {
+                var favourite = new Favourite
+                {
+                    UserId = user.Id,
+                    ProjectId = id
+                };
 
-            return Ok();
+                _context.Favourites.Add(favourite);
+                await _context.SaveChangesAsync();
+                return Json(new { value = "Added" });
+            }
+            return Json(new { value = "Already exist" });
         }
 
 
@@ -133,7 +155,7 @@ namespace CrowdFunding.Controllers
                 return Ok();
             }
             return BadRequest();
-            
+
         }
 
         private string GetPath(string fileName, string userEmail)

@@ -22,6 +22,7 @@ namespace CrowdFunding.Data
         public DbSet<Project> Projects { get; set; }
         public DbSet<VerifiedCompany> VerifiedCompanies { get; set; }
         public DbSet<ProjectCategory> ProjectCategory { get; set; }
+        public DbSet<Favourite> Favourites { get; set; }
 
     }
 }

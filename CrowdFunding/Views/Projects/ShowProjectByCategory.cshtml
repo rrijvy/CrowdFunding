@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<ProjectViewModel>
+@inject SignInManager<ApplicationUser> SignInManager
 @{
     ViewData["Title"] = "ShowProjectByCategory";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -14,9 +15,12 @@
         <div class="project-list-item">
             <div class="project-list-item-img">
                 <img src="~/images/@title/@item.Image" />
-                <button id="favourite" class="project-list-item-img-favourite" value="@item.Id">
-                    <i class="far fa-heart"></i>
-                </button>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <button class="project-list-item-img-favourite favourite" value="@item.Id">
+                        <i class="far fa-heart"></i>
+                    </button>
+                }
             </div>
             <div class="project-list-item-info">
                 <div class="project-list-item-info-1">
