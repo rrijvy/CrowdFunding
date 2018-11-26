@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -45,9 +46,16 @@
     <div class="sidebar">
         <a href="/Home"><i class="fas fa-house-damage"></i></a>
         <a href="/Identity/Account/Manage">Profile</a>
-        <a href="/Projects/UserProject">Projects</a>
+        @if ((await AuthorizationService.AuthorizeAsync(User, "Entrepreneur")).Succeeded)
+        {
+            <a href="/Projects/UserProject">Projects</a>
+        }
+
         <a href="/Projects/LovedProjects">Projects you love</a>
-        <a href="/Projects/BakcedProject">Projects you back</a>
+        @if ((await AuthorizationService.AuthorizeAsync(User, "Investor")).Succeeded)
+        {
+            <a href="/Projects/BakcedProject">Projects you back</a>
+        }
         <a href="#about">Notifications</a>
         <a href="#about">Messages</a>
         <a href="#about">Company</a>

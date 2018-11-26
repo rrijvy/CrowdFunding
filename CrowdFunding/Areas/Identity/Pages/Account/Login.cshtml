@@ -37,7 +37,7 @@
 
     <div class="middle">
         <div class="row">
-            <div class="col-md-4 col-md-offset-4">
+            <div class="col-md-4 col-md-offset-1">
                 <section>
                     <form method="post">
                         @*<h4>Use a local account to log in.</h4>
@@ -66,7 +66,7 @@
                         </div>
                         <div class="form-group">
                             <p>
-                                <a asp-page="./ForgotPassword">Forgot your password?</a>
+                                <a asp-page="./ForgotPassword" style="font-size:12px">Forgot your password?</a>
                             </p>
                             <p>
                                 <a class="btn btn-reg" style="color: #fff" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
@@ -75,7 +75,7 @@
                     </form>
                 </section>
             </div>
-            @*<div class="col-md-6 col-md-offset-2">
+            <div class="col-md-4 col-md-offset-3">
                     <section>
                         <h4>Use another service to log in.</h4>
                         <hr />
@@ -104,7 +104,7 @@
                             }
                         }
                     </section>
-                </div>*@
+                </div>
         </div>
     </div>
     @section Scripts {

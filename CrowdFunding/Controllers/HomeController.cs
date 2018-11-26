@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using CrowdFunding.Services;
 
 namespace CrowdFunding.Controllers
 {
@@ -24,29 +25,40 @@ namespace CrowdFunding.Controllers
         private readonly IHostingEnvironment _environment;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IGetFundedAmount _fundedAmount;
 
         public HomeController(ApplicationDbContext context,
             IHostingEnvironment environment,
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            IGetFundedAmount fundedAmount)
         {
             _context = context;
             _environment = environment;
             _userManager = userManager;
             _signInManager = signInManager;
+            _fundedAmount = fundedAmount;
         }
         public IActionResult Index(int? categoryId)
         {
-            var projectCategories = _context.ProjectCategory.ToList();
-            var projects = _context.Projects.Where(x => x.ProjectCategoryId == categoryId).ToList();
-            var fileProjects = _context.Projects.Where(x => x.ProjectCategoryId == 1).ToList();
+            List<ProjectCategory> projectCategories = _context.ProjectCategory.ToList();
+            List<Project> projects = _context.Projects.Where(x => x.ProjectCategoryId == categoryId).ToList();
+            List<Project> fileProjects = _context.Projects.Where(x => x.ProjectCategoryId == 1).ToList();
+            IQueryable<Project> latestProject = _context.Projects.Include(x=>x.Company).ThenInclude(x=>x.Entrepreneur).OrderByDescending(x=>x.Id).Take(8);
+            List<Project> latestProjects = new List<Project>();
+            foreach (var item in latestProject)
+            {
+                latestProjects.Add(item);
+            }
 
             var inputViewModel = new HomeIndexVIewModel
             {
                 ProjectCategories = projectCategories,
                 Projects = projects,
-                FileProjects = fileProjects
+                FileProjects = fileProjects,
+                LatestProject = latestProjects
             };
+            
 
             if (categoryId == null)
             {
@@ -62,7 +74,7 @@ namespace CrowdFunding.Controllers
 
         public IActionResult About()
         {
-            return Json(_context.Entrepreneurs.ToList());
+            return View();
         }
 
         public IActionResult Contact()
@@ -134,6 +146,53 @@ namespace CrowdFunding.Controllers
                 return Json(new { value = "Added" });
             }
             return Json(new { value = "Already exist" });
+        }
+
+        [HttpPost]
+        public IActionResult Search(string keyword, int page)
+         {
+            int numberOfContent = 12;
+
+            var projectItems = _context.Projects
+               .Where(x => x.Name.Contains(keyword) || x.Company.Name.Contains(keyword) || x.ProjectShortDescription.Contains(keyword) || x.ProjectCategory.Type.Contains(keyword))
+               .Include(x=> x.ProjectCategory)
+               .Include(x => x.Company)
+               .ThenInclude(x => x.Entrepreneur)
+               .ThenInclude(x => x.Country)
+               .OrderByDescending(x=>x.Id);
+
+            int numberOfPage = projectItems.Count() / numberOfContent;
+
+            List<ProjectViewModel> projectList = new List<ProjectViewModel>();                          
+
+            var projects = projectItems
+                .Skip((page - 1) * numberOfContent)
+                .Take(numberOfContent).ToList();
+
+            foreach (var item in projects)
+            {
+                var projectViewModel = new ProjectViewModel
+                {
+                    Id = item.Id,
+                    Image = item.Image1,
+                    Name = item.Name,
+                    ProjectTitle = item.ProjectTitle,
+                    ShortDescription = item.ProjectShortDescription,
+                    EntreprenuerName = item.Company.Entrepreneur.FName + " " + item.Company.Entrepreneur.LName,
+                    PledgedAmount = item.NeededFund,
+                    DaysLeft = Math.Floor((item.EndingDate - DateTime.Now).TotalDays),
+                    CompanyName = item.Company.Name,
+                    CountryName = item.Company.Entrepreneur.Country.Name,
+                    Funded = _fundedAmount.FundedAmount(item.Id),
+                    Image2 = item.Image2,
+                    Image3 = item.Image3
+                };
+                projectList.Add(projectViewModel);
+            }
+
+            ViewData["NumberOfPage"] = numberOfPage;
+
+            return View(projectList);
         }
 
 

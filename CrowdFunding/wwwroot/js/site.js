@@ -25,5 +25,10 @@
             type: 'GET'
         });
     });
+
+
+    $('.favourite').hover(function () {
+
+    });
 });
 

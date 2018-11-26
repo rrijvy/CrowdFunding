@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using CrowdFunding.Models;
+using CrowdFunding.Services;
 
 namespace CrowdFunding.Areas.Identity.Pages.Account
 {
@@ -19,15 +22,21 @@ namespace CrowdFunding.Areas.Identity.Pages.Account
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<ExternalLoginModel> _logger;
+        private readonly ApplicationDbContext _context;
+        private readonly ICustomizedId _customId;
 
         public ExternalLoginModel(
             SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager,
-            ILogger<ExternalLoginModel> logger)
+            ILogger<ExternalLoginModel> logger,
+            ApplicationDbContext context,
+            ICustomizedId customId)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _logger = logger;
+            _context = context;
+            _customId = customId;
         }
 
         [BindProperty]
@@ -45,6 +54,15 @@ namespace CrowdFunding.Areas.Identity.Pages.Account
             [Required]
             [EmailAddress]
             public string Email { get; set; }
+            [Required]
+            public string FName { get; set; }
+            [Required]
+            public string LName { get; set; }
+            [Required]
+            public int Country { get; set; }
+            [Required, DataType(DataType.Date)]
+            public DateTime DateOfBirth { get; set; }
+
         }
 
         public IActionResult OnGetAsync()
@@ -95,14 +113,17 @@ namespace CrowdFunding.Areas.Identity.Pages.Account
                 {
                     Input = new InputModel
                     {
-                        Email = info.Principal.FindFirstValue(ClaimTypes.Email)
+                        Email = info.Principal.FindFirstValue(ClaimTypes.Email),
+                        FName = info.Principal.FindFirstValue(ClaimTypes.GivenName),
+                        LName = info.Principal.FindFirstValue(ClaimTypes.Surname)
                     };
                 }
+                ViewData["Countries"] = new SelectList(_context.Countries, "Id", "Name");
                 return Page();
             }
         }
 
-        public async Task<IActionResult> OnPostConfirmationAsync(string returnUrl = null)
+        public async Task<IActionResult> OnPostConfirmationAsync(string name, string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
             // Get the information about the user from the external login provider
@@ -115,22 +136,67 @@ namespace CrowdFunding.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
-                var result = await _userManager.CreateAsync(user);
-                if (result.Succeeded)
+                if (name == "Investor")
                 {
-                    result = await _userManager.AddLoginAsync(user, info);
+                    var user = new Investor
+                    {
+                        UserName = Input.Email,
+                        Email = Input.Email,
+                        FName = Input.FName,
+                        LName = Input.LName,
+                        CountryId = Input.Country,
+                        DateofBirth = Input.DateOfBirth
+                    };
+                    user.InvestorCustomizedId = _customId.InvestorCustomId(user);
+                    var result = await _userManager.CreateAsync(user);
+                    await _userManager.AddToRoleAsync(user, "Investor");
                     if (result.Succeeded)
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
-                        return LocalRedirect(returnUrl);
+                        result = await _userManager.AddLoginAsync(user, info);
+                        if (result.Succeeded)
+                        {
+                            await _signInManager.SignInAsync(user, isPersistent: false);
+                            _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
+                            return LocalRedirect(returnUrl);
+                        }
+                    }
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
                     }
                 }
-                foreach (var error in result.Errors)
+                else
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    var user = new Entrepreneur
+                    {
+                        UserName = Input.Email,
+                        Email = Input.Email,
+                        FName = Input.FName,
+                        LName = Input.LName,
+                        CountryId = Input.Country,
+                        DateofBirth = Input.DateOfBirth
+
+                    };
+                    user.EntrepreneurCustomizedId = _customId.EntreprenuerCustomId(user);
+                    var result = await _userManager.CreateAsync(user);
+                    await _userManager.AddToRoleAsync(user, "Entreprenuer");
+                    if (result.Succeeded)
+                    {
+                        result = await _userManager.AddLoginAsync(user, info);
+                        if (result.Succeeded)
+                        {
+                            await _signInManager.SignInAsync(user, isPersistent: false);
+                            _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
+                            return LocalRedirect(returnUrl);
+                        }
+                    }
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
                 }
+                
+                
             }
 
             LoginProvider = info.LoginProvider;

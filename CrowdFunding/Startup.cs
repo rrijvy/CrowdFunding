@@ -45,7 +45,7 @@ namespace CrowdFunding
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("EditProjectPolicy", policy =>                 
+                options.AddPolicy("EditProjectPolicy", policy =>
                 {
                     policy.Requirements.Add(new CheckProjectUserId());
                 });
@@ -55,7 +55,7 @@ namespace CrowdFunding
                 });
                 options.AddPolicy("Entrepreneur", policy =>
                 {
-                    policy.RequireRole("Entrepreneur");
+                    policy.RequireRole("Entreprenuer");
                 });
                 options.AddPolicy("Admin", policy =>
                 {
@@ -78,6 +78,12 @@ namespace CrowdFunding
                 options.LoginPath = "/Identity/Account/Login";
                 options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
                 options.SlidingExpiration = true;
+            });
+
+            services.AddAuthentication().AddGoogle(options =>
+            {
+                options.ClientId = Configuration["Authentication:Google:ClientId"];
+                options.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

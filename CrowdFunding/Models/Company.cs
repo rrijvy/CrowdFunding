@@ -18,7 +18,7 @@ namespace CrowdFunding.Models
         [Required, Display(Name ="Company type")]
         public int CompanyTypeId { get; set; }
 
-        
+        [Required, Display(Name = "Entrepreneur name")]
         public string EntrepreneurId { get; set; }
        
         [Required, EmailAddress]
@@ -31,6 +31,7 @@ namespace CrowdFunding.Models
 
         public string Address { get; set; }
 
+        [Display(Name = "Website url"), Url]
         public string WebsiteUrl { get; set; }
 
         public string Video { get; set; }        

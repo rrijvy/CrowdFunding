@@ -3,8 +3,8 @@ body {
   margin: 0;
   box-sizing: border-box;
   font-family: 'Source Sans Pro', sans-serif;
-  font-weight: 300;
-  font-size: 18px; }
+  font-weight: 500;
+  font-size: 16px; }
 
 footer {
   background-color: #333;
@@ -42,10 +42,13 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'Raleway', sans-serif; }
 
 h1 {
+  font-weight: 600; }
+
+h2, h3 {
   font-weight: 500; }
 
-h2, h3, h4, h5, h6, h7 {
-  font-weight: 300; }
+h4, h5, h6, h7 {
+  font-weight: 400; }
 
 a {
   text-decoration: none;
@@ -53,7 +56,8 @@ a {
 
 .width100p {
   width: 100%;
-  padding: 10px; }
+  padding: 10px;
+  margin-bottom: 100px; }
 
 a:active, a:link, a:visited {
   text-decoration: none;
@@ -67,18 +71,24 @@ a:active, a:link, a:visited {
 
 .btn {
   border-radius: 0px;
-  text-transform: none; }
+  text-transform: none;
+  font-weight: 600; }
   .btn-reg {
     margin-top: 20px;
     background-color: #42ccae;
     padding: 8px 40px 8px 14px;
     text-transform: none; }
+    .btn-reg:hover {
+      padding: 8px 60px 8px 14px;
+      background-color: #2b9f86; }
   .btn-default {
     padding: 8px 20px;
     color: #fff;
     background-color: #42ccae;
     border: none;
     text-transform: none; }
+    .btn-default:hover {
+      background-color: #2b9f86; }
 
 #nav {
   background-color: #fff;
@@ -135,7 +145,8 @@ a:active, a:link, a:visited {
     letter-spacing: 4px; }
   .centered-create-project {
     padding: 14px 30px;
-    background-color: #42ccae; }
+    background-color: #42ccae;
+    font-weight: 400; }
 
 /*.mySlides img {
     width: 100%;
@@ -162,19 +173,19 @@ a:active, a:link, a:visited {
   .top-header .login-form-left {
     list-style-type: none;
     font-size: 1.5rem;
-    font-weight: 500;
+    font-weight: 700;
     font-family: 'Inconsolata', monospace;
     margin: 0;
     padding: 2px 0 0 0; }
     .top-header .login-form-left li {
       float: left;
-      padding: 8px 50px;
+      padding: .7% 4%;
       height: 100%; }
       .top-header .login-form-left li i {
         padding: 0px 5px; }
       .top-header .login-form-left li a {
         padding: 6px 10px;
-        border-radius: 20px;
+        border-radius: 4px;
         box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.19);
         transition: box-shadow 0.5s; }
         .top-header .login-form-left li a:hover {
@@ -195,14 +206,20 @@ a:active, a:link, a:visited {
   text-align: center;
   margin-bottom: 4rem;
   margin-top: 2rem; }
+  .regButton button {
+    border: none;
+    background-color: transparent;
+    padding: 20px 40px; }
+    .regButton button:hover {
+      border-bottom: 3px solid #2b9f86; }
 
 .regForm {
-  width: 610px;
+  width: 700px;
   overflow: hidden;
   padding: 20px;
   margin: auto;
   background-color: #fff;
-  border: 1px solid;
+  border: none;
   box-shadow: 5px;
   font-size: 1.3rem;
   text-align: center; }
@@ -276,12 +293,12 @@ a:active, a:link, a:visited {
       .category-projects-box-list-image {
         width: 30%;
         float: left;
-        height: 100%;
+        height: 120px;
         padding: 15px 10px 10px 0px; }
         .category-projects-box-list-image img {
           width: 100%;
-          height: auto;
-          object-fit: contain; }
+          height: 100%;
+          object-fit: cover; }
       .category-projects-box-list-info {
         width: 70%;
         float: left;
@@ -295,7 +312,12 @@ a:active, a:link, a:visited {
       padding: 50px 0px 0px 40px; }
       .category-projects-box-all a {
         padding: 8px 25px;
-        background-color: #42ccae; }
+        background-color: #42ccae;
+        font-weight: 600;
+        color: #fff; }
+        .category-projects-box-all a:hover {
+          background-color: #fff;
+          color: #333; }
 
 .how {
   width: 100%;
@@ -306,23 +328,31 @@ a:active, a:link, a:visited {
     margin: auto;
     text-align: center;
     padding: 20px 0 20px 0; }
+    .how-works h1 {
+      padding-bottom: 50px; }
+    .how-works p {
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 2; }
     .how-works-list {
       width: 100%;
       display: flex;
       flex-flow: row wrap;
       justify-content: space-around;
       align-items: center;
-      padding: 20px 0 20px 0; }
+      padding: 50px 0 20px 0; }
       .how-works-list-item {
         width: 30%; }
+        .how-works-list-item h2 {
+          font-weight: 500; }
         .how-works-list-item i {
           font-size: 32px;
-          color: #42ccae; }
+          color: #42ccae;
+          padding-bottom: 20px; }
 
 .project-list {
-  padding-top: 2rem;
   width: 80%;
-  margin: auto;
+  margin: 160px auto 40px auto;
   /*display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
@@ -358,10 +388,21 @@ a:active, a:link, a:visited {
       justify-content: space-between; }
       .project-list-item-info-pledged {
         color: #42ccae; }
+  .project-list-page {
+    width: 100%;
+    margin-top: 30px; }
+    .project-list-page ul {
+      width: 100%;
+      height: 100%; }
+      .project-list-page ul li {
+        float: left;
+        margin: 0px 3px;
+        padding: 5px 8px; }
 
 .product {
   width: 70%;
-  margin: auto; }
+  margin: auto;
+  margin-top: 130px; }
   .product-details {
     width: 70%;
     float: left;
@@ -415,7 +456,7 @@ a:active, a:link, a:visited {
     width: 40%;
     float: right;
     padding: 60px;
-    font-weight: 300; }
+    font-weight: 400; }
   .investment-body {
     width: 60%;
     float: left; }
@@ -464,7 +505,8 @@ a:active, a:link, a:visited {
       background-color: #42ccae;
       color: #fff;
       display: block;
-      width: 197px; }
+      width: 197px;
+      font-weight: 600; }
   .create-project-image {
     width: 100%;
     height: 700px;
@@ -524,7 +566,8 @@ a:active, a:link, a:visited {
   .project-category-a {
     padding-top: 30px;
     width: 80%;
-    margin: auto; }
+    margin: auto;
+    font-weight: 600; }
     .project-category-a input {
       padding: 12px 80px;
       color: #fff;
@@ -594,7 +637,7 @@ a:active, a:link, a:visited {
   padding: 16px;
   text-decoration: none;
   border-bottom: 1px solid #42ccae;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 1.7rem; }
   .sidebar a:last-child {
     border-bottom: none; }
@@ -670,7 +713,7 @@ div.content {
           background-color: transparent;
           padding: 5px 22px;
           font-size: 22px;
-          font-weight: 300; }
+          font-weight: 400; }
   .dashboard-info {
     width: 64%;
     background-color: #f6f6f6;
@@ -708,6 +751,82 @@ div.content {
     padding: 10px 10px 10px 0px; }
     .dashboard-project-crud-m {
       margin-top: 20px; }
+
+.about {
+  width: 100%; }
+  .about-h1 {
+    height: 110vh;
+    width: 100%;
+    text-align: center;
+    background-image: linear-gradient(to left, rgba(45, 52, 54, 0.5), rgba(0, 0, 0, 0.5)), url("/images/about hero.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover; }
+    .about-h1 h1 {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin: auto;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      font-weight: 700;
+      font-size: 55px; }
+  .about-work {
+    width: 60%;
+    margin: -160px auto 100px auto;
+    background-color: #42ccae;
+    z-index: 2000;
+    padding: 80px 120px;
+    text-align: center; }
+    .about-work h3 {
+      color: #fff;
+      font-weight: 600;
+      line-height: 1.8; }
+
+.latest {
+  width: 80%;
+  margin: 50px auto; }
+  .latest-header {
+    width: 100%;
+    padding: 30px 0px; }
+  .latest-body {
+    width: 100%; }
+    .latest-body-a {
+      font-size: 2rem;
+      font-weight: 300;
+      padding: 0px 0px 3px 0px; }
+      .latest-body-a:hover {
+        color: #42ccae;
+        border-bottom: 3px solid #42ccae; }
+    .latest-body-row {
+      width: 100%;
+      margin: 0;
+      padding: 0; }
+      .latest-body-row-item {
+        width: 22.5%;
+        float: left;
+        margin: 10px 1.2%;
+        height: 450px;
+        position: relative; }
+        .latest-body-row-item img {
+          width: 100%;
+          height: 200px;
+          object-fit: cover; }
+        .latest-body-row-item-content {
+          padding: 5px 12px; }
+          .latest-body-row-item-content h4 {
+            font-weight: 500; }
+          .latest-body-row-item-content p {
+            font-size: 14px;
+            font-weight: 400;
+            padding-top: 15px; }
+            .latest-body-row-item-content p a {
+              font-size: 12px; }
+              .latest-body-row-item-content p a:hover {
+                text-decoration: underline; }
+        .latest-body-row-item-favourite {
+          top: 20px;
+          right: 20px; }
 
 .schedule-table {
   border-collapse: separate;
@@ -777,3 +896,13 @@ a:hover h1, a:hover h2, a:hover h3, a:hover h4, a:hover h5, a:hover h6 {
 .group {
   zoom: 1;
   /* For IE 6/7 (trigger hasLayout) */ }
+
+.registrationEntreprenuer {
+  display: none; }
+
+.registrationInvestor {
+  display: none; }
+
+.external-middle {
+  margin: auto;
+  width: 100%; }

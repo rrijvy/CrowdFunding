@@ -1,8 +1,9 @@
 ﻿@model IEnumerable<ProjectViewModel>
 @inject SignInManager<ApplicationUser> SignInManager
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Search";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var numberOfPage = ViewBag.NumberOfPage;
 }
 
 <div class="project-list group">
@@ -41,4 +42,15 @@
             </div>
         </div>
     }
+        <div class="project-list-page">
+            @if (numberOfPage > 1)
+            {
+                for (int i = 0; i < numberOfPage; i++)
+                {
+                    <ul class="group">
+                        <li>@i</li>
+                    </ul>
+                }
+            }
+        </div>
 </div>

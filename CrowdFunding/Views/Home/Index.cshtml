@@ -68,11 +68,11 @@
                                 <a href="/Projects/Details/@item.Id"><h4>@item.Name</h4></a>
                                 <p>@item.ProjectShortDescription</p>
                                 <p class="fund">Pledged of taka @item.NeededFund goal</p>
-                                
-                                    <button class="category-projects-box-list-info-favourite favourite" value="@item.Id">
-                                        <i class="far fa-heart"></i>
-                                    </button>
-                                
+
+                                <button class="category-projects-box-list-info-favourite favourite" value="@item.Id">
+                                    <i class="far fa-heart"></i>
+                                </button>
+
                             </div>
                         </li>
                     </ul>
@@ -110,6 +110,42 @@
     </div>
 </div>
 
+<div class="latest">
+    <div class="latest-header"><h2>Latest now . . .</h2></div>
+    <div class="latest-body ">
+        <div class="latest-body-row group">
+            @foreach (var item in Model.LatestProject)
+            {
+                <div class="latest-body-row-item">
+                    <img src="~/images/@item.ProjectTitle.Replace(" ",string.Empty)/@item.Image1" alt="Project image" />
+                    <div class="latest-body-row-item-content">
+                        <a href="/Projects/Details/@item.Id"><h4>@item.Name</h4></a>
+                        <p>@item.ProjectShortDescription</p>
+                        <p>by <a href="">@item.Company.Entrepreneur.FName @item.Company.Entrepreneur.LName</a> </p>
+                    </div>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <button class="latest-body-row-item-favourite favourite" value="@item.Id">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    }
+                </div>
+            }
+        </div>
+        <a class="latest-body-a" href="Projects">View all . . .</a>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
 
 @section Scripts{
     <script>
@@ -141,7 +177,7 @@
                         dvItems.html(" ");
                         var categoryId = 0;
                         var str;
-                        
+
                         $.each(response, function (i, item) {
                             var url = "/images/" + item.projectTitle.replace(/\s/g, '') + "/" + item.image1.replace(/\s/g, '');
                             str += '<ul> <li class="group"> ';

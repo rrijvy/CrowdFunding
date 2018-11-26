@@ -13,7 +13,7 @@
 
     <div class="regForm regEntreprenuer">
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post" class="regForm-form form-horizontal">
-            <h4>Create a new account.</h4>
+            <h4>Create an Entreprenuer account.</h4>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input name="name" hidden value="Entreprenuer" />
 
@@ -37,7 +37,7 @@
 
             <div class="form-group">
                 <label class="control-label col-sm-3" asp-for="Input.DateofBirth"></label>
-                <div class="col-sm-9"><input asp-for="Input.DateofBirth" class="form-control" /></div>
+                <div class="col-sm-9"><input asp-for="Input.DateofBirth" class="form-control" data-validation-format="dd-mm-yyyy" /></div>
                 <span asp-validation-for="Input.DateofBirth" class="text-danger"></span>
             </div>
 
@@ -87,7 +87,7 @@
 
     <div class="regForm regInvestor">
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post" class="regForm-form form-horizontal">
-            <h4>Create a new account.</h4>
+            <h4>Create an Investor account.</h4>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input name="name" hidden value="Investor" />
 
@@ -170,15 +170,19 @@
 
     <script>
         var asInvestor = function () {
-            $(".regInvestor").css("display", "block");
-            $(".regEntreprenuer").css("display", "none");
-            $(".width100p").css("background-image", "linear-gradient(to right bottom, rgba(0,0,0,.4), rgba(0,0,0,.5))");
+            //$(".regInvestor").css("display", "block");
+            //$(".regEntreprenuer").css("display", "none");
+            //$(".width100p").css("background-image", "linear-gradient(to right bottom, rgba(0,0,0,.4), rgba(0,0,0,.5))");
+            $(".regInvestor").show(1000);
+            $(".regEntreprenuer").hide(1000);
 
         }
         var asEntreprenuer = function () {
-            $(".regEntreprenuer").css("display", "block");
-            $(".regInvestor").css("display", "none");
-            $(".width100p").css("background-image", "linear-gradient(to right bottom, rgba(0,0,0,.4), rgba(0,0,0,.5))");
+            //$(".regEntreprenuer").css("display", "block");
+            //$(".regInvestor").css("display", "none");
+            //$(".width100p").css("background-image", "linear-gradient(to right bottom, rgba(0,0,0,.4), rgba(0,0,0,.5))");
+            $(".regInvestor").hide(1000);
+            $(".regEntreprenuer").show(1000);
         }
     </script>
 

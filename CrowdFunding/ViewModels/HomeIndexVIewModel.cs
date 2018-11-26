@@ -1,8 +1,5 @@
 ﻿using CrowdFunding.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CrowdFunding.ViewModels
 {
@@ -12,5 +9,6 @@ namespace CrowdFunding.ViewModels
         public List<Project> Projects { get; set; }
         public List<Project> FileProjects { get; set; }
         public Project LastProject { get; set; }
+        public List<Project> LatestProject { get; set; }
     }
 }

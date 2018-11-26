@@ -4,31 +4,119 @@
     ViewData["Title"] = "Register";
 }
 
-<h2>@ViewData["Title"]</h2>
-<h4>Associate your @Model.LoginProvider account.</h4>
-<hr />
 
-<p class="text-info">
-    You've successfully authenticated with <strong>@Model.LoginProvider</strong>.
-    Please enter an email address for this site below and click the Register button to finish
-    logging in.
-</p>
 
-<div class="row">
-    <div class="col-md-4">
-        <form asp-page-handler="Confirmation" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Input.Email"></label>
-                <input asp-for="Input.Email" class="form-control" />
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
+
+
+<div class="container">
+    <h2>@ViewData["Title"]</h2>
+    <h4>Associate your @Model.LoginProvider account.</h4>
+    <hr />
+    <div class="regButton">
+        <button onclick="Investor()">Register as a Investor</button>
+        <button onclick="Entreprenuer()">Register as a Entreprenuer</button>
+    </div>
+
+
+    <div class="registrationInvestor">
+        <p class="text-info">
+            You've successfully authenticated with <strong>@Model.LoginProvider</strong>.
+            Please enter an email address for this site below and click the Register button to finish
+            logging in.
+        </p>
+        <div class="external-middle">
+            <div class="row">
+                <div class="col-md-4">
+                    <form asp-page-handler="Confirmation" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <input name="name" hidden value="Investor" />
+                        <div class="form-group">
+                            <label asp-for="Input.Email"></label>
+                            <input asp-for="Input.Email" class="form-control" />
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Input.FName"></label>
+                            <input asp-for="Input.FName" class="form-control" />
+                            <span asp-validation-for="Input.FName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Input.LName"></label>
+                            <input asp-for="Input.LName" class="form-control" />
+                            <span asp-validation-for="Input.LName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Input.Country"></label>
+                            <select asp-for="Input.Country" class="form-control" asp-items="ViewBag.Countries"></select>
+                            <span asp-validation-for="Input.Country" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Input.DateOfBirth"></label>
+                            <input type="date" asp-for="Input.DateOfBirth" class="form-control" />
+                            <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
+                        </div>
+                        <button type="submit" class="btn btn-default">Register</button>
+                    </form>
+                </div>
             </div>
-            <button type="submit" class="btn btn-default">Register</button>
-        </form>
+        </div>
+    </div>
+    <div class="registrationEntreprenuer">
+        <p class="text-info">
+            You've successfully authenticated with <strong>@Model.LoginProvider</strong>.
+            Please enter an email address for this site below and click the Register button to finish
+            logging in.
+        </p>
+        <div class="external-middle">
+            <div class="row">
+                <div class="col-md-4">
+                    <form asp-page-handler="Confirmation" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <input name="name" hidden value="Entreprenuer" />
+                        <div class="form-group">
+                            <label asp-for="Input.Email"></label>
+                            <input asp-for="Input.Email" class="form-control" />
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Input.FName"></label>
+                            <input asp-for="Input.FName" class="form-control" />
+                            <span asp-validation-for="Input.FName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Input.LName"></label>
+                            <input asp-for="Input.LName" class="form-control" />
+                            <span asp-validation-for="Input.LName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Input.Country"></label>
+                            <select asp-for="Input.Country" class="form-control" asp-items="ViewBag.Countries"></select>
+                            <span asp-validation-for="Input.Country" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Input.DateOfBirth"></label>
+                            <input type="date" asp-for="Input.DateOfBirth" class="form-control" />
+                            <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
+                        </div>
+                        <button type="submit" class="btn btn-default">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        var Investor = function () {            
+            $(".registrationInvestor").show(1000);
+            $(".registrationEntreprenuer").hide(1000);
+
+        }
+        var Entreprenuer = function () {
+            $(".registrationInvestor").hide(1000);
+            $(".registrationEntreprenuer").show(1000);
+        }
+    </script>
 }
 
