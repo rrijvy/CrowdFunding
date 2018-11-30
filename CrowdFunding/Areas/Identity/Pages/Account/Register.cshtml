@@ -72,7 +72,7 @@
 
             <div class="form-group">
                 <label class="control-label col-sm-3" asp-for="Input.CountryId"></label>
-                <div class="col-sm-9"><select asp-for="Input.CountryId" class="form-control" asp-items="ViewBag.Country"></select></div>
+                <div class="col-sm-9"><select asp-for="Input.CountryId" class="form-control" asp-items="@ViewBag.Country"></select></div>
                 <span asp-validation-for="Input.CountryId" class="text-danger"></span>
             </div>
 
@@ -146,7 +146,7 @@
 
             <div class="form-group">
                 <label class="control-label col-sm-3" asp-for="Input.CountryId"></label>
-                <div class="col-sm-9"><select asp-for="Input.CountryId" class="form-control" asp-items="ViewBag.Country"></select></div>
+                <div class="col-sm-9"><select asp-for="Input.CountryId" class="form-control" asp-items="@ViewBag.Country"></select></div>
                 <span asp-validation-for="Input.CountryId" class="text-danger"></span>
             </div>
 
@@ -170,17 +170,10 @@
 
     <script>
         var asInvestor = function () {
-            //$(".regInvestor").css("display", "block");
-            //$(".regEntreprenuer").css("display", "none");
-            //$(".width100p").css("background-image", "linear-gradient(to right bottom, rgba(0,0,0,.4), rgba(0,0,0,.5))");
             $(".regInvestor").show(1000);
             $(".regEntreprenuer").hide(1000);
-
         }
         var asEntreprenuer = function () {
-            //$(".regEntreprenuer").css("display", "block");
-            //$(".regInvestor").css("display", "none");
-            //$(".width100p").css("background-image", "linear-gradient(to right bottom, rgba(0,0,0,.4), rgba(0,0,0,.5))");
             $(".regInvestor").hide(1000);
             $(".regEntreprenuer").show(1000);
         }

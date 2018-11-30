@@ -59,5 +59,7 @@ namespace CrowdFunding.Models
 
         public List<InvestmentType> InvestmentTypes { get; set; }
 
+        public List<Favourite> Favourites { get; set; }
+
     }
 }

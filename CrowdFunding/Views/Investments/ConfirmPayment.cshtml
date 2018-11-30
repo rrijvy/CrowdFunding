@@ -1,0 +1,11 @@
+﻿
+@{
+    ViewData["Title"] = "ConfirmPayment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="bkash-payment">
+    <h2>Request send to Admin. Please contact Admin with Transaction Id</h2>
+    <h1>BKash no. - 01717745808 </h1>
+    <h2>Or scan this QR to get number.</h2>
+    <qrcode content="@ViewBag.BkashNumber" alt="qrcode" height="200px" width="200px"></qrcode>
+</div>

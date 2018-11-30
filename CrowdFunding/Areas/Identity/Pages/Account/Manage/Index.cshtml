@@ -4,10 +4,11 @@
     ViewData["Title"] = "Profile";
     Layout = "_LayoutDashboard";
 }
-<h4>@ViewData["Title"]</h4>
-<hr />
+
 <form id="profile-form" method="post" enctype="multipart/form-data">
-    <div class="dashboard group">
+    <div class="dashboard">
+        <h3>@ViewData["Title"]</h3>
+        <hr />
         <div class="dashboard-avater">
             <div class="dashboard-avater-image">
                 @if (!string.IsNullOrEmpty(Model.Input.Image))

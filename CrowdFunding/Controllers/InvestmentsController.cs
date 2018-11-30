@@ -95,7 +95,7 @@ namespace CrowdFunding.Controllers
             _context.Investments.Add(investment);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(ConfirmPayment));
         }
 
         // GET: Investments/Edit/5
@@ -185,6 +185,13 @@ namespace CrowdFunding.Controllers
             _context.Investments.Remove(investment);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+
+        public IActionResult ConfirmPayment()
+        {
+            ViewData["BKashNumber"] = "8801717745808";
+            return View();
         }
 
         private bool InvestmentExists(int id)

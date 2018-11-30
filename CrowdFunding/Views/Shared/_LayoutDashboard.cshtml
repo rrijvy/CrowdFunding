@@ -1,6 +1,4 @@
-﻿
-<!DOCTYPE html>
-
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -43,19 +41,23 @@
 
         </div>
     </div>
+    <button class="sidebarBtn"><i class="fas fa-equals"></i></button>
     <div class="sidebar">
         <a href="/Home"><i class="fas fa-house-damage"></i></a>
         <a href="/Identity/Account/Manage">Profile</a>
+
         @if ((await AuthorizationService.AuthorizeAsync(User, "Entrepreneur")).Succeeded)
         {
             <a href="/Projects/UserProject">Projects</a>
         }
 
         <a href="/Projects/LovedProjects">Projects you love</a>
+
         @if ((await AuthorizationService.AuthorizeAsync(User, "Investor")).Succeeded)
         {
             <a href="/Projects/BakcedProject">Projects you back</a>
         }
+
         <a href="#about">Notifications</a>
         <a href="#about">Messages</a>
         <a href="#about">Company</a>
@@ -90,5 +92,6 @@
     </environment>
 
     @RenderSection("Scripts", required: false)
+    
 </body>
 </html>

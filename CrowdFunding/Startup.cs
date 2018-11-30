@@ -65,7 +65,10 @@ namespace CrowdFunding
 
             services.AddTransient<IAuthorizationHandler, CheckProjectUserIdAuthorizationHandler>();
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>(config =>
+            {
+                config.SignIn.RequireConfirmedEmail = false;
+            })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -103,7 +106,7 @@ namespace CrowdFunding
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection(); 
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
@@ -115,8 +118,8 @@ namespace CrowdFunding
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-            
-            
+
+
         }
     }
 }

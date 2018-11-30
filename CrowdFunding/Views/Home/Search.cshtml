@@ -42,15 +42,20 @@
             </div>
         </div>
     }
-        <div class="project-list-page">
-            @if (numberOfPage > 1)
+    <div class="project-list-page">
+        @if (numberOfPage > 1)
+        {
+            for (int i = 0; i < numberOfPage; i++)
             {
-                for (int i = 0; i < numberOfPage; i++)
-                {
-                    <ul class="group">
-                        <li>@i</li>
-                    </ul>
-                }
+                <ul class="group">
+                    <li>
+                        <form action="/Home/Search/" method="post">
+                            <input type="text" name="keyword" value="@ViewBag.Keyword" hidden/>
+                            <input type="submit" name="page" value="@i" />                       
+                        </form>
+                    </li>
+                </ul>
             }
-        </div>
+        }
+    </div>
 </div>

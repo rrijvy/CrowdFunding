@@ -92,17 +92,13 @@ namespace CrowdFunding.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
-
-
+               
         [HttpPost]
         public IActionResult UploadFilesAjax()
         {
             long size = 0;
             var files = Request.Form.Files;
             string location = "";
-
-
             foreach (var file in files)
             {
                 location = Path.Combine(_environment.WebRootPath, Path.GetFileName(file.FileName));
@@ -119,10 +115,6 @@ namespace CrowdFunding.Controllers
                 }
 
             }
-
-            //var fileName = Path.Combine(he.WebRootPath, Path.GetFileName(files.FileName));
-
-            //string message = $"{files.Count} file(s) / { size} bytes uploaded successfully!";
             return Json(location);
         }
 
@@ -191,12 +183,11 @@ namespace CrowdFunding.Controllers
             }
 
             ViewData["NumberOfPage"] = numberOfPage;
+            ViewData["Keyword"] = keyword;
 
             return View(projectList);
         }
-
-
-
+               
         [HttpPost]
         public async Task<IActionResult> UploadUserAvater(IFormFile userAvater)
         {

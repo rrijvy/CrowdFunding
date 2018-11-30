@@ -26,6 +26,11 @@
         });
     });
 
+    $('.sidebarBtn').on('click', function () {
+        $('.sidebar').slideToggle(500);
+
+    });
+
 
     $('.favourite').hover(function () {
 
