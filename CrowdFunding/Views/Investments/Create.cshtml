@@ -26,6 +26,7 @@
                         <form asp-controller="Investments" asp-action="Create" method="post">
                             <input asp-for="Investment.InvestmentTypeId" type="number" value="@item.Id" hidden />
                             <input asp-for="Project.Id" type="number" value="@Model.Project.Id" hidden />
+                            <input asp-for="Project.Name" type="text" value="@Model.Project.Name" hidden />
                             <div class="investment-body-item-div">
                                 <input asp-for="Investment.Amount" type="number" value="" class="investment-body-item-amount" /> <input class="investment-body-item-continue" type="submit" value="Continue" />
                             </div>

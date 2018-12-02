@@ -10,7 +10,6 @@
         <button onclick="asEntreprenuer()">Register as a Entreprenuer</button>
     </div>
 
-
     <div class="regForm regEntreprenuer">
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post" class="regForm-form form-horizontal">
             <h4>Create an Entreprenuer account.</h4>
@@ -80,11 +79,6 @@
         </form>
     </div>
 
-
-
-
-
-
     <div class="regForm regInvestor">
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post" class="regForm-form form-horizontal">
             <h4>Create an Investor account.</h4>
@@ -153,17 +147,7 @@
             <button type="submit" class="btn btn-default col-sm-offset-3 col-sm-3">Register</button>
         </form>
     </div>
-
-
-
-
-
-
-
 </div>
-
-
-
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

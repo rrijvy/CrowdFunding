@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<ProjectViewModel>
 @inject SignInManager<ApplicationUser> SignInManager
 @{
-    ViewData["Title"] = "Search";
+    ViewData["Title"] = "SearchByCountry";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var numberOfPage = ViewBag.NumberOfPage;
 }
@@ -23,9 +23,9 @@
             <form action="/Home/SearchBySort" method="post">
                 <label>sorted by</label>
                 <input type="text" name="keyword" value="@ViewBag.Keyword" hidden />
-                <input type="number" name="page" value="1" hidden />
+                <input name="page" value="1" hidden />
                 <select name="sortItem" asp-items="@Html.GetEnumSelectList<MyEnum>()">
-                    <option selected>--select--</option>
+                    <option selected>earth</option>
                 </select>
                 <button type="submit"><i class="fas fa-search"></i></button>
             </form>

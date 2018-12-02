@@ -42,6 +42,7 @@ namespace CrowdFunding
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<ICustomizedId, CustomizedId>();
             services.AddTransient<IGetFundedAmount, GetFundedAmount>();
+            services.AddTransient<IGetProjectOwner, GetProjectOwner>();
 
             services.AddAuthorization(options =>
             {

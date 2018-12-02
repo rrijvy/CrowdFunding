@@ -32,10 +32,10 @@ namespace CrowdFunding.Models
         [Display(Name = "Needed fund")]
         public double NeededFund { get; set; }
 
-        [Required, DataType(DataType.Date), Display(Name ="Starting date")]
+        [Required, DataType(DataType.Date), Display(Name ="Starting date"), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime StartingDate { get; set; }
 
-        [Required, DataType(DataType.Date), Display(Name ="Ending date")]
+        [Required, DataType(DataType.Date), Display(Name ="Ending date"), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime EndingDate { get; set; }
 
         public string Image1 { get; set; }
@@ -46,6 +46,8 @@ namespace CrowdFunding.Models
 
         [Display(Name = "Company name")]
         public int CompanyId { get; set; }
+
+        public string VideoUrl { get; set; }
 
         [ForeignKey("CompanyId")]
         public Company Company { get; set; }

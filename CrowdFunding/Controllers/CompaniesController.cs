@@ -51,7 +51,7 @@ namespace CrowdFunding.Controllers
 
             return View(company);
         }
-             
+
 
         public IActionResult SelectType()
         {
@@ -77,31 +77,31 @@ namespace CrowdFunding.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreatePost(Company model)
         {
-            if (ModelState.IsValid)
+
+            var company = new Company
             {
-                var company = new Company
-                {
-                    Name = model.Name,
-                    CompanyTypeId = model.CompanyTypeId,
-                    Email = model.Email,
-                    Liesence = model.Liesence,
-                    PhoneNo = model.PhoneNo,
-                    Address = model.Address,
-                    WebsiteUrl = model.WebsiteUrl
-                };
+                Name = model.Name,
+                RegNo = model.RegNo,
+                CompanyTypeId = model.CompanyTypeId,
+                Email = model.Email,
+                Liesence = model.Liesence,
+                PhoneNo = model.PhoneNo,
+                Address = model.Address,
+                WebsiteUrl = model.WebsiteUrl
+            };
 
-                var userId = _userManager.GetUserId(HttpContext.User);
+            var userId = _userManager.GetUserId(HttpContext.User);
 
-                company.EntrepreneurId = userId;
+            company.EntrepreneurId = userId;
 
-                if (string.IsNullOrEmpty(model.RegNo))
-                    company.RegNo = null;
-                else
-                    company.RegNo = model.RegNo;
+            if (string.IsNullOrEmpty(model.RegNo))
+                company.RegNo = null;
+            else
+                company.RegNo = model.RegNo;
 
-                await _context.AddAsync(company);
-                await _context.SaveChangesAsync();
-            }
+            await _context.AddAsync(company);
+            await _context.SaveChangesAsync();
+
             return RedirectToAction("Index");
         }
 

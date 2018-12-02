@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using CrowdFunding.Services;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CrowdFunding.Controllers
 {
@@ -184,10 +185,62 @@ namespace CrowdFunding.Controllers
 
             ViewData["NumberOfPage"] = numberOfPage;
             ViewData["Keyword"] = keyword;
-
+            ViewData["Country"] = new SelectList(_context.Countries, "Id", "Name");
+            ViewData["SortedBy"] = new SelectList(_context.Countries, "Id", "Name");
             return View(projectList);
         }
-               
+
+        [HttpPost]
+        public IActionResult SearchByCountry(string keyword, int countryId, int page)
+        {
+            int numberOfContent = 12;
+
+            var projectItems = _context.Projects
+               .Where(x => x.Name.Contains(keyword) || x.Company.Name.Contains(keyword) || x.ProjectShortDescription.Contains(keyword) || x.ProjectCategory.Type.Contains(keyword))
+               .Include(x => x.ProjectCategory)
+               .Include(x => x.Company)
+               .ThenInclude(x => x.Entrepreneur)
+               .ThenInclude(x => x.Country)
+               .OrderByDescending(x => x.Id);
+
+            int numberOfPage = projectItems.Count() / numberOfContent;
+
+            List<ProjectViewModel> projectList = new List<ProjectViewModel>();
+
+            var projects = projectItems
+                .Skip((page - 1) * numberOfContent)
+                .Take(numberOfContent).ToList();
+
+            foreach (var item in projects)
+            {
+                if (item.Company.Entrepreneur.Country.Id == countryId)
+                {
+                    var projectViewModel = new ProjectViewModel
+                    {
+                        Id = item.Id,
+                        Image = item.Image1,
+                        Name = item.Name,
+                        ProjectTitle = item.ProjectTitle,
+                        ShortDescription = item.ProjectShortDescription,
+                        EntreprenuerName = item.Company.Entrepreneur.FName + " " + item.Company.Entrepreneur.LName,
+                        PledgedAmount = item.NeededFund,
+                        DaysLeft = Math.Floor((item.EndingDate - DateTime.Now).TotalDays),
+                        CompanyName = item.Company.Name,
+                        CountryName = item.Company.Entrepreneur.Country.Name,
+                        Funded = _fundedAmount.FundedAmount(item.Id),
+                        Image2 = item.Image2,
+                        Image3 = item.Image3
+                    };
+                    projectList.Add(projectViewModel);
+                }                
+            }
+
+            ViewData["NumberOfPage"] = numberOfPage;
+            ViewData["Keyword"] = keyword;
+            ViewData["Country"] = new SelectList(_context.Countries, "Id", "Name");
+            return View(projectList);
+        }
+
         [HttpPost]
         public async Task<IActionResult> UploadUserAvater(IFormFile userAvater)
         {

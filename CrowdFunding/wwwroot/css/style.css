@@ -255,7 +255,7 @@ a:active, a:link, a:visited {
 
 .projectCategory {
   width: 100%;
-  margin-bottom: 4rem; }
+  margin-bottom: 30px; }
   .projectCategory-ul {
     list-style-type: none;
     float: left; }
@@ -276,7 +276,7 @@ a:active, a:link, a:visited {
 
 .category-projects {
   width: 100%;
-  height: 55vh; }
+  height: 673px; }
   .category-projects-big {
     width: 50%;
     float: left;
@@ -415,6 +415,26 @@ a:active, a:link, a:visited {
         float: left;
         margin: 0px 3px;
         padding: 5px 8px; }
+  .project-list .search-category {
+    width: 60%;
+    margin: auto;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: center;
+    padding-bottom: 100px; }
+    .project-list .search-category select {
+      padding: 16px 18px;
+      border: 1px solid #42ccae;
+      margin-left: 10px;
+      background-color: transparent; }
+    .project-list .search-category button {
+      border: none;
+      background-color: transparent; }
+      .project-list .search-category button i {
+        font-size: 20px; }
+      .project-list .search-category button:hover i {
+        color: #42ccae; }
 
 .product {
   width: 70%;
@@ -426,11 +446,14 @@ a:active, a:link, a:visited {
     padding-right: 1rem;
     margin-top: 3rem; }
     .product-details img {
-      height: auto;
+      height: 500px;
       width: 100%;
       object-fit: cover;
       overflow: hidden;
       margin-bottom: 60px; }
+    .product-details-video {
+      width: 560px;
+      margin: auto; }
   .product-back {
     border-top: 2px solid #42ccae;
     float: left;
@@ -1506,4 +1529,101 @@ a:hover h1, a:hover h2, a:hover h3, a:hover h4, a:hover h5, a:hover h6 {
         .project-list-page ul li {
           float: left;
           margin: 0px 3px;
-          padding: 5px 8px; } }
+          padding: 5px 8px; }
+  .create-project {
+    width: 100%;
+    margin: auto;
+    padding: 30px 10px; }
+    .create-project-header {
+      width: 100%; }
+      .create-project-header h1 {
+        padding-bottom: 30px; }
+      .create-project-header a {
+        padding: 12px 20px;
+        background-color: #42ccae;
+        color: #fff;
+        display: block;
+        width: 197px;
+        font-weight: 600; }
+    .create-project-image {
+      width: 100%;
+      height: 300px;
+      padding: 30px 0px; }
+      .create-project-image-1 {
+        width: 50%;
+        float: left;
+        height: 100%; }
+        .create-project-image-1-i {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          padding: 10px 4px 10px 0px;
+          overflow: hidden; }
+      .create-project-image-2 {
+        width: 50%;
+        float: left;
+        height: 50%; }
+        .create-project-image-2-i {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          padding: 10px 0px 10px 4px;
+          overflow: hidden; }
+  .create-project-quotes {
+    padding-top: 0px;
+    width: 100%;
+    height: auto;
+    text-align: center;
+    background-color: #42ccae;
+    color: #fff; }
+    .create-project-quotes h1 {
+      width: 80%;
+      margin: auto;
+      font-size: 2.7rem;
+      padding: 40px 0px; }
+  .project-category {
+    width: 100%;
+    margin: auto;
+    padding-top: 50px;
+    text-align: center;
+    padding: 10px; }
+    .project-category-p {
+      font-size: 1.6rem;
+      color: #333;
+      padding: 10px 0px; }
+    .project-category-list {
+      width: 100%;
+      margin: auto; }
+      .project-category-list textarea {
+        width: 100%;
+        height: 150px; }
+      .project-category-list select {
+        width: 100%;
+        height: 45px; }
+    .project-category-a {
+      padding-top: 30px;
+      width: 100%;
+      margin: auto;
+      font-weight: 600; }
+      .project-category-a input {
+        padding: 12px 80px;
+        color: #fff;
+        background-color: #42ccae;
+        display: block;
+        border: none; }
+    .project-category-foo {
+      padding: 50px 0px 30px 0px;
+      font-size: 12px;
+      color: #444; }
+  .create {
+    width: 100%;
+    margin: auto;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 30px 10px; }
+    .create-items {
+      width: 90%;
+      margin: auto; }
+    .create-login {
+      padding-left: 20px; }
+      .create-login a {
+        color: #42ccae; } }

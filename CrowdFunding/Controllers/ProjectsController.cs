@@ -43,8 +43,8 @@ namespace CrowdFunding.Controllers
 
 
         // GET: Projects
-        
-        public async Task<IActionResult> Index()
+
+        public IActionResult Index()
         {
             List<ProjectViewModel> projectList = new List<ProjectViewModel>();
             var projects = _context.Projects.Include(x => x.Company).ThenInclude(x => x.Entrepreneur).ThenInclude(x => x.Country);
@@ -71,9 +71,8 @@ namespace CrowdFunding.Controllers
             }
 
 
-            return View(projectList.OrderByDescending(x=>x.Id));
+            return View(projectList.OrderByDescending(x => x.Id));
         }
-
 
         // GET: Projects/Details/5
         [AllowAnonymous]
@@ -111,6 +110,7 @@ namespace CrowdFunding.Controllers
                 projectViewModel.TotalBacker = _fundedAmount.Backers(project.Id);
                 projectViewModel.Image2 = project.Image2;
                 projectViewModel.Image3 = project.Image3;
+                projectViewModel.VideoUrl = project.VideoUrl;
             }
 
             if (projectViewModel == null)
@@ -236,7 +236,7 @@ namespace CrowdFunding.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Entreprenuer")]
-        public async Task<IActionResult> ProjectDashboard(int id, List<IFormFile> files, [Bind("Id,Name,ProjectShortDescription,DetailDescription,ProjectTitle,IsRunning,IsCompleted,NeededFund,StartingDate,EndingDate,CompanyId,ProjectCategoryId")] Project project)
+        public async Task<IActionResult> ProjectDashboard(int id, List<IFormFile> files, [Bind("Id,Name,ProjectShortDescription,DetailDescription,ProjectTitle,IsRunning,IsCompleted,NeededFund,StartingDate,EndingDate,CompanyId,ProjectCategoryId,VideoUrl")] Project project)
         {
             if (id != project.Id)
             {
@@ -261,7 +261,7 @@ namespace CrowdFunding.Controllers
 
             string[] nameOfFile = fileNames.Split(",");
             int nameLength = nameOfFile.Length;
-            if (nameLength == 1)
+            if (nameLength-1 == 1)
             {
                 if (!string.IsNullOrEmpty(nameOfFile[0]))
                 {
@@ -496,7 +496,8 @@ namespace CrowdFunding.Controllers
                     BackedAmount = item.Amount,
                     ChoosenReward = item.InvestmentType.Type,
                     ProjectTitle = item.Project.ProjectTitle,
-                    Image = item.Project.Image1
+                    Image = item.Project.Image1,
+                    TotalAmountBacked = _fundedAmount.FundedAmount(item.ProjectId)
                 };
 
                 BackedProjectList.Add(BackModel);

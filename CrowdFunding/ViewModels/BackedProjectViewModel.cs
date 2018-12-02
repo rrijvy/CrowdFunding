@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CrowdFunding.ViewModels
 {
@@ -14,5 +11,6 @@ namespace CrowdFunding.ViewModels
         public string ChoosenReward { get; set; }
         public string Image { get; set; }
         public string ProjectTitle { get; set; }
+        public double TotalAmountBacked { get; set; }
     }
 }

@@ -11,6 +11,8 @@ using CrowdFunding.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using CrowdFunding.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using System.Text.Encodings.Web;
 
 namespace CrowdFunding.Controllers
 {
@@ -20,14 +22,20 @@ namespace CrowdFunding.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ICustomizedId _customizedId;
+        private readonly IGetProjectOwner _getProjectOwner;
+        private readonly IEmailSender _emailSender;
 
         public InvestmentsController(ApplicationDbContext context,
                                     UserManager<ApplicationUser> userManager,
-                                    ICustomizedId customizedId)
+                                    ICustomizedId customizedId,
+                                    IGetProjectOwner getProjectOwner,
+                                    IEmailSender emailSender)
         {
             _context = context;
             _userManager = userManager;
             _customizedId = customizedId;
+            _getProjectOwner = getProjectOwner;
+            _emailSender = emailSender;
         }
 
         // GET: Investments
@@ -81,19 +89,29 @@ namespace CrowdFunding.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(InvestmentViewModel model)
         {
-            string userId = _userManager.GetUserId(HttpContext.User);
+            var user = await _userManager.GetUserAsync(User);
             var investment = new Investment
             {
                 Amount = model.Investment.Amount,
                 InvestmentTypeId = model.Investment.InvestmentTypeId,
                 ProjectId = model.Project.Id,
-                InvestorId = userId
+                InvestorId = user.Id
             };
-            string regNo = _customizedId.InvestmentRegNo(model, userId);
+            string regNo = _customizedId.InvestmentRegNo(model, user.Id);
             investment.InvestmentRegNo = regNo;
 
             _context.Investments.Add(investment);
             await _context.SaveChangesAsync();
+
+            var owner = _getProjectOwner.GetOwner(investment.ProjectId);
+            var callbackUrl = Url.Page(
+                            "/Projects/Details",
+                            pageHandler: null,
+                            values: new { id = model.Project.Id },
+                            protocol: Request.Scheme);
+
+            await _emailSender.SendEmailAsync(owner.Email, model.Project.Name,
+                $"{user.Email} pledge {model.Investment.Amount} taka to {model.Project.Name}. Please contact with admin for more details. To see your project <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>");
 
             return RedirectToAction(nameof(ConfirmPayment));
         }
