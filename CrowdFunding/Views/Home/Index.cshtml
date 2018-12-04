@@ -27,7 +27,6 @@
     </div>
 </div>
 
-
 <div class="second-part">
     <div class="projectCategory group">
         <ul class="projectCategory-ul">
@@ -41,17 +40,24 @@
     </div>
     <div class="category-projects group">
         <div class="category-projects-big">
-            <img src="~/images/@Model.LastProject.ProjectTitle.Replace(" ",string.Empty)/@Model.LastProject.Image1" alt="project image" />
-            @if (SignInManager.IsSignedIn(User))
+            @if (!(Model.LastProject == null))
             {
-                <button class="category-projects-big-favourite favourite" value="@Model.LastProject.Id">
-                    <i class="far fa-heart"></i>
-                </button>
+                <img src="~/images/@Model.LastProject.ProjectTitle.Replace(" ",string.Empty)/@Model.LastProject.Image1" alt="project image" />
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <button class="category-projects-big-favourite favourite" value="@Model.LastProject.Id">
+                        <i class="far fa-heart"></i>
+                    </button>
+                }
+                <div class="category-projects-big-info">
+                    <a href="/Projects/Details/@Model.LastProject.Id"><h2>@Model.LastProject.Name</h2></a>
+                    <p>@Model.LastProject.ProjectShortDescription</p>
+                </div>
             }
-            <div class="category-projects-big-info">
-                <a href="/Projects/Details/@Model.LastProject.Id"><h2>@Model.LastProject.Name</h2></a>
-                <p>@Model.LastProject.ProjectShortDescription</p>
-            </div>
+
+
+
+
         </div>
 
         <div class="category-projects-box">
@@ -121,7 +127,7 @@
                     <div class="latest-body-row-item-content">
                         <a href="/Projects/Details/@item.Id"><h4>@item.Name</h4></a>
                         <p>@item.ProjectShortDescription</p>
-                        <p>by <a href="">@item.Company.Entrepreneur.FName @item.Company.Entrepreneur.LName</a> </p>
+                        <p>by <a class="userDetails" href="/Home/UserDetails/@item.Company.Entrepreneur.Id">@item.Company.Entrepreneur.FName @item.Company.Entrepreneur.LName</a> </p>
                     </div>
                     @if (SignInManager.IsSignedIn(User))
                     {
@@ -135,6 +141,8 @@
         <a class="latest-body-a" href="Projects">View all . . .</a>
     </div>
 </div>
+
+
 
 
 
@@ -179,13 +187,15 @@
                         var str;
 
                         $.each(response, function (i, item) {
-                            var url = "/images/" + item.projectTitle.replace(/\s/g, '') + "/" + item.image1.replace(/\s/g, '');
+                            var url = "/images/" + item.projectTitle.replace(/\s/g, '') + "/" + item.image.replace(/\s/g, '');
                             str += '<ul> <li class="group"> ';
                             str += '<div class="category-projects-box-list-image"> <img src=' + url + ' /> </div>';
                             str += '<div class="category-projects-box-list-info">';
                             str += '<h4><a href="/Projects/Details/' + item.id + '">' + item.name + '</a></h4>';
-                            str += '<p>' + item.projectShortDescription + '</p>';
-                            str += '<p class="fund">Pledged of taka ' + item.neededFund + ' goal</p>';
+                            str += '<p class="category-projects-box-list-info-desc">' + item.shortDescription + '</p>';
+                            str += '<h6>By <a href="#">' + item.entreprenuerName + '</a></h6>';
+
+                            //str += '<h5 class="fund">Pledged of taka ' + item.pledgedAmount + ' goal</h5>';
                             str += '<button class="category-projects-box-list-info-favourite favourite" value="' + item.id + '"><i class="far fa-heart"></i></button>';
                             str += '</div> </li> </ul>';
 
@@ -219,7 +229,7 @@
 
 
             function shortString(text) {
-                
+
             }
 
         });

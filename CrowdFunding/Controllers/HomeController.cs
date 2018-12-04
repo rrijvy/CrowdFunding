@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using CrowdFunding.Services;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace CrowdFunding.Controllers
 {
@@ -27,47 +28,51 @@ namespace CrowdFunding.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IGetFundedAmount _fundedAmount;
+        private readonly IContactEmailSender _emailSender;
 
         public HomeController(ApplicationDbContext context,
             IHostingEnvironment environment,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IGetFundedAmount fundedAmount)
+            IGetFundedAmount fundedAmount,
+            IContactEmailSender emailSender)
         {
             _context = context;
             _environment = environment;
             _userManager = userManager;
             _signInManager = signInManager;
             _fundedAmount = fundedAmount;
+            _emailSender = emailSender;
         }
+
+
         public IActionResult Index(int? categoryId)
         {
             List<ProjectCategory> projectCategories = _context.ProjectCategory.ToList();
-            List<Project> projects = _context.Projects.Where(x => x.ProjectCategoryId == categoryId).ToList();
             List<Project> fileProjects = _context.Projects.Where(x => x.ProjectCategoryId == 1).ToList();
-            IQueryable<Project> latestProject = _context.Projects.Include(x=>x.Company).ThenInclude(x=>x.Entrepreneur).OrderByDescending(x=>x.Id).Take(8);
+            IQueryable<Project> latestProject = _context.Projects.Include(x => x.Company).ThenInclude(x => x.Entrepreneur).OrderByDescending(x => x.Id).Take(8);
             List<Project> latestProjects = new List<Project>();
             foreach (var item in latestProject)
             {
                 latestProjects.Add(item);
             }
-
             var inputViewModel = new HomeIndexVIewModel
             {
                 ProjectCategories = projectCategories,
-                Projects = projects,
                 FileProjects = fileProjects,
                 LatestProject = latestProjects
             };
-            
 
-            if (categoryId == null)
+
+            if (!(categoryId == null))
             {
-                inputViewModel.LastProject = _context.Projects.Where(x => x.ProjectCategoryId == 1).LastOrDefault();
+                inputViewModel.Projects = _context.Projects.Where(x => x.ProjectCategoryId == categoryId).ToList();
+                inputViewModel.LastProject = _context.Projects.Where(x => x.ProjectCategoryId == categoryId).LastOrDefault();
             }
             else
             {
-                inputViewModel.LastProject = _context.Projects.Where(x => x.ProjectCategoryId == categoryId).LastOrDefault();
+                inputViewModel.Projects = null;
+                inputViewModel.LastProject = _context.Projects.Where(x => x.ProjectCategoryId == 1).LastOrDefault();
             }
 
             return View(inputViewModel);
@@ -78,9 +83,27 @@ namespace CrowdFunding.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult Contact()
         {
-            return Json(_context.Investors.ToList());
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Contact(string email, string subject, string message)
+        {
+            var htmlMessage = message + " reply to " + email;
+            await _emailSender.SendContactEmailAsync(email, subject, htmlMessage);
+            return RedirectToAction(nameof(Thanks));
+        }
+
+        public IActionResult Thanks()
+        {
+            return View();
+        }
+
+        public IActionResult Works()
+        {
+            return View();
         }
 
         public IActionResult Privacy()
@@ -239,6 +262,26 @@ namespace CrowdFunding.Controllers
             ViewData["Keyword"] = keyword;
             ViewData["Country"] = new SelectList(_context.Countries, "Id", "Name");
             return View(projectList);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UserDetails(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            var country = _context.Countries.Find(user.CountryId);
+            var companies = _context.Companies.Where(x => x.EntrepreneurId == user.Id);
+            var backed = _context.Investments.Where(x => x.InvestorId == user.Id);
+            var content = new UserViewModel
+            {
+                Name = user.FName + " " + user.LName,
+                Email = user.Email,
+                IsVerified = user.EmailConfirmed,
+                Companies = companies.Count(),
+                Country = country.Name,
+                Backed = backed.Count(),
+                Avater = user.Image                
+            };
+            return Json(content);
         }
 
         [HttpPost]

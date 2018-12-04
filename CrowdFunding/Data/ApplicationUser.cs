@@ -9,6 +9,11 @@ namespace CrowdFunding.Data
 {
     public class ApplicationUser : IdentityUser
     {
+        public ApplicationUser()
+        {
+            this.FullName = this.FName + " " + this.LName;
+        }
+
         [Display(Name ="National ID no.")]
         public string NID { get; set; }
 
@@ -17,6 +22,8 @@ namespace CrowdFunding.Data
 
         [Display(Name = "Last name")]
         public string LName { get; set; }
+
+        public string FullName { get; set; }
 
         [Display(Name = "Date of birth"), DataType(DataType.Date)]
         public DateTime DateofBirth { get; set; }

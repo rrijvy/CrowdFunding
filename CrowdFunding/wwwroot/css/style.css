@@ -76,7 +76,6 @@ a {
   margin-bottom: 100px; }
 
 a:active, a:link, a:visited {
-  text-decoration: none;
   color: #111; }
 
 #boder-radious-zero {
@@ -97,7 +96,8 @@ a:active, a:link, a:visited {
     text-transform: none; }
     .btn-reg:hover {
       padding: 8px 60px 8px 14px;
-      background-color: #2b9f86; }
+      background-color: #2b9f86;
+      text-decoration: none; }
   .btn-default {
     padding: 8px 20px;
     color: #fff;
@@ -320,6 +320,8 @@ a:active, a:link, a:visited {
         width: 70%;
         float: left;
         position: relative; }
+        .category-projects-box-list-info-desc {
+          font-size: 14px; }
         .category-projects-box-list-info-favourite {
           bottom: 5px;
           right: 5px; }
@@ -334,7 +336,8 @@ a:active, a:link, a:visited {
         color: #fff; }
         .category-projects-box-all a:hover {
           background-color: #fff;
-          color: #333; }
+          color: #333;
+          text-decoration: none; }
 
 .how {
   width: 100%;
@@ -446,12 +449,15 @@ a:active, a:link, a:visited {
     padding-right: 1rem;
     margin-top: 3rem; }
     .product-details img {
-      height: 500px;
+      height: auto;
       width: 100%;
       object-fit: cover;
       overflow: hidden;
       margin-bottom: 60px; }
+      .product-details img:first-child {
+        height: 550px; }
     .product-details-video {
+      padding-top: 50px;
       width: 560px;
       margin: auto; }
   .product-back {
@@ -850,6 +856,62 @@ a:active, a:link, a:visited {
 
 .bkash-payment {
   margin-top: 120px;
+  width: 100%;
+  text-align: center; }
+
+.user {
+  position: fixed;
+  top: -83px;
+  width: 100%;
+  height: 110vh;
+  background-color: rgba(45, 52, 54, 0.9);
+  z-index: 3000;
+  display: none; }
+  .user .x {
+    position: absolute;
+    top: 8%;
+    right: 21%; }
+    .user .x i {
+      color: #42ccae;
+      font-size: 30px; }
+  .user-details {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    height: 80%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-around;
+    align-content: center;
+    text-align: center; }
+    .user-details img {
+      height: 200px;
+      width: 200px;
+      border-radius: 50%;
+      object-fit: cover; }
+
+.works {
+  width: 50%;
+  margin: 120px auto;
+  text-align: center; }
+  .works-wh {
+    padding: 20px 0px;
+    line-height: 2; }
+    .works-wh h1 {
+      padding: 15px 0px;
+      color: #42ccae; }
+    .works-wh p {
+      font-weight: 600; }
+
+.contactUs {
+  width: 50%;
+  margin: 150px auto; }
+
+.thanks {
+  margin-top: 200px;
   width: 100%;
   text-align: center; }
 

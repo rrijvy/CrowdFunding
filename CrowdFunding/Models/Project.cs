@@ -13,7 +13,6 @@ namespace CrowdFunding.Models
         [Required]
         public string Name { get; set; }
 
-
         [Required, Display(Name = "Project Short Discription")]
         public string ProjectShortDescription { get; set; }
 
@@ -48,6 +47,8 @@ namespace CrowdFunding.Models
         public int CompanyId { get; set; }
 
         public string VideoUrl { get; set; }
+
+        public double Viewed { get; set; }
 
         [ForeignKey("CompanyId")]
         public Company Company { get; set; }
