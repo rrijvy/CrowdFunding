@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CrowdFunding.Models
@@ -9,8 +10,10 @@ namespace CrowdFunding.Models
 
         public string Type { get; set; }
 
+        [Display(Name = "Short description")]
         public string ShortDescription { get; set; }
 
+        [Display(Name = "Project id")]
         public int ProjectId { get; set; }
 
         [ForeignKey("ProjectId")]

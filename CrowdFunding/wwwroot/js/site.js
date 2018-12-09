@@ -1,4 +1,13 @@
-﻿jQuery(document).ready(function () {
+﻿//---- facebook ---//
+(function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2';
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+
+jQuery(document).ready(function () {
     var prevPosition = window.pageYOffset;
     window.onscroll = function () {
         var newPosition = window.pageYOffset;
@@ -57,41 +66,5 @@
             }
         });
     });
-
-    
-
-
-    //var myNode = document.querySelector('.user');
-    //var element = document.querySelectorAll('#user');
-    //for (var i = 0; i < element.length; i++) {
-    //    element[i].addEventListener('click', function (e) {
-    //        e.preventDefault();
-    //        var url = element[i].getAttribute('href');
-    //        console.log(url);
-    //        myNode.style.display = 'block';
-    //        $.ajax({
-    //            url: url,
-    //            type: 'GET',
-    //            cache: false,
-    //            dataType: JSON,
-    //            contentType: "application/x-www-form-urlencoded",
-    //            success: function (response) {
-    //                var str = "";
-    //                str += '<img src="~/images/' + response.email + '/' + response.avater + '" />';
-    //                str += '<h1>' + response.name + '</h1>';
-    //                str += '<p>' + response.about + '</p>';
-    //                str += '<p>' + response.email + '</p>';
-    //                str += '<p>' + response.website + '</p>';
-    //                str += '<p>' + response.backed + '</p>';
-    //                str += '<p>' + response.companies + '</p>';
-    //                console.log(str);
-
-    //                myNode.children().html(str);
-
-    //            }
-    //        });
-    //    });
-    //}
-
 });
 

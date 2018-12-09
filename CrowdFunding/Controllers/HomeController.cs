@@ -16,7 +16,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using CrowdFunding.Services;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace CrowdFunding.Controllers
 {
@@ -49,7 +48,7 @@ namespace CrowdFunding.Controllers
         public IActionResult Index(int? categoryId)
         {
             List<ProjectCategory> projectCategories = _context.ProjectCategory.ToList();
-            List<Project> fileProjects = _context.Projects.Where(x => x.ProjectCategoryId == 1).ToList();
+            List<Project> fileProjects = _context.Projects.Where(x => x.ProjectCategoryId == 1).OrderByDescending(x => x.Id).ToList();
             IQueryable<Project> latestProject = _context.Projects.Include(x => x.Company).ThenInclude(x => x.Entrepreneur).OrderByDescending(x => x.Id).Take(8);
             List<Project> latestProjects = new List<Project>();
             foreach (var item in latestProject)
@@ -116,7 +115,7 @@ namespace CrowdFunding.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-               
+
         [HttpPost]
         public IActionResult UploadFilesAjax()
         {
@@ -166,20 +165,20 @@ namespace CrowdFunding.Controllers
 
         [HttpPost]
         public IActionResult Search(string keyword, int page)
-         {
+        {
             int numberOfContent = 12;
 
             var projectItems = _context.Projects
                .Where(x => x.Name.Contains(keyword) || x.Company.Name.Contains(keyword) || x.ProjectShortDescription.Contains(keyword) || x.ProjectCategory.Type.Contains(keyword))
-               .Include(x=> x.ProjectCategory)
+               .Include(x => x.ProjectCategory)
                .Include(x => x.Company)
                .ThenInclude(x => x.Entrepreneur)
                .ThenInclude(x => x.Country)
-               .OrderByDescending(x=>x.Id);
+               .OrderByDescending(x => x.Id);
 
             int numberOfPage = projectItems.Count() / numberOfContent;
 
-            List<ProjectViewModel> projectList = new List<ProjectViewModel>();                          
+            List<ProjectViewModel> projectList = new List<ProjectViewModel>();
 
             var projects = projectItems
                 .Skip((page - 1) * numberOfContent)
@@ -255,7 +254,7 @@ namespace CrowdFunding.Controllers
                         Image3 = item.Image3
                     };
                     projectList.Add(projectViewModel);
-                }                
+                }
             }
 
             ViewData["NumberOfPage"] = numberOfPage;
@@ -279,12 +278,33 @@ namespace CrowdFunding.Controllers
                 Companies = companies.Count(),
                 Country = country.Name,
                 Backed = backed.Count(),
-                Avater = user.Image                
+                Avater = user.Image
             };
             return Json(content);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> UserDetailsPage(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            var country = _context.Countries.Find(user.CountryId);
+            var companies = _context.Companies.Where(x => x.EntrepreneurId == user.Id);
+            var backed = _context.Investments.Where(x => x.InvestorId == user.Id);
+            var content = new UserViewModel
+            {
+                Name = user.FName + " " + user.LName,
+                Email = user.Email,
+                IsVerified = user.EmailConfirmed,
+                Companies = companies.Count(),
+                Country = country.Name,
+                Backed = backed.Count(),
+                Avater = user.Image
+            };
+            return View(content);
+        }
+
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> UploadUserAvater(IFormFile userAvater)
         {
             if (!(userAvater == null))

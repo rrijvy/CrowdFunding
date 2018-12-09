@@ -49,6 +49,11 @@ footer {
   width: 70%;
   margin: 160px auto; }
 
+.logo {
+  font-variant: small-caps;
+  font-weight: 700;
+  font-size: 28px; }
+
 p {
   font-family: 'Open Sans', sans-serif;
   font-weight: 400;
@@ -61,14 +66,14 @@ h1 {
   font-weight: 600; }
 
 h2, h3 {
-  font-weight: 500; }
+  font-weight: 700; }
 
 h4, h5, h6, h7 {
-  font-weight: 400; }
+  font-weight: 600; }
 
 a {
   text-decoration: none;
-  color: #333333; }
+  color: #333333 !important; }
 
 .width100p {
   width: 100%;
@@ -88,6 +93,8 @@ a:active, a:link, a:visited {
 .btn {
   border-radius: 0px;
   text-transform: none;
+  font-weight: 600;
+  background-color: #42ccae;
   font-weight: 600; }
   .btn-reg {
     margin-top: 20px;
@@ -448,6 +455,8 @@ a:active, a:link, a:visited {
     float: left;
     padding-right: 1rem;
     margin-top: 3rem; }
+    .product-details p {
+      line-height: 2; }
     .product-details img {
       height: auto;
       width: 100%;
@@ -460,6 +469,11 @@ a:active, a:link, a:visited {
       padding-top: 50px;
       width: 560px;
       margin: auto; }
+    .product-details-viewed {
+      margin-top: 30px;
+      text-align: center;
+      padding: 13px 23px;
+      background-color: #42ccae; }
   .product-back {
     border-top: 2px solid #42ccae;
     float: left;
@@ -655,6 +669,8 @@ a:active, a:link, a:visited {
         .footer-head-child ul li {
           padding: 3px 0px;
           font-size: 1.3rem; }
+          .footer-head-child ul li a {
+            color: #fff !important; }
   .footer-footer {
     width: 100%;
     color: #fff;
@@ -822,8 +838,7 @@ a:active, a:link, a:visited {
       font-weight: 300;
       padding: 0px 0px 3px 0px; }
       .latest-body-a:hover {
-        color: #42ccae;
-        border-bottom: 3px solid #42ccae; }
+        color: #42ccae; }
     .latest-body-row {
       width: 100%;
       margin: 0;
@@ -915,6 +930,23 @@ a:active, a:link, a:visited {
   width: 100%;
   text-align: center; }
 
+.pending {
+  width: 100%;
+  padding: 10px; }
+  .pending-companies {
+    width: 22.5%;
+    margin: 15px;
+    float: left;
+    background-color: #fcfcfc;
+    padding: 10px;
+    height: 300px; }
+    .pending-companies p {
+      font-weight: 600;
+      font-size: 15px; }
+      .pending-companies p a {
+        font-size: 13px;
+        font-weight: 700; }
+
 .schedule-table {
   border-collapse: separate;
   width: 100%; }
@@ -942,6 +974,31 @@ a:active, a:link, a:visited {
 .fund {
   font-size: 13px;
   font-weight: 600; }
+
+.user-detail {
+  width: 70%;
+  margin: 120px auto 100px auto; }
+  .user-detail div {
+    margin: 25px 0px; }
+  .user-detail-country {
+    margin-top: 0; }
+    .user-detail-country-p {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 700; }
+  .user-detail-image {
+    width: 25%;
+    height: 300px; }
+    .user-detail-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px; }
+  .user-detail-email {
+    font-size: 15px; }
+    .user-detail-email p {
+      text-transform: uppercase;
+      font-weight: 700; }
 
 a:hover h1, a:hover h2, a:hover h3, a:hover h4, a:hover h5, a:hover h6 {
   text-decoration: underline;

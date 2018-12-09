@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CrowdFunding.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -17,6 +17,7 @@ namespace CrowdFunding.Controllers
         {
             _context = context;
         }
+
         public IActionResult Index()
         {
             return View();
@@ -53,6 +54,57 @@ namespace CrowdFunding.Controllers
             await _context.Fundeds.AddAsync(fund);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(PendingFunds));
+        }
+
+        [HttpGet]
+        public IActionResult PendingCompanies()
+        {
+            var companies = _context.Companies
+                                            .Where(x => x.IsVerified == false)
+                                            .Include(x => x.Projects)
+                                            .Include(x => x.Entrepreneur)
+                                            .ThenInclude(x => x.Country).ToList();
+            return View(companies);
+        }
+
+        [HttpPost]
+        public IActionResult PendingCompanies(int id)
+        {
+            if (id == 0)
+            {
+                var company = _context.Companies.Find(id);
+                company.IsVerified = true;
+                _context.Update(company);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(PendingCompanies));
+            }
+            return NotFound();
+        }
+
+        [HttpGet]
+        public IActionResult PendingProjects()
+        {
+            var projects = _context.Projects
+                                            .Where(x => x.IsVerified == false)
+                                            .Include(x => x.Company)
+                                            .ThenInclude(x => x.Entrepreneur)
+                                            .ThenInclude(x => x.Country).ToList();
+            return View(projects);
+        }
+
+        [HttpPost]
+        public IActionResult PendingProjects(int id)
+        {
+            if (id == 0)
+            {
+                var projects = _context.Projects.Find(id);
+                projects.IsVerified = true;
+                _context.Update(projects);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(PendingProjects));
+            }
+            return NotFound();
+
         }
     }
 }

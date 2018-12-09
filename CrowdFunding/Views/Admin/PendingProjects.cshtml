@@ -1,0 +1,22 @@
+﻿@model IEnumerable<Project>
+@{
+    ViewData["Title"] = "PendingCompanies";
+    Layout = "~/Views/Shared/_LayoutAdminDashboard.cshtml";
+}
+
+<div class="pending group">
+    @foreach (var item in Model)
+    {
+    <div class="pending-companies">
+        <h2><a href="/Projects/Details/@item.Id">@item.Name</a></h2>
+        <p>by <a href="/Home/UserDetails/@item.Company.Entrepreneur.Id">@item.Company.Entrepreneur.FName @item.Company.Entrepreneur.LName</a></p>
+        <p>with <a href="/Companies/Details/@item.Company.Id">@item.Company.Name</a></p>
+        <p>Needed fund @item.NeededFund</p>
+        <form action="/Admin/PendingProjects" method="post">
+            <input type="number" name="id" value="@item.Id" hidden />
+            <button type="submit" class="btn btn-default submit-pending-companies" value="@item.Id">Approve</button>
+        </form>
+
+    </div>
+    }
+</div>

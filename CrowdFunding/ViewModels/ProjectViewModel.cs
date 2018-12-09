@@ -23,5 +23,7 @@ namespace CrowdFunding.ViewModels
         public string Image3 { get; set; }
         public int TotalBacker { get; set; }
         public string VideoUrl { get; set; }
+        public double Viewed { get; set; }
+        public string EntreprenuerId { get; set; }
     }
 }

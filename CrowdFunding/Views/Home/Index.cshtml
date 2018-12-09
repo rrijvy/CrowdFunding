@@ -99,12 +99,12 @@
         <div class="how-works-list">
             <div class="how-works-list-item">
                 <i class="far fa-edit"></i>
-                <h2>Create</h2>
+                <h2><a href="/Company/SelectType">Create</a></h2>
                 <p>Create a company to raise funds for your cause.</p>
             </div>
             <div class="how-works-list-item">
                 <i class="fas fa-share"></i>
-                <h2>Share</h2>
+                <h2><a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a></h2>
                 <p>Share it on all social media platforms, we mean, ALL!</p>
             </div>
             <div class="how-works-list-item">
@@ -127,7 +127,7 @@
                     <div class="latest-body-row-item-content">
                         <a href="/Projects/Details/@item.Id"><h4>@item.Name</h4></a>
                         <p>@item.ProjectShortDescription</p>
-                        <p>by <a class="userDetails" href="/Home/UserDetails/@item.Company.Entrepreneur.Id">@item.Company.Entrepreneur.FName @item.Company.Entrepreneur.LName</a> </p>
+                        <p>by <a class="userDetails" href="/Home/UserDetailsPage/@item.Company.Entrepreneur.Id">@item.Company.Entrepreneur.FName @item.Company.Entrepreneur.LName</a> </p>
                     </div>
                     @if (SignInManager.IsSignedIn(User))
                     {
@@ -142,22 +142,11 @@
     </div>
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 @section Scripts{
     <script>
         $(document).ready(function () {
+
+
             var myIndex = 0;
             carousel();
             function carousel() {
@@ -173,6 +162,7 @@
             }
 
             $(".projectCategory-li-a").on('click', function () {
+                
                 var categoryId = $(this).val();
                 var url = "/Projects/ShowByCategory/" + categoryId;
                 $.ajax({
@@ -183,9 +173,7 @@
                     success: function (response) {
                         var dvItems = $(".category-projects-box-list");
                         dvItems.html(" ");
-                        var categoryId = 0;
-                        var str;
-
+                        let str;
                         $.each(response, function (i, item) {
                             var url = "/images/" + item.projectTitle.replace(/\s/g, '') + "/" + item.image.replace(/\s/g, '');
                             str += '<ul> <li class="group"> ';
@@ -194,19 +182,14 @@
                             str += '<h4><a href="/Projects/Details/' + item.id + '">' + item.name + '</a></h4>';
                             str += '<p class="category-projects-box-list-info-desc">' + item.shortDescription + '</p>';
                             str += '<h6>By <a href="#">' + item.entreprenuerName + '</a></h6>';
-
-                            //str += '<h5 class="fund">Pledged of taka ' + item.pledgedAmount + ' goal</h5>';
                             str += '<button class="category-projects-box-list-info-favourite favourite" value="' + item.id + '"><i class="far fa-heart"></i></button>';
                             str += '</div> </li> </ul>';
-
-                            categoryId = item.projectCategoryId;
                         });
 
                         dvItems.append(str);
                         var url = '/Projects/ShowProjectByCategory/' + categoryId;
                         $('.category-projects-box-all-a').attr('href', url);
-
-
+                        
                         $('.favourite').click(function () {
                             var projectId = $(this).val();
                             console.log(projectId);
@@ -226,11 +209,6 @@
                 });
 
             });
-
-
-            function shortString(text) {
-
-            }
 
         });
     </script>

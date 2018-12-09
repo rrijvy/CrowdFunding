@@ -61,6 +61,12 @@ footer {
     margin: 160px auto;
 }
 
+.logo {
+    font-variant: small-caps;
+    font-weight: 700;
+    font-size: 28px;
+}
+
 p {
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
@@ -76,16 +82,16 @@ h1 {
 }
 
 h2, h3, {
-    font-weight: 500;
+    font-weight: 700;
 }
 
 h4, h5, h6, h7 {
-    font-weight: 400;
+    font-weight: 600;
 }
 
 a {
     text-decoration: none;
-    color: #333333;
+    color: #333333 !important;
 }
 
 .width100p {
@@ -110,6 +116,8 @@ a:active, a:link, a:visited {
 .btn {
     border-radius: 0px;
     text-transform: none;
+    font-weight: 600;
+    background-color: #42ccae;
     font-weight: 600;
 
     &-reg {
@@ -270,7 +278,6 @@ a:active, a:link, a:visited {
 }
 
 ///---register---///
-
 .regEntreprenuer {
     display: none;
 }
@@ -636,7 +643,9 @@ a:active, a:link, a:visited {
         padding-right: 1rem;
         margin-top: 3rem;
 
-
+        p {
+            line-height: 2;
+        }
 
         img {
             height: auto;
@@ -654,6 +663,13 @@ a:active, a:link, a:visited {
             padding-top: 50px;
             width: 560px;
             margin: auto;
+        }
+
+        &-viewed {
+            margin-top: 30px;
+            text-align: center;
+            padding: 13px 23px;
+            background-color: #42ccae;
         }
     }
 
@@ -703,7 +719,6 @@ a:active, a:link, a:visited {
 }
 
 ///---- Investment ----////
-
 .investment {
     width: 70%;
     margin: auto;
@@ -953,6 +968,10 @@ a:active, a:link, a:visited {
                 li {
                     padding: 3px 0px;
                     font-size: 1.3rem;
+
+                    a {
+                        color: #fff !important;
+                    }
                 }
             }
         }
@@ -1195,7 +1214,6 @@ a:active, a:link, a:visited {
 
             &:hover {
                 color: #42ccae;
-                border-bottom: 3px solid #42ccae;
             }
         }
 
@@ -1254,7 +1272,6 @@ a:active, a:link, a:visited {
     width: 100%;
     text-align: center;
 }
-
 
 //--- user about ----///
 .user {
@@ -1332,7 +1349,29 @@ a:active, a:link, a:visited {
     text-align: center;
 }
 
+.pending {
+    width: 100%;
+    padding: 10px;
 
+    &-companies {
+        width: 22.5%;
+        margin: 15px;
+        float: left;
+        background-color: #fcfcfc;
+        padding: 10px;
+        height: 300px;
+
+        p {
+            font-weight: 600;
+            font-size: 15px;
+
+            a {
+                font-size: 13px;
+                font-weight: 700;
+            }
+        }
+    }
+}
 
 .schedule-table {
     border-collapse: separate;
@@ -1372,6 +1411,47 @@ a:active, a:link, a:visited {
     font-size: 13px;
     font-weight: 600;
 }
+
+.user-detail {
+    width: 70%;
+    margin: 120px auto 100px auto;
+
+    div {
+        margin: 25px 0px;
+    }
+
+    &-country {
+        margin-top: 0;
+
+        &-p {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 700;
+        }
+    }
+
+    &-image {
+        width: 25%;
+        height: 300px;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+    }
+
+    &-email {
+        font-size: 15px;
+
+        p {
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+    }
+}
+
 
 a:hover {
     h1, h2, h3, h4, h5, h6 {
@@ -1441,6 +1521,8 @@ a:hover {
     margin: auto;
     width: 100%;
 }
+
+
 
 @media screen and (max-width: 600px) {
 

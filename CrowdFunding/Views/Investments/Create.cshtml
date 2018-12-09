@@ -28,7 +28,8 @@
                             <input asp-for="Project.Id" type="number" value="@Model.Project.Id" hidden />
                             <input asp-for="Project.Name" type="text" value="@Model.Project.Name" hidden />
                             <div class="investment-body-item-div">
-                                <input asp-for="Investment.Amount" type="number" value="" class="investment-body-item-amount" /> <input class="investment-body-item-continue" type="submit" value="Continue" />
+                                <input asp-for="Investment.Amount" type="number" placeholder="@item.Type" class="investment-body-item-amount" /> 
+                                <input class="investment-body-item-continue" type="submit" value="Continue" />
                             </div>
                         </form>
                     </div>

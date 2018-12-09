@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -16,7 +14,7 @@ using System.Text.Encodings.Web;
 
 namespace CrowdFunding.Controllers
 {
-    [Authorize(Roles ="Investor")]
+    [Authorize]
     public class InvestmentsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -39,6 +37,7 @@ namespace CrowdFunding.Controllers
         }
 
         // GET: Investments
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Investments.Include(i => i.InvestmentType).Include(i => i.Investor).Include(i => i.Project);
@@ -46,6 +45,7 @@ namespace CrowdFunding.Controllers
         }
 
         // GET: Investments/Details/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -67,6 +67,7 @@ namespace CrowdFunding.Controllers
         }
 
         // GET: Investments/Create
+        [Authorize(Roles = "Investor")]
         public async Task<IActionResult> Create(int id)
         {
             var project = await _context.Projects.FindAsync(id);
@@ -87,6 +88,7 @@ namespace CrowdFunding.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Investor")]
         public async Task<IActionResult> Create(InvestmentViewModel model)
         {
             var user = await _userManager.GetUserAsync(User);
@@ -117,6 +119,7 @@ namespace CrowdFunding.Controllers
         }
 
         // GET: Investments/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -140,6 +143,7 @@ namespace CrowdFunding.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,InvestmentRegNo,Amount,ProjectId,InvestmentTypeId,InvestorId")] Investment investment)
         {
             if (id != investment.Id)
@@ -174,6 +178,7 @@ namespace CrowdFunding.Controllers
         }
 
         // GET: Investments/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -197,6 +202,7 @@ namespace CrowdFunding.Controllers
         // POST: Investments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var investment = await _context.Investments.FindAsync(id);
@@ -205,7 +211,7 @@ namespace CrowdFunding.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
+        [Authorize(Roles = "Admin")]
         public IActionResult ConfirmPayment()
         {
             ViewData["BKashNumber"] = "8801717745808";

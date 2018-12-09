@@ -3,10 +3,11 @@
     ViewData["Title"] = "LovedProjects";
     Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
 }
-
+<h2>Favourite projects</h2>
 @foreach (var item in Model)
 {
     <div class="dashboard-project group">
+        
         <div class="dashboard-project-image">
             <img src="~/images/@item.ProjectTitle.Replace(" ", string.Empty)/@item.Image" alt="@item.ProjectTitle" />
         </div>

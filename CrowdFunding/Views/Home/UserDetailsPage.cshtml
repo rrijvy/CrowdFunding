@@ -1,0 +1,37 @@
+﻿@model UserViewModel
+@{
+    ViewData["Title"] = "UserDetailsPage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="user-detail">
+    <div class="user-detail-image">
+        <img src="~/images/@Model.Email/@Model.Avater" alt="user avater" />
+    </div>
+    <h2>@Model.Name</h2>
+    <div class="user-detail-country">
+        <p class="user-detail-country-p">from @Model.Country</p>
+    </div>
+
+    <div class="user-detail-about">
+        @if (!string.IsNullOrEmpty(Model.About))
+        {
+            <p><b>Details: </b>@Model.About</p>
+        }
+        <p><b>Details: </b>Not available</p>
+    </div>
+    <div class="user-detail-email">
+        <p>@Model.Email</p>
+    </div>
+    <div class="user-detail-website">
+        <p>@Model.Website</p>
+    </div>
+    <div class="user-detail-companies btn-user-detail">
+        <a class="btn" href="#">Have @Model.Companies companies.</a>
+    </div>
+    <div class="user-detail-backed btn-user-detail">
+        <a class="btn" href="#">Backed @Model.Backed project.</a>
+    </div>
+    <hr />
+</div>
+

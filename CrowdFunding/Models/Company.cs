@@ -7,6 +7,11 @@ namespace CrowdFunding.Models
 {
     public class Company
     {
+        public Company()
+        {
+            IsVerified = false;
+        }
+
         public int Id { get; set; }
         
         [Required, Display(Name ="Company name")]
@@ -34,7 +39,9 @@ namespace CrowdFunding.Models
         [Display(Name = "Website url"), Url]
         public string WebsiteUrl { get; set; }
 
-        public string Video { get; set; }        
+        public string Video { get; set; }
+
+        public bool IsVerified { get; set; }
 
         [ForeignKey("CompanyTypeId")]
         public CompanyType CompanyType { get; set; }

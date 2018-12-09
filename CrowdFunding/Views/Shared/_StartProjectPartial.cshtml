@@ -9,7 +9,8 @@
         <a class="centered-create-project" href="/Projects/CreateProject/">Start a project</a>
     }*@
 
-@if ((await AuthorizationService.AuthorizeAsync(User, "Entrepreneur")).Succeeded)
+@*@if ((await AuthorizationService.AuthorizeAsync(User, "Entrepreneur")).Succeeded)
 {
     <a class="centered-create-project" href="/Projects/CreateProject/">Start a project</a>
-}
+}*@
+<a class="centered-create-project" href="/Projects/CreateProject/">Start a project</a>

@@ -43,7 +43,6 @@ namespace CrowdFunding.Controllers
 
 
         // GET: Projects
-
         public IActionResult Index()
         {
             List<ProjectViewModel> projectList = new List<ProjectViewModel>();
@@ -65,7 +64,8 @@ namespace CrowdFunding.Controllers
                     CountryName = item.Company.Entrepreneur.Country.Name,
                     Funded = _fundedAmount.FundedAmount(item.Id),
                     Image2 = item.Image2,
-                    Image3 = item.Image3
+                    Image3 = item.Image3,
+                    EntreprenuerId = item.Company.Entrepreneur.Id
                 };
                 projectList.Add(projectViewModel);
             }
@@ -82,17 +82,30 @@ namespace CrowdFunding.Controllers
             {
                 return NotFound();
             }
-
+            var model = _context.Projects.Find(id);
+            model.Viewed++;
+            try
+            {
+                _context.Update(model);
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ProjectExists(model.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
             var projects = _context.Projects
                             .Where(x => x.Id == id)
                             .Include(x => x.Company)
                             .ThenInclude(x => x.Entrepreneur)
                             .ThenInclude(x => x.Country);
-
-
             var projectViewModel = new ProjectViewModel();
-            
-
             foreach (var project in projects)
             {
                 projectViewModel.Id = project.Id;
@@ -111,13 +124,12 @@ namespace CrowdFunding.Controllers
                 projectViewModel.Image2 = project.Image2;
                 projectViewModel.Image3 = project.Image3;
                 projectViewModel.VideoUrl = project.VideoUrl;
+                projectViewModel.Viewed = project.Viewed;
             }
-
             if (projectViewModel == null)
             {
                 return NotFound();
             }
-
             return View(projectViewModel);
         }
 
@@ -148,7 +160,7 @@ namespace CrowdFunding.Controllers
             ViewData["ProjectCategory"] = new SelectList(_context.ProjectCategory, "Id", "Type");
             return View();
         }
-        
+
         [HttpPost]
         [Authorize(Roles = "Entreprenuer")]
         public IActionResult ShortDescription(ProjectCategory projectCategory)
@@ -242,26 +254,26 @@ namespace CrowdFunding.Controllers
             {
                 return NotFound();
             }
-            
+
             string fileNames = string.Empty;
 
             foreach (var item in files)
             {
                 string fileName = ContentDispositionHeaderValue.Parse(item.ContentDisposition).FileName.Trim('"').Replace(" ", string.Empty);
                 string sFileExtension = Path.GetExtension(item.FileName).ToLower();
-                if((sFileExtension == ".jpg")|| (sFileExtension == ".jpge") || (sFileExtension == ".png") || (sFileExtension == ".bmp"))
+                if ((sFileExtension == ".jpg") || (sFileExtension == ".jpge") || (sFileExtension == ".png") || (sFileExtension == ".bmp"))
                 {
                     using (var stream = new FileStream(GetPath(fileName, project.ProjectTitle), FileMode.Create))
                     {
                         await item.CopyToAsync(stream);
                         fileNames += fileName + ",";
                     }
-                }    
+                }
             }
 
             string[] nameOfFile = fileNames.Split(",");
             int nameLength = nameOfFile.Length;
-            if (nameLength-1 == 1)
+            if (nameLength - 1 == 1)
             {
                 if (!string.IsNullOrEmpty(nameOfFile[0]))
                 {
@@ -295,7 +307,7 @@ namespace CrowdFunding.Controllers
                     project.Image3 = nameOfFile[2];
                 }
             }
-            
+
 
             if (ModelState.IsValid)
             {
@@ -324,7 +336,7 @@ namespace CrowdFunding.Controllers
         // GET: Projects/Edit/5
         [Authorize(Roles = "Entreprenuer")]
         public async Task<IActionResult> Edit(int? id)
-        {        
+        {
             var proj = _context.Projects.Where(x => x.Id == id).Include(x => x.Company);
 
             var checkProjectUserIdModel = new CheckProjectUserIdModel();
@@ -392,7 +404,6 @@ namespace CrowdFunding.Controllers
             return View(project);
         }
 
-
         // GET: Projects/Delete/5
         [Authorize(Roles = "Entreprenuer")]
         public async Task<IActionResult> Delete(int? id)
@@ -414,7 +425,6 @@ namespace CrowdFunding.Controllers
             return View(project);
         }
 
-
         // POST: Projects/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -426,17 +436,20 @@ namespace CrowdFunding.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        
+
         private bool ProjectExists(int id)
         {
             return _context.Projects.Any(e => e.Id == id);
         }
-        
+
         [AllowAnonymous]
         public IActionResult ShowByCategory(int id)
         {
             List<ProjectViewModel> projectList = new List<ProjectViewModel>();
-            var projects = _context.Projects.Where(x => x.ProjectCategoryId == id).Include(x => x.Company).ThenInclude(x => x.Entrepreneur).ThenInclude(x => x.Country);
+            var projects = _context.Projects.Where(x => x.ProjectCategoryId == id && x.IsVerified == true).OrderByDescending(x => x.Id)
+                                            .Include(x => x.Company)
+                                            .ThenInclude(x => x.Entrepreneur)
+                                            .ThenInclude(x => x.Country);
             foreach (var item in projects)
             {
                 var projectViewModel = new ProjectViewModel
@@ -459,12 +472,15 @@ namespace CrowdFunding.Controllers
             }
             return Json(projectList);
         }
-        
+
         [AllowAnonymous]
         public IActionResult ShowProjectByCategory(int id)
         {
             List<ProjectViewModel> projectList = new List<ProjectViewModel>();
-            var projects = _context.Projects.Where(x => x.ProjectCategoryId == id).Include(x => x.Company).ThenInclude(x => x.Entrepreneur).ThenInclude(x => x.Country);
+            var projects = _context.Projects.Where(x => x.ProjectCategoryId == id && x.IsVerified == true)
+                                            .Include(x => x.Company)
+                                            .ThenInclude(x => x.Entrepreneur)
+                                            .ThenInclude(x => x.Country);
             foreach (var item in projects)
             {
                 var projectViewModel = new ProjectViewModel
@@ -481,7 +497,8 @@ namespace CrowdFunding.Controllers
                     CountryName = item.Company.Entrepreneur.Country.Name,
                     Funded = _fundedAmount.FundedAmount(item.Id),
                     Image2 = item.Image2,
-                    Image3 = item.Image3
+                    Image3 = item.Image3,
+                    EntreprenuerId = item.Company.EntrepreneurId
                 };
                 projectList.Add(projectViewModel);
             }
@@ -498,16 +515,16 @@ namespace CrowdFunding.Controllers
             }
 
             var projects = _context.Projects.Include(x => x.Company).Where(x => x.Company.EntrepreneurId == user.Id);
-            
+
             return View(projects);
         }
 
-        [Authorize(Roles ="Investor")]
+        [Authorize(Roles = "Investor")]
         public async Task<IActionResult> BakcedProject()
         {
             List<BackedProjectViewModel> BackedProjectList = new List<BackedProjectViewModel>();
             var user = await _userManager.GetUserAsync(User);
-            var backs = _context.Investments.Include(x=>x.InvestmentType).Include(x=>x.Project).Where(x => x.InvestorId == user.Id);
+            var backs = _context.Investments.Include(x => x.InvestmentType).Include(x => x.Project).Where(x => x.InvestorId == user.Id);
             foreach (var item in backs)
             {
                 var BackModel = new BackedProjectViewModel
@@ -523,15 +540,16 @@ namespace CrowdFunding.Controllers
 
                 BackedProjectList.Add(BackModel);
             }
-            
+
             return View(BackedProjectList);
         }
 
+        [Authorize(Roles = "Investor, Entreprenuer")]
         public async Task<IActionResult> LovedProjects()
         {
             var user = await _userManager.GetUserAsync(User);
             List<LovedProjectsViewModel> lovedProjects = new List<LovedProjectsViewModel>();
-            var favourites = _context.Favourites.Where(x => x.UserId == user.Id).ToList();            
+            var favourites = _context.Favourites.Where(x => x.UserId == user.Id).ToList();
             foreach (var item in favourites)
             {
                 var projects = _context.Projects.Find(item.ProjectId);
@@ -553,6 +571,7 @@ namespace CrowdFunding.Controllers
             return View(lovedProjects);
         }
 
+        [Authorize(Roles = "Investor, Entreprenuer")]
         public IActionResult DeleteFavourite(int id)
         {
             var deleteItem = _context.Favourites.Find(id);

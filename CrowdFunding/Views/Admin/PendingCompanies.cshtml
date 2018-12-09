@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Company>
+@{
+    ViewData["Title"] = "PendingCompanies";
+    Layout = "~/Views/Shared/_LayoutAdminDashboard.cshtml";
+}
+
+<div class="pending group">
+    @foreach (var item in Model)
+    {
+        <div class="pending-companies">
+            <h2><a href="/Companies/Details/@item.Id">@item.Name</a></h2>
+            <p>by <a href="/Home/UserDetails/@item.EntrepreneurId">@item.Entrepreneur.FName @item.Entrepreneur.LName</a></p>
+            @if (string.IsNullOrEmpty(item.RegNo))
+            {
+                <p>Registration number not set yet.</p>
+            }
+            else
+            {
+                <p>Registration number is @item.RegNo</p>
+            }
+            @if (string.IsNullOrEmpty(item.RegNo))
+            {
+                <p>Licence number not set yet.</p>
+            }
+            else
+            {
+                <p>Licence number @item.Liesence</p>
+            }
+            <form action="/Admin/PendingCompanies" method="post">
+                <input type="number" name="id" value="@item.Id" hidden/>
+                <button type="submit" class="btn btn-default submit-pending-companies" value="@item.Id">Approve</button>
+            </form>
+
+        </div>
+    }
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            //$('.submit-pending-companies').on('click', function (e) {
+            //    var companyId = parseInt($(this).val());
+            //    var company = new Object();
+            //    company.Id = companyId;
+            //    var url = '/Admin/PendingCompanies/';
+            //    $.ajax({
+            //        url: url,
+            //        type: "POST",
+            //        data: company,
+            //        contentType: "application/json; charset=utf-8",
+            //        dataType: "json",
+            //        cache: false
+            //    });
+            //});
+        });
+    </script>
+}

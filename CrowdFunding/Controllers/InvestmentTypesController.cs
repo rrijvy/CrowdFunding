@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,6 +11,7 @@ using CrowdFunding.Authorization;
 
 namespace CrowdFunding.Controllers
 {
+    [Authorize]
     public class InvestmentTypesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -29,12 +28,14 @@ namespace CrowdFunding.Controllers
         }
 
         // GET: InvestmentTypes
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.investmentTypes.ToListAsync());
         }
 
         // GET: InvestmentTypes/Details/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -53,6 +54,7 @@ namespace CrowdFunding.Controllers
         }
 
         // GET: InvestmentTypes/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             var project = _context.Projects.Include(x => x.Company).ThenInclude(x => x.Entrepreneur);
@@ -66,6 +68,7 @@ namespace CrowdFunding.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("Id,Type,ShortDescription,ProjectId")] InvestmentType investmentType)
         {
             if (ModelState.IsValid)
@@ -98,6 +101,7 @@ namespace CrowdFunding.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Type")] InvestmentType investmentType)
         {
             if (id != investmentType.Id)
@@ -129,6 +133,7 @@ namespace CrowdFunding.Controllers
         }
 
         // GET: InvestmentTypes/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -149,6 +154,7 @@ namespace CrowdFunding.Controllers
         // POST: InvestmentTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var investmentType = await _context.investmentTypes.FindAsync(id);
@@ -163,6 +169,7 @@ namespace CrowdFunding.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Entreprenuer")]
         public async Task<IActionResult> CreateReward(int? id)
         {
             var project = _context.Projects.Where(x => x.Id == id).Include(x => x.Company).ThenInclude(x=>x.Entrepreneur);
@@ -186,6 +193,7 @@ namespace CrowdFunding.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Entreprenuer")]
         public async Task<IActionResult> CreateReward([Bind("Id,Type,ShortDescription,ProjectId")] InvestmentType model)
         {
             var type = new InvestmentType

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CrowdFunding.Controllers
 {
+    [Authorize]
     public class CompaniesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -26,6 +27,7 @@ namespace CrowdFunding.Controllers
         }
 
         // GET: Companies
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Companies.Include(c => c.CompanyType).Include(c => c.Entrepreneur);
@@ -33,6 +35,7 @@ namespace CrowdFunding.Controllers
         }
 
         // GET: Companies/Details/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -52,7 +55,7 @@ namespace CrowdFunding.Controllers
             return View(company);
         }
 
-
+        [Authorize(Roles = "Entreprenuer")]
         public IActionResult SelectType()
         {
             ViewData["CompanyTypes"] = new SelectList(_context.CompanyTypes, "Id", "TypeName");
@@ -61,6 +64,7 @@ namespace CrowdFunding.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "Entreprenuer")]
         public IActionResult Create(CompanyType model)
         {
             var company = new Company
@@ -75,6 +79,7 @@ namespace CrowdFunding.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Entreprenuer")]
         public async Task<IActionResult> CreatePost(Company model)
         {
 
@@ -106,6 +111,7 @@ namespace CrowdFunding.Controllers
         }
 
         // GET: Companies/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -128,6 +134,7 @@ namespace CrowdFunding.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,RegNo,TypeName,EntrepreneurId,Email,Liesence,PhoneNo,Address,WebsiteUrl,Video")] Company company)
         {
             if (id != company.Id)
@@ -161,6 +168,7 @@ namespace CrowdFunding.Controllers
         }
 
         // GET: Companies/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -183,6 +191,7 @@ namespace CrowdFunding.Controllers
         // POST: Companies/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var company = await _context.Companies.FindAsync(id);
