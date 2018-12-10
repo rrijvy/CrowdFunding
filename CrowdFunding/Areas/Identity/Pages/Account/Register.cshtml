@@ -1,4 +1,4 @@
-﻿@page
+﻿@*@page
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
@@ -9,142 +9,127 @@
         <button onclick="asInvestor()">Register as a Investor</button>
         <button onclick="asEntreprenuer()">Register as a Entreprenuer</button>
     </div>
-
     <div class="regForm regEntreprenuer">
-        <form asp-route-returnUrl="@Model.ReturnUrl" method="post" class="regForm-form form-horizontal">
+        <form asp-route-returnUrl="@Model.ReturnUrl" method="post" class="regForm-form form-horizontal" id="validform">
             <h4>Create an Entreprenuer account.</h4>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input name="name" hidden value="Entreprenuer" />
 
             <div class="form-group">
-                <label class="control-label col-sm-3" asp-for="Input.FName"></label>
-                <div class="col-sm-9"><input asp-for="Input.FName" class="form-control" /></div>
+
+                <label class="control-label col-md-3" asp-for="Input.FName"></label>
+                <div class="col-md-9"><input asp-for="Input.FName" name="fName" class="form-control" /></div>
+
                 <span asp-validation-for="Input.FName" class="text-danger"></span>
             </div>
 
+
             <div class="form-group">
-                <label class="control-label col-sm-3" asp-for="Input.LName"></label>
-                <div class="col-sm-9"><input asp-for="Input.LName" class="form-control" /></div>
+                <label class="control-label col-md-3" asp-for="Input.LName"></label>
+                <div class="col-md-9"><input asp-for="Input.LName" name="lName" class="form-control" /></div>
                 <span asp-validation-for="Input.LName" class="text-danger"></span>
             </div>
-
             <div class="form-group">
-                <label class="control-label col-sm-3" asp-for="Input.Email"></label>
-                <div class="col-sm-9"><input asp-for="Input.Email" class="form-control" /></div>
+                <label class="control-label col-md-3" asp-for="Input.Email"></label>
+                <div class="col-md-9"><input asp-for="Input.Email" name="email" class="form-control" /></div>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
-
             <div class="form-group">
-                <label class="control-label col-sm-3" asp-for="Input.DateofBirth"></label>
-                <div class="col-sm-9"><input asp-for="Input.DateofBirth" class="form-control" data-validation-format="dd-mm-yyyy" /></div>
+                <label class="control-label col-md-3" asp-for="Input.DateofBirth"></label>
+                <div class="col-md-9"><input asp-for="Input.DateofBirth" name="dob" class="form-control" data-validation-format="dd-mm-yyyy" /></div>
                 <span asp-validation-for="Input.DateofBirth" class="text-danger"></span>
             </div>
-
             <div class="form-group">
-                <label class="control-label col-sm-3" asp-for="Input.NID"></label>
-                <div class="col-sm-9"><input asp-for="Input.NID" class="form-control" /></div>
+                <label class="control-label col-md-3" asp-for="Input.NID"></label>
+                <div class="col-md-9"><input asp-for="Input.NID" name="nid" class="form-control" /></div>
                 <span asp-validation-for="Input.NID" class="text-danger"></span>
             </div>
-
             <div class="form-group">
-                <label class="control-label col-sm-3" asp-for="Input.PresentAddress"></label>
-                <div class="col-sm-9"><input asp-for="Input.PresentAddress" class="form-control" /></div>
+                <label class="control-label col-md-3" asp-for="Input.PresentAddress"></label>
+                <div class="col-md-9"><input asp-for="Input.PresentAddress" name="address" class="form-control" /></div>
                 <span asp-validation-for="Input.PresentAddress" class="text-danger"></span>
             </div>
-
             <div class="form-group">
-                <label class="control-label col-sm-3" asp-for="Input.ParmanantAddress"></label>
-                <div class="col-sm-9"><input asp-for="Input.ParmanantAddress" class="form-control" /></div>
+                <label class="control-label col-md-3" asp-for="Input.ParmanantAddress"></label>
+                <div class="col-md-9"><input asp-for="Input.ParmanantAddress" name="pAddress" class="form-control" /></div>
                 <span asp-validation-for="Input.ParmanantAddress" class="text-danger"></span>
             </div>
-
             <div class="form-group">
-                <label class="control-label col-sm-3" asp-for="Input.Password"></label>
-                <div class="col-sm-9"><input asp-for="Input.Password" class="form-control" /></div>
+                <label class="control-label col-md-3" asp-for="Input.Password"></label>
+                <div class="col-md-9"><input asp-for="Input.Password" name="password" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" /></div>
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-3" asp-for="Input.ConfirmPassword"></label>
-                <div class="col-sm-9"><input asp-for="Input.ConfirmPassword" class="form-control" /></div>
+                <label class="control-label col-md-3" asp-for="Input.ConfirmPassword"></label>
+                <div class="col-md-9"><input asp-for="Input.ConfirmPassword" name="confirmPassword" class="form-control" /></div>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
-
             <div class="form-group">
-                <label class="control-label col-sm-3" asp-for="Input.CountryId"></label>
-                <div class="col-sm-9"><select asp-for="Input.CountryId" class="form-control" asp-items="@ViewBag.Country"></select></div>
+                <label class="control-label col-md-3" asp-for="Input.CountryId"></label>
+                <div class="col-md-9"><select asp-for="Input.CountryId" name="country" class="form-control" asp-items="@ViewBag.Country"></select></div>
                 <span asp-validation-for="Input.CountryId" class="text-danger"></span>
             </div>
-
-            <button type="submit" class="btn btn-default col-sm-offset-3 col-sm-3">Register</button>
+            <button type="submit" class="btn btn-default col-sm-offset-3 col-md-3">Register</button>
         </form>
     </div>
-
     <div class="regForm regInvestor">
-        <form asp-route-returnUrl="@Model.ReturnUrl" method="post" class="regForm-form form-horizontal">
+        <form asp-route-returnUrl="@Model.ReturnUrl" method="post" class="regForm-form form-horizontal" id="Ivalidationform">
             <h4>Create an Investor account.</h4>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input name="name" hidden value="Investor" />
-
             <div class="form-group">
-                <label class="control-label col-sm-3" asp-for="Input.FName"></label>
-                <div class="col-sm-9"><input asp-for="Input.FName" class="form-control" /></div>
+                <label class="control-label col-md-3" asp-for="Input.FName"></label>
+                <div class="col-md-9"><input asp-for="Input.FName" name="IfName" class="form-control" /></div>
                 <span asp-validation-for="Input.FName" class="text-danger"></span>
             </div>
-
             <div class="form-group">
-                <label class="control-label col-sm-3" asp-for="Input.LName"></label>
-                <div class="col-sm-9"><input asp-for="Input.LName" class="form-control" /></div>
+                <label class="control-label col-md-3" asp-for="Input.LName"></label>
+                <div class="col-md-9"><input asp-for="Input.LName" name="IlName" class="form-control" /></div>
                 <span asp-validation-for="Input.LName" class="text-danger"></span>
             </div>
-
             <div class="form-group">
-                <label class="control-label col-sm-3" asp-for="Input.Email"></label>
-                <div class="col-sm-9"><input asp-for="Input.Email" class="form-control" /></div>
+                <label class="control-label col-md-3" asp-for="Input.Email"></label>
+                <div class="col-md-9"><input asp-for="Input.Email" name="Iemail" class="form-control" /></div>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
-
             <div class="form-group">
-                <label class="control-label col-sm-3" asp-for="Input.DateofBirth"></label>
-                <div class="col-sm-9"><input asp-for="Input.DateofBirth" class="form-control" /></div>
+                <label class="control-label col-md-3" asp-for="Input.DateofBirth"></label>
+                <div class="col-md-9"><input asp-for="Input.DateofBirth" name="Idob" class="form-control" /></div>
                 <span asp-validation-for="Input.DateofBirth" class="text-danger"></span>
             </div>
-
             <div class="form-group">
-                <label class="control-label col-sm-3" asp-for="Input.NID"></label>
-                <div class="col-sm-9"><input asp-for="Input.NID" class="form-control" /></div>
+                <label class="control-label col-md-3" asp-for="Input.NID"></label>
+                <div class="col-md-9"><input asp-for="Input.NID" name="Inid" class="form-control" /></div>
                 <span asp-validation-for="Input.NID" class="text-danger"></span>
             </div>
-
             <div class="form-group">
-                <label class="control-label col-sm-3" asp-for="Input.PresentAddress"></label>
-                <div class="col-sm-9"><input asp-for="Input.PresentAddress" class="form-control" /></div>
+                <label class="control-label col-md-3" asp-for="Input.PresentAddress"></label>
+                <div class="col-md-9"><input asp-for="Input.PresentAddress" name="Iaddress" class="form-control" /></div>
                 <span asp-validation-for="Input.PresentAddress" class="text-danger"></span>
             </div>
-
             <div class="form-group">
-                <label class="control-label col-sm-3" asp-for="Input.ParmanantAddress"></label>
-                <div class="col-sm-9"><input asp-for="Input.ParmanantAddress" class="form-control" /></div>
+                <label class="control-label col-md-3" asp-for="Input.ParmanantAddress"></label>
+                <div class="col-md-9"><input asp-for="Input.ParmanantAddress" name="IpAddress" class="form-control" /></div>
                 <span asp-validation-for="Input.ParmanantAddress" class="text-danger"></span>
             </div>
-
             <div class="form-group">
-                <label class="control-label col-sm-3" asp-for="Input.Password"></label>
-                <div class="col-sm-9"><input asp-for="Input.Password" class="form-control" /></div>
+                <label class="control-label col-md-3" asp-for="Input.Password"></label>
+                <div class="col-md-9">
+                    <input asp-for="Input.Password" name="Ipassword" class="form-control" required />
+                </div>
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-3" asp-for="Input.ConfirmPassword"></label>
-                <div class="col-sm-9"><input asp-for="Input.ConfirmPassword" class="form-control" /></div>
+                <label class="control-label col-md-3" asp-for="Input.ConfirmPassword"></label>
+                <div class="col-md-9"><input asp-for="Input.ConfirmPassword" name="IconfirmPassword" class="form-control" /></div>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
-
             <div class="form-group">
-                <label class="control-label col-sm-3" asp-for="Input.CountryId"></label>
-                <div class="col-sm-9"><select asp-for="Input.CountryId" class="form-control" asp-items="@ViewBag.Country"></select></div>
+                <label class="control-label col-md-3" asp-for="Input.CountryId"></label>
+                <div class="col-md-9"><select asp-for="Input.CountryId" name="Icountry" class="form-control" asp-items="@ViewBag.Country"></select></div>
                 <span asp-validation-for="Input.CountryId" class="text-danger"></span>
             </div>
-
-            <button type="submit" class="btn btn-default col-sm-offset-3 col-sm-3">Register</button>
+            <button type="submit" class="btn btn-default col-sm-offset-3 col-md-3">Register</button>
         </form>
     </div>
 </div>
@@ -152,6 +137,8 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 
+    <script src="~/lib/bootstrap/dist/js/.js"></script>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js'></script>
     <script>
         var asInvestor = function () {
             $(".regInvestor").show(1000);
@@ -161,6 +148,424 @@
             $(".regInvestor").hide(1000);
             $(".regEntreprenuer").show(1000);
         }
+
+
+        //Validation Check
+
+        $('#validform').bootstrapValidator({
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                fName: {
+                    validators: {
+                        stringLength: {
+                            min: 3,
+                            message: 'Please Enter your First name with minimum 3 letters length'
+                        },
+                        notEmpty: {
+                            message: 'Please Enter your First name'
+                        }
+                    }
+                },
+                lName: {
+                    validators: {
+                        stringLength: {
+                            min: 3,
+                            message: 'Please Enter your Last name with minimum 3 letters length'
+                        },
+                        notEmpty: {
+                            message: 'Please Enter your Last name'
+                        }
+                    }
+                },
+                email: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Please Enter your email address'
+                        },
+                        emailAddress: {
+                            message: 'Please Enter a valid email address'
+                        }
+                    }
+                },
+                dob: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The date of birth option is required'
+                        }
+                    }
+                },
+                nid: {
+                    validators: {
+                        stringLength: {
+                            min: 16,
+                            message: 'The Nid number must be a number in 16 digit'
+                        },
+                        notEmpty: {
+                            message: 'Please Enter your NID number'
+                        }
+                    }
+                },
+                address: {
+                    validators: {
+                        stringLength: {
+                            min: 10,
+                            max: 100,
+                            message: 'Please enter at least 10 characters and no more than 100'
+                        },
+                        notEmpty: {
+                            message: 'Please Enter Address'
+                        }
+                    }
+                },
+                pAddress: {
+                    validators: {
+                        stringLength: {
+                            min: 10,
+                            max: 100,
+                            message: 'Please enter at least 10 characters and no more than 100'
+                        },
+                        notEmpty: {
+                            message: 'Please Enter Address'
+                        }
+                    }
+                },
+
+
+                password: {
+                    validators: {
+                        stringLength: {
+                            min: 8
+
+                        },
+                        notEmpty: {
+                            message: 'Enter your profile minimum 8 charecters'
+                        },
+                    }
+                },
+                confirmPassword: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Enter confirm your profile password'
+                        },
+                        identical: {
+                            field: 'password',
+                            message: 'Enter the password, what enter in password field'
+                        }
+                    }
+                },
+                country: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The Country option is required'
+                        }
+                    }
+                },
+            }
+        });
+
+        $('#Ivalidationform').bootstrapValidator({
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+
+                IfName: {
+                    validators: {
+                        stringLength: {
+                            min: 3,
+                            message: 'Please Enter your First name with minimum 3 letters length'
+                        },
+                        notEmpty: {
+                            message: 'Please Enter your First name'
+                        }
+                    }
+                },
+                IlName: {
+                    validators: {
+                        stringLength: {
+                            min: 3,
+                            message: 'Please Enter your Last name with minimum 3 letters length'
+                        },
+                        notEmpty: {
+                            message: 'Please Enter your Last name'
+                        }
+                    }
+                },
+                Iemail: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Please Enter your email address'
+                        },
+                        emailAddress: {
+                            message: 'Please Enter a valid email address'
+                        }
+                    }
+                },
+
+                Idob: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The date of birth option is required'
+                        }
+                    }
+                },
+                Inid: {
+                    validators: {
+
+                        stringLength: {
+                            min: 10,
+                            max: 100,
+                            message: 'The Nid number must be a number in 16 digit'
+
+                        },
+                        notEmpty: {
+                            message: 'Please Enter your NID number'
+                        }
+                    }
+                },
+                Iaddress: {
+                    validators: {
+                        stringLength: {
+                            min: 10,
+                            max: 100,
+                            message: 'Please enter at least 10 characters and no more than 100'
+                        },
+                        notEmpty: {
+                            message: 'Please Enter Address'
+                        }
+                    }
+                },
+                IpAddress: {
+                    validators: {
+                        stringLength: {
+                            min: 10,
+                            max: 100,
+                            message: 'Please enter at least 10 characters and no more than 100'
+                        },
+                        notEmpty: {
+                            message: 'Please Enter Address'
+                        }
+                    }
+                },
+
+
+                Ipassword: {
+                    validators: {
+
+                        stringLength: {
+                            min: 8
+
+                        },
+                        notEmpty: {
+                            message: 'Enter your profile minimum 8 charecters'
+                        },
+
+                    }
+                },
+                IconfirmPassword: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Enter confirm your profile password'
+                        },
+                        identical: {
+                            field: 'Ipassword',
+                            message: 'Enter the password, what enter in password field'
+                        }
+                    }
+                },
+
+                Icountry: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The Country option is required'
+                        }
+                    }
+                },
+            }
+
+
+        });
+
+
+
+
     </script>
 
-}
+}*@
+
+
+
+
+
+@page
+    @model RegisterModel
+    @{
+        ViewData["Title"] = "Register";
+        Layout = "_Layout";
+    }
+    <div class="width100p">
+        <div class="regButton">
+            <button onclick="asInvestor()">Register as a Investor</button>
+            <button onclick="asEntreprenuer()">Register as a Entreprenuer</button>
+        </div>
+
+        <div class="regForm regEntreprenuer">
+            <form asp-route-returnUrl="@Model.ReturnUrl" method="post" class="regForm-form form-horizontal">
+                <h4>Create an Entreprenuer account.</h4>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input name="name" hidden value="Entreprenuer" />
+
+                <div class="form-group">
+                    <label class="control-label col-md-3" asp-for="Input.FName"></label>
+                    <div class="col-md-9"><input asp-for="Input.FName" class="form-control" /></div>
+                    <span asp-validation-for="Input.FName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-3" asp-for="Input.LName"></label>
+                    <div class="col-md-9"><input asp-for="Input.LName" class="form-control" /></div>
+                    <span asp-validation-for="Input.LName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-3" asp-for="Input.Email"></label>
+                    <div class="col-md-9"><input asp-for="Input.Email" class="form-control" /></div>
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-3" asp-for="Input.DateofBirth"></label>
+                    <div class="col-md-9"><input asp-for="Input.DateofBirth" class="form-control" data-validation-format="dd-mm-yyyy" /></div>
+                    <span asp-validation-for="Input.DateofBirth" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-3" asp-for="Input.NID"></label>
+                    <div class="col-md-9"><input asp-for="Input.NID" class="form-control" /></div>
+                    <span asp-validation-for="Input.NID" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-3" asp-for="Input.PresentAddress"></label>
+                    <div class="col-md-9"><input asp-for="Input.PresentAddress" class="form-control" /></div>
+                    <span asp-validation-for="Input.PresentAddress" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-3" asp-for="Input.ParmanantAddress"></label>
+                    <div class="col-md-9"><input asp-for="Input.ParmanantAddress" class="form-control" /></div>
+                    <span asp-validation-for="Input.ParmanantAddress" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-3" asp-for="Input.Password"></label>
+                    <div class="col-md-9"><input asp-for="Input.Password" class="form-control" /></div>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3" asp-for="Input.ConfirmPassword"></label>
+                    <div class="col-md-9"><input asp-for="Input.ConfirmPassword" class="form-control" /></div>
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-3" asp-for="Input.CountryId"></label>
+                    <div class="col-md-9"><select asp-for="Input.CountryId" class="form-control" asp-items="@ViewBag.Country"></select></div>
+                    <span asp-validation-for="Input.CountryId" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-default col-sm-offset-3 col-md-3">Register</button>
+            </form>
+        </div>
+
+        <div class="regForm regInvestor">
+            <form asp-route-returnUrl="@Model.ReturnUrl" method="post" class="regForm-form form-horizontal">
+                <h4>Create an Investor account.</h4>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input name="name" hidden value="Investor" />
+
+                <div class="form-group">
+                    <label class="control-label col-md-3" asp-for="Input.FName"></label>
+                    <div class="col-md-9"><input asp-for="Input.FName" class="form-control" /></div>
+                    <span asp-validation-for="Input.FName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-3" asp-for="Input.LName"></label>
+                    <div class="col-md-9"><input asp-for="Input.LName" class="form-control" /></div>
+                    <span asp-validation-for="Input.LName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-3" asp-for="Input.Email"></label>
+                    <div class="col-md-9"><input asp-for="Input.Email" class="form-control" /></div>
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-3" asp-for="Input.DateofBirth"></label>
+                    <div class="col-md-9"><input asp-for="Input.DateofBirth" class="form-control" /></div>
+                    <span asp-validation-for="Input.DateofBirth" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-3" asp-for="Input.NID"></label>
+                    <div class="col-md-9"><input asp-for="Input.NID" class="form-control" /></div>
+                    <span asp-validation-for="Input.NID" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-3" asp-for="Input.PresentAddress"></label>
+                    <div class="col-md-9"><input asp-for="Input.PresentAddress" class="form-control" /></div>
+                    <span asp-validation-for="Input.PresentAddress" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-3" asp-for="Input.ParmanantAddress"></label>
+                    <div class="col-md-9"><input asp-for="Input.ParmanantAddress" class="form-control" /></div>
+                    <span asp-validation-for="Input.ParmanantAddress" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-3" asp-for="Input.Password"></label>
+                    <div class="col-md-9"><input asp-for="Input.Password" class="form-control" /></div>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3" asp-for="Input.ConfirmPassword"></label>
+                    <div class="col-md-9"><input asp-for="Input.ConfirmPassword" class="form-control" /></div>
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-3" asp-for="Input.CountryId"></label>
+                    <div class="col-md-9"><select asp-for="Input.CountryId" class="form-control" asp-items="@ViewBag.Country"></select></div>
+                    <span asp-validation-for="Input.CountryId" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-default col-sm-offset-3 col-md-3">Register</button>
+            </form>
+        </div>
+    </div>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+
+        <script>
+            var asInvestor = function () {
+                $(".regInvestor").show(1000);
+                $(".regEntreprenuer").hide(1000);
+            }
+            var asEntreprenuer = function () {
+                $(".regInvestor").hide(1000);
+                $(".regEntreprenuer").show(1000);
+            }
+        </script>
+
+    }

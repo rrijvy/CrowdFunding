@@ -70,7 +70,7 @@ namespace CrowdFunding.Controllers
         [HttpPost]
         public IActionResult PendingCompanies(int id)
         {
-            if (id == 0)
+            if (id != 0)
             {
                 var company = _context.Companies.Find(id);
                 company.IsVerified = true;
@@ -95,7 +95,7 @@ namespace CrowdFunding.Controllers
         [HttpPost]
         public IActionResult PendingProjects(int id)
         {
-            if (id == 0)
+            if (id != 0)
             {
                 var projects = _context.Projects.Find(id);
                 projects.IsVerified = true;

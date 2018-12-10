@@ -94,11 +94,11 @@ a:active, a:link, a:visited {
   border-radius: 0px;
   text-transform: none;
   font-weight: 600;
-  background-color: #42ccae;
+  background-color: #42ccae !important;
   font-weight: 600; }
   .btn-reg {
     margin-top: 20px;
-    background-color: #42ccae;
+    background-color: #42ccae !important;
     padding: 8px 40px 8px 14px;
     text-transform: none; }
     .btn-reg:hover {
@@ -238,7 +238,7 @@ a:active, a:link, a:visited {
       border-bottom: 3px solid #2b9f86; }
 
 .regForm {
-  width: 700px;
+  width: 40%;
   overflow: hidden;
   padding: 20px;
   margin: auto;
@@ -678,6 +678,8 @@ a:active, a:link, a:visited {
     padding: 30px 20px; }
     .footer-footer-left {
       float: left; }
+      .footer-footer-left-p {
+        color: #fff; }
     .footer-footer-right {
       float: right; }
       .footer-footer-right i {

@@ -211,7 +211,7 @@ namespace CrowdFunding.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Investor")]
         public IActionResult ConfirmPayment()
         {
             ViewData["BKashNumber"] = "8801717745808";

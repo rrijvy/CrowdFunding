@@ -117,12 +117,12 @@ a:active, a:link, a:visited {
     border-radius: 0px;
     text-transform: none;
     font-weight: 600;
-    background-color: #42ccae;
+    background-color: #42ccae !important;
     font-weight: 600;
 
     &-reg {
         margin-top: 20px;
-        background-color: #42ccae;
+        background-color: #42ccae !important;
         padding: 8px 40px 8px 14px;
         text-transform: none;
 
@@ -284,7 +284,7 @@ a:active, a:link, a:visited {
 
 .regInvestor {
     display: none;
-}
+} 
 
 #logoutForm {
     margin-top: -15px;
@@ -309,7 +309,7 @@ a:active, a:link, a:visited {
 }
 
 .regForm {
-    width: 700px;
+    width: 40%;
     overflow: hidden;
     padding: 20px;
     margin: auto;
@@ -985,6 +985,10 @@ a:active, a:link, a:visited {
 
         &-left {
             float: left;
+
+            &-p {
+                color: #fff;
+            }
         }
 
         &-right {

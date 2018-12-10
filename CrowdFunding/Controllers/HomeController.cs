@@ -48,8 +48,8 @@ namespace CrowdFunding.Controllers
         public IActionResult Index(int? categoryId)
         {
             List<ProjectCategory> projectCategories = _context.ProjectCategory.ToList();
-            List<Project> fileProjects = _context.Projects.Where(x => x.ProjectCategoryId == 1).OrderByDescending(x => x.Id).ToList();
-            IQueryable<Project> latestProject = _context.Projects.Include(x => x.Company).ThenInclude(x => x.Entrepreneur).OrderByDescending(x => x.Id).Take(8);
+            List<Project> fileProjects = _context.Projects.Where(x => x.ProjectCategoryId == 1 && x.IsVerified == true).OrderByDescending(x => x.Id).ToList();
+            IQueryable<Project> latestProject = _context.Projects.Where(x => x.IsVerified == true).Include(x => x.Company).ThenInclude(x => x.Entrepreneur).OrderByDescending(x => x.Id).Take(8);
             List<Project> latestProjects = new List<Project>();
             foreach (var item in latestProject)
             {

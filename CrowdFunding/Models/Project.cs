@@ -35,10 +35,10 @@ namespace CrowdFunding.Models
         [Display(Name = "Needed fund")]
         public double NeededFund { get; set; }
 
-        [Required, DataType(DataType.Date), Display(Name ="Starting date"), DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [Required, DataType(DataType.Date), Display(Name ="Starting date"), DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime StartingDate { get; set; }
 
-        [Required, DataType(DataType.Date), Display(Name ="Ending date"), DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [Required, DataType(DataType.Date), Display(Name ="Ending date"), DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime EndingDate { get; set; }
 
         public string Image1 { get; set; }

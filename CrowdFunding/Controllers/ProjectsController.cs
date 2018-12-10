@@ -43,6 +43,7 @@ namespace CrowdFunding.Controllers
 
 
         // GET: Projects
+        [AllowAnonymous]
         public IActionResult Index()
         {
             List<ProjectViewModel> projectList = new List<ProjectViewModel>();

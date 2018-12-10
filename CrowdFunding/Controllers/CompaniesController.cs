@@ -107,7 +107,7 @@ namespace CrowdFunding.Controllers
             await _context.AddAsync(company);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Projects", "CreateProject");
         }
 
         // GET: Companies/Edit/5
